@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cp-blog | Competitive Programming</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="tutorials.js"></script>
+</head>
+<body>
+ <div class="app-container">
+        <aside class="sidebar">]
+            <div class="sidebar-brand">
+                <div class="logo-icon">&lt;/&gt;</div>
+                <span class="brand-name">cp-blog</span>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Navigation</div>
+                <nav class="sidebar-nav" id="sidebarMainNav">
+                </nav>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">More</div>
+                <nav class="sidebar-nav" id="sidebarMoreNav">
+                </nav>
+            </div>
+       <div class="sidebar-bottom">
+    <div class="theme-indicator" id="themeIndicator">
+        Current theme: <span id="themeCurrentLabel">Dark</span>
+    </div>
+    <div class="version-text">cp-blog v1.0</div>
+</div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+
+            <section class="page active-page" id="page-home">
+                <h1 class="page-title">Welcome to cp-blog</h1>
+                <p class="page-subtitle">A platform for competitive programming tutorials, notes, and problem-solving strategies.</p>
+
+                <div class="intro-card">
+                    <h2>What is this site about</h2>
+                    <p>
+                        cp-blog is a personal knowledge base focused on competitive programming. Here you will find concise tutorials
+                        covering essential algorithms, data structures, and problem-solving techniques.
+                    </p>
+                </div>
+
+                <div class="intro-card">
+                    <h2>What you will find here</h2>
+                    <p>
+                        Each tutorial breaks down a topic with clear explanations and runnable code snippets. The problems section
+                        will eventually host curated practice problems with hints and solution sketches.
+                    </p>
+                    <div class="feature-grid">
+                        <div class="feature-tag tag-green">Algorithm Tutorials</div>
+                        <div class="feature-tag tag-blue">Data Structures</div>
+                        <div class="feature-tag tag-accent">C++ Implementations</div>
+                        <div class="feature-tag tag-green">Contest Strategies</div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="intro-card recent-tutorials-section">
+                    <h2>Recent Tutorials</h2>
+                </div>
+            </section>
+
+            <section class="page" id="page-tutorials">
+                <h1 class="page-title">Tutorials</h1>
+                <p class="page-subtitle">Your personal collection of competitive programming tutorials.</p>
+                <div id="tutorialListContainer"></div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+     <section class="page page-full" id="page-tutorial-detail">
+                <div id="tutorialDetailContent"></div>
+            </section>
+
+            <section class="page" id="page-problems">
+                <h1 class="page-title">Problems</h1>
+                <p class="page-subtitle">Curated problem sets with hints and solution sketches.</p>
+                <div class="coming-soon-container">
+                    <h2>Coming Soon</h2>
+                    <p>Problem sets are being curated. Check back in a future update.</p>
+                </div>
+            </section>
+
+            <section class="page" id="page-profile">
+                <h1 class="page-title">Profile</h1>
+                <p class="page-subtitle">Your competitive programming stats and progress.</p>
+                <div class="coming-soon-container">
+                    <h2>Coming Soon</h2>
+                    <p>Profile features including contest history and progress tracking will be available soon.</p>
+                </div>
+            </section>
+
+            <section class="page" id="page-settings">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Customize your cp-blog experience.</p>
+                <div class="settings-group">
+                    <h3>Appearance</h3>
+                    <div class="settings-row">
+                        <span>Dark mode</span>
+                   
+
+     <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-row">
+                        <span>Monospace font in code blocks</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>Notifications</h3>
+                    <div class="settings-row">
+                        <span>Email alerts for new tutorials</span>
+                        <span class="coming-soon-badge">coming soon</span>
+                    </div>
+                    <div class="settings-row">
+                        <span>Browser notifications</span>
+                        <span class="coming-soon-badge">coming soon</span>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted);font-size:12px;margin-top:16px;">
+                    Some settings are placeholders and will be fully functional in a future update.
+                </p>
+            </section>
+
+            <section class="page" id="page-about">
+                <h1 class="page-title">About the Author</h1>
+                <p class="page-subtitle">The person behind cp-blog.</p>
+                <div class="about-card">
+                    <div class="about-avatar">DH</div>
+                    <div class="about-info">
+                        <h3>DreamxHava</h3>
+                        <span class="role">NOI & IOI Participant</span>
+                        <p>NOI and IOI participant. I write about the algorithms I had to learn the hard way, so you don't have to.</p>
+                        <div class="stat-container">
+                            <div class="stat-box">
+                                <div class="stat-value">684</div>
+                                <div class="stat-label">Codeforces</div>
+                                <div class="stat-sub">Newbie</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">1k+</div>
+                                <div class="stat-label">Solved</div>
+                                <div class="stat-sub">lifetime</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">99+</div>
+                                <div class="stat-label">Streak</div>
+                                <div class="stat-sub">days</div>
+                            </div>
+                        </div>
+                        <div class="about-links">
+                            <a class="about-link" href="https://codeforces.com/profile/dreamxhava" target="_blank">Codeforces</a>
+                            <a class="about-link" href="https://www.hackerrank.com/savindudamsara77" target="_blank">HackerRank</a>
+                            <a class="about-link" href="https://github.com/savindudam" target="_blank">GitHub</a>
+                            <a class="about-link" href="mailto:savindudamsara77@gmail.com">Email</a>
+                   
+     </div>
+                        <p class="current-status">Currently: Reviewing past programming progress + learning new algorithms and data structures + Got into ML side.</p>
+                    </div>
+                </div>
+                <div class="intro-card" style="margin-top:20px;">
+                    <h2>Why cp-blog exists</h2>
+                    <p>The goal is to create a no-nonsense resource where each tutorial is self-contained and code-focused. I hope you enjoy exploring and learning!</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
