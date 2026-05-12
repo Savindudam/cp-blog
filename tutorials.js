@@ -470,6 +470,62 @@ using std::vector;</code></pre>
 
 <blockquote>Compiling might seem like a boring step, but knowing how to squeeze every bit of performance with the right flags can save you from a TLE. Plus, warnings are like free code reviews  don't ignore them.</blockquote>
 `
+},{
+  slug: "fast-io-ios-sync-stdio-cin-tie",
+  title: "Fast I/O: ios::sync_with_stdio and cin.tie",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How two magic lines can make your C++ I/O significantly faster and why they matter.",
+  tags: ["fast I/O", "cin", "cout", "sync_with_stdio", "cin.tie"],
+  html: `
+<p>If you've ever submited a solution that looked correct but got Time Limit Exceeded (TLE), the culprit might be slow input/output. By default, C++ streams are synced with C standard I/O, which adds overhead. With two simple lines, you can uncouple them and make your <code>cin</code>/<code>cout</code> much faster.</p>
+
+<h2>The magic incantation</h2>
+<pre><code>ios::sync_with_stdio(false);
+cin.tie(0);</code></pre>
+<p>Add these at the very beginning of <code>main()</code>, before any I/O operations. Let's see what they actually do.</p>
+
+<h2>ios::sync_with_stdio(false)</h2>
+<p>By default, C++ keeps <code>cin</code>/<code>cout</code> and C's <code>scanf</code>/<code>printf</code> in sync. This means that after outputing with <code>cout</code>, the data is guaranteed to appear before any subsequent <code>scanf</code> reads. This syncing is conveniant but adds extra work. Setting <code>sync_with_stdio(false)</code> disconnects them, so <code>cin</code>/<code>cout</code> don't wait for each other. The result: <code>cin</code> and <code>cout</code> become roughly as fast as <code>scanf</code>/<code>printf</code> (or even faster in many cases).</p>
+<p>Important: after doing this, you should NOT mix <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code>. The order of reads and writes may get scrambled. Pick one style and stick with it.</p>
+
+<h2>cin.tie(0)</h2>
+<p>Normaly, <code>cin</code> is tied to <code>cout</code>. This means that before every <code>cin</code> read, the output buffer is flushed (i.e., everything you printed is forced to appear). This is usefull for interactive programs, but in cp it's pure overhead. By calling <code>cin.tie(0)</code>, you untie them. Now <code>cin</code> won't force a flush, which speeds up reading significantly. If you still want to flush output, you can do it manualy with <code>cout << flush</code> or <code>endl</code> (but remember, <code>endl</code> also flushes, so use <code>"\\n"</code> instead).</p>
+
+<h2>Complete example</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    int n;
+    cin >> n;
+    long long sum = 0;
+    for (int i = 0; i < n; ++i) {
+        int x; cin >> x;
+        sum += x;
+    }
+    cout << sum << "\\n";
+    return 0;
+}</code></pre>
+<p>This will read large inputs blazingly fast and output the answer without any unnecesary delays.</p>
+
+<h2>What about scanf/printf?</h2>
+<p>With this optimization, <code>cin</code>/<code>cout</code> are competitive with <code>scanf</code>/<code>printf</code>. Many cp'rs still use <code>scanf</code>/<code>printf</code> for very large input (like millions of numbers), but the difference is tiny. I prefer the cleaner syntax of <code>cin</code>/<code>cout</code> and just add the two speed-up lines.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always add <code>ios::sync_with_stdio(false); cin.tie(0);</code> at the start of main if you use <code>cin</code>/<code>cout</code>.</li>
+  <li>Don't mix <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code> after unsyncing.</li>
+  <li>Use <code>"\\n"</code> instead of <code>endl</code> to avoid unneeded flushes.</li>
+</ul>
+
+<blockquote>Two lines of code can turn a TLE into an AC. Never forget to speed up your I/O  it's one of the simplest and most impactfull optimizations you can do.</blockquote>
+`
 },
 
 
