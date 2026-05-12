@@ -357,8 +357,65 @@ int main() {
 
 <blockquote>When the clock is ticking and you need to write a quick bugfree solution, bits/stdc++.h is your best friend. Just remember it's a cp hack, not a generalpurpose practice.</blockquote>
 `
+},{
+  slug: "understanding-using-namespace-std",
+  title: "Understanding the using namespace std Directive",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "Why we write 'using namespace std' and what happends if we don't  the good, the bad, and the lazy.",
+  tags: ["namespace", "std", "basics", "cpp"],
+  html: `
+<p>You've seen the line <code>using namespace std;</code> in practically every cp code snippet, but what does it actualy do? Basicaly, it saves you a bunch of typing. Without it, you'd have to write <code>std::</code> before every single standard library thing.</p>
+
+<h2>What is a namespace?</h2>
+<p>A namespace is like a container for names. The C++ standard library puts all its functions and classes inside the <strong>std</strong> namespace so they don't clash with your own names. For example, <code>cout</code> is realy <code>std::cout</code>, <code>vector</code> is <code>std::vector</code>, and so on.</p>
+
+<h2>Without using namespace std</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+int main() {
+    std::cout << "Hello\\n";
+    std::vector&ltint&gt v;
+    v.push_back(5);
+    std::cout << v[0] << "\\n";
+    return 0;
+}</code></pre>
+<p>As you can see, <code>std::</code> appears alot. In a competive program where speed matters, typing <code>std::</code> hundreds of times is just wastefull.</p>
+
+<h2>With using namespace std</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+int main() {
+    cout << "Hello\\n";
+    vector&ltint&gt v;
+    v.push_back(5);
+    cout << v[0] << "\\n";
+    return 0;
+}</code></pre>
+<p>Much cleaner! Now the compiutomaticaly looks inside the <code>std</code> namespace when it sees <code>cout</code> or <code>vector</code>. This makes the code shorter and easier to reach is exactly what we want in a contest.</p>
+
+<h2>Is it dangrous?</h2>
+<p>In large projects, using the whole <code>std</code> namespace can cause name conflicts (collisions). But in competive programming you normaly write short programs of a few hundred lines at most, so conflicts are super rare. Almost every cp'r uses it.</p>
+
+<h2>What if you don't want the entire namespace?</h2>
+<p>Some people prefere to bring in only specific things:</p>
+<pre><code>using std::cout;
+using std::cin;
+using std::vector;</code></pre>
+<p>This is a bit safer but more verbse. Honestly, in cp just go with <code>using namespace std;</code>  it's the standard.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>using namespace std;</code> makes all standard library names avilable without the <code>std::</code> prefix.</li>
+  <li>It is totaly fine for cp, but avoid it in large sofware projects.</li>
+  <li>Always put it right after the includes, before your code.</li>
+  <li>Don't use it inside header files if you ever make one (but in cp you rarely do).</li>
+</ul>
+
+<blockquote>Think of <code>using namespace std;</code> as a shortcut that removes unecessary noise from your code. In a timed contest, every saved keystroke is a small victory.</blockquote>
+`
 },
 
-e 
 
 ]
