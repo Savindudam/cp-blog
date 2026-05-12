@@ -137,6 +137,63 @@ cin >> name;</code></pre>
 
 <blockquote>Getting comftable with basic input and output is the foundation of everything else. Once you can read data and print answers reliably, the real algorithm fun begins.</blockquote>
 `
+},{
+  slug: "working-with-numbers-in-cpp",
+  title: "Working With Numbers In C++",
+  topic: "Numbers & Mathematics",
+  difficulty: "Easy",
+  readMinutes: 9,
+  date: "2026-05-07",
+  excerpt: "A deep dive into the integer types, modulo arithmetic, and how to avoid overflow while working with numbers.",
+  tags: ["numbers", "math", "integers", "modulo"],
+  html: `
+<p>Numbers are at the hart of competive programming. You'll be adding, multiplying, and modding them all the time. But if you pick the wrong data type, your answer will be completly wrong due to overflow. Let's break it down.</p>
+
+<h2>The int type  your goto soldier</h2>
+<p>The <code>int</code> type is a 32bit integer. It can store values from about <strong>2 billion to +2 billion</strong>. For most simple problems this is enought. But be carefull: if you multiply two large ints, the result can be bigger than 2 billion and it will <em>overflow</em>  wrappig around to a negative number or something wierd.</p>
+<pre><code>int a = 50000;
+int b = 50000;
+int c = a * b; // 2.5 billion  overflows! c will be negative or random</code></pre>
+
+<h2>long long to the rescue</h2>
+<p>When you expect numbers larger than 2 billion, switch to <code>long long</code>. It's 64bit and can hold values up to about <strong>9 quintillion</strong> (that's a 9 followed by 18 zeros). Use the <code>LL</code> suffix for large constants:</p>
+<pre><code>long long big = 123456789123456789LL;</code></pre>
+<p>Even if your final answer fits in int, intermediate calculations may overflow. So many programmers just typedef <code>long long</code> to <code>ll</code> and use it everywhere to be safe.</p>
+
+<h2>Modular arithmetic  keeping things small</h2>
+<p>A huge number of problems ask you to output the answer modulo some big prime, like <strong>10<sup>9</sup>+7</strong>. The trick is to take the remainder after every operation:</p>
+<pre><code>long long mod = 1000000007;
+long long result = 1;
+for (int i = 1; i <= n; i++) {
+    result = (result * i) % mod;
+}
+cout << result << "\n";</code></pre>
+<p>That computes n! modulo mod without ever letting the number grow huge.</p>
+
+<h2>Handling negative mod</h2>
+<p>In C++, <code>%</code> on a negative number gives a negative remainder, which is almost never what you want. Fix it with:</p>
+<pre><code>int x = -10;
+int m = 7;
+x = x % m;
+if (x < 0) x += m;
+// now x is 4</code></pre>
+
+<h2>Floating point numbers  the sneaky ones</h2>
+<p>For decimal values, you have <code>double</code> (64bit) and <code>long double</code> (80bit). But be carefull! Floats are not exact. Comparing them with <code>==</code> is risky because of tiny rounding errors. Always use an epsilon:</p>
+<pre><code>if (abs(a - b) < 1e-9) {
+    // a and b are equal enough
+}</code></pre>
+
+<h2>Quick refrence</h2>
+<table border="1" cellpadding="5">
+  <tr><th>Type</th><th>Size</th><th>Range (approx)</th></tr>
+  <tr><td>int</td><td>32bit</td><td>2.110<sup>9</sup></td></tr>
+  <tr><td>long long</td><td>64bit</td><td>9.210<sup>18</sup></td></tr>
+  <tr><td>double</td><td>64bit</td><td>decimals, ~15 digits precision</td></tr>
+</table>
+
+<blockquote>Overflow bugs are silent killers in competive programming. When in doubt, use <code>long long</code> and take modulo early. Your future self will thank you.</blockquote>
+`
 },
 
 
