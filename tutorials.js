@@ -714,5 +714,60 @@ while (cin >> word) {
 
 <blockquote>The <code>while(cin >> x)</code> trick is one of those simple things that makes competive programming so much easier. It frees you from counting input sizes and lets you focus on the actual algorithm.</blockquote>
 `
+},{
+  slug: "output-formatting-cout-newline",
+  title: "Output Formatting with cout and Newline",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "How to make your program's output look exactly the way the judge expects  spacing, newlines, and formatting tricks.",
+  tags: ["output", "cout", "formatting", "newline"],
+  html: `
+<p>The judge is very picky about how your output looks. A missing space or an extra newline can turn a correct solution into a Wrong Answer. Let's learn to format output properly with <code>cout</code>.</p>
+
+<h2>Basic chaining with cout</h2>
+<pre><code>int a = 7, b = 3;
+cout << a << " " << b << "\\n";
+// Output: 7 3</code></pre>
+<p>You can chain as many things as you want using the <code><<</code> operator. Each piece is printed right after the previous one, so if you need spaces you have to add them explicitely as <code>" "</code>.</p>
+
+<h2>Newlines: \\n vs endl</h2>
+<p>To move to the next line you have two options: <code>"\\n"</code> (the newline escape character) and <code>endl</code>. They both insert a newline, but <code>endl</code> also <strong>flushes the output buffer</strong>. Flushing means the program stops and writes everything immediately to the console or file. That extra work can be slow. So in cp you almost always want <code>"\\n"</code>.</p>
+<pre><code>cout << "Hello\\n";        // fast
+cout << "World" << endl; // slower, flushes</code></pre>
+<p>Only use <code>endl</code> when you need the output to appear right away (e.g., in interactive problems where you ask a question and wait for an answer).</p>
+
+<h2>Formatting floating point numbers</h2>
+<p>When the problem asks for a certain number of decimal places, you can set the precision:</p>
+<pre><code>double pi = 3.1415926535;
+cout << fixed << setprecision(4) << pi << "\\n"; // 3.1416</code></pre>
+<p><code>fixed</code> tells <code>cout</code> to always show the decimal part, and <code>setprecision(n)</code> sets the number of digits after the point. Don't forget to include <code>&ltiomanip&gt</code> (which is already in bits/stdc++.h).</p>
+
+<h2>Formatting with printf (quick reference)</h2>
+<p>If you prefer <code>printf</code>, the same formatting looks like:</p>
+<pre><code>printf("%.4f\\n", pi); // 3.1416</code></pre>
+<p><code>%d</code> for int, <code>%lld</code> for long long, <code>%f</code>/<code>%lf</code> for double, <code>%s</code> for Cstyle strings.</p>
+
+<h2>Printing multiple values with a single newline</h2>
+<p>A common pattern is to print all elements of a vector separated by spaces:</p>
+<pre><code>for (int i = 0; i < v.size(); i++) {
+    cout << v[i] << (i == v.size()-1 ? "\\n" : " ");
+}</code></pre>
+<p>This prints spaces between elements but no trailing space at the end of the line. Many judges are strict about that.</p>
+
+<h2>Avoiding extra newlines</h2>
+<p>Be careful not to accidently print a blank line at the end when the problem doesn't want it. If the problem says "print the answer for each test case on a new line", don't add an extra newline after the last answer.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use <code>"\\n"</code> insread of <code>endl</code> for speed.</li>
+  <li>Add spaces manually between outputs.</li>
+  <li>Use <code>fixed</code> and <code>setprecision</code> to format decimals.</li>
+  <li>Check the problem statement for the exact output format.</li>
+</ul>
+
+<blockquote>Output formatting is one of those things that seems trivial until you get a WA for a missing space. Always doublecheck the required format before submitting.</blockquote>
+`
 },
 ]
