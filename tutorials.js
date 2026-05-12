@@ -586,5 +586,66 @@ for (int i = 0; i < n; ++i) {
 `
 },
 
+{
+  slug: "readingstrings-from-cin",
+  title: "Reading Strings from cin in C++",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How to read words, lines, and full strings with spaces using cin, getline, and stringstream.",
+  tags: ["strings", "input", "cin", "getline"],
+  html: `
+<p>Reading strings can be a bit trickier than reading numbers because strings may contain spaces, newlines, or special characters. Let's cover all the scenarious you'll encounter.</p>
 
+<h2>Reading a single word</h2>
+<p>Using <code>cin >></code> reads characters until it hits whitespace. So it reads exactly one <strong>word</strong>:</p>
+<pre><code>string word;
+cin >> word;</code></pre>
+<p>If the input is "Hello world", <code>word</code> will contain only "Hello". The remaining "world" stays in the buffer for the next read.</p>
+
+<h2>Reading multiple words</h2>
+<pre><code>string first, last;
+cin >> first >> last;
+cout << "Hello, " << first << " " << last << "!\\n";</code></pre>
+<p>Input: "John Doe" -> first = "John", last = "Doe".</p>
+
+<h2>Reading a whole line (with spaces)</h2>
+<p>When you need the entire line, including spaces, use <code>getline</code>:</p>
+<pre><code>string line;
+getline(cin, line);</code></pre>
+<p>This reads everything until a newline character (Enter). The newline itself is consumed but not stored. If you previously used <code>cin >></code>, there might be a leftover newline in the buffer. In that case, the first <code>getline</code> will read an empty string. To fix it, call <code>cin.ignore()</code> after the last <code>cin >></code> before <code>getline</code>:</p>
+<pre><code>int n;
+cin >> n;
+cin.ignore(); // ignore the trailing newline
+string s;
+getline(cin, s); // now reads the actual line</code></pre>
+
+<h2>Reading until EOF (all lines)</h2>
+<p>To read every line of input:</p>
+<pre><code>string line;
+while (getline(cin, line)) {
+    // process each line
+}</code></pre>
+
+<h2>Parsing a line into separate words</h2>
+<p>Sometimes you have a line of integers or words that you want to split. You can use a <code>stringstream</code>:</p>
+<pre><code>string line = "10 20 30";
+stringstream ss(line);
+int x;
+while (ss >> x) {
+    cout << x << "\\n";
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>cin >></code> reads a word (stops at whitespace).</li>
+  <li><code>getline(cin, str)</code> reads a whole line.</li>
+  <li>Be carefull mixing <code>cin >></code> and <code>getline</code>  <code>cin.ignore()</code> is your friend.</li>
+  <li>Using <code>stringstream</code> is an easy way to split a string into tokens.</li>
+</ul>
+
+<blockquote>String input can be a source of annoying bugs because invisible newline characters get left in the buffer. Always test your reading logic on a small sample before writing the rest of the solution.</blockquote>
+`
+},
 ]
