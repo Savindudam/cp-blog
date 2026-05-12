@@ -526,6 +526,64 @@ int main() {
 
 <blockquote>Two lines of code can turn a TLE into an AC. Never forget to speed up your I/O  it's one of the simplest and most impactfull optimizations you can do.</blockquote>
 `
+},{
+  slug: "reading-integers-from-standard-input",
+  title: "Reading Integers from Standard Input in C++",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-08",
+  excerpt: "Everything about reading integers using cin and scanf  handling multiple inputs, loops, and common pitfalls.",
+  tags: ["integers", "input", "cin", "scanf"],
+  html: `
+<p>Readng numbers from the input is probably the first thing you'll do in 99% of cp problems. Let's see all the ways to grab those intagers into your program.</p>
+
+<h2>Reading a single integer</h2>
+<pre><code>int x;
+cin >> x;</code></pre>
+<p>That's it. The same works for <code>long long</code> or any other numeric type. <code>cin</code> will skip any whitespace (spaces, newlines) and try to interpret the next characters as a number.</p>
+
+<h2>Reading multiple integers</h2>
+<pre><code>int a, b, c;
+cin >> a >> b >> c;</code></pre>
+<p>You can chain them. It doesn't matter if the numbers are on the same line or different lines  <code>cin</code> handles both.</p>
+
+<h2>Reading an unknown amount of integers</h2>
+<p>Sometimes the input doesn't tell you how many numbers there are. You can read until EOF (end of file):</p>
+<pre><code>int x;
+while (cin >> x) {
+    // process x
+}</code></pre>
+<p>The condition <code>cin >> x</code> returns false when there's no more input (or the input cannot be parsed as an integer), so the loop stops automagically.</p>
+
+<h2>Using scanf for even more control</h2>
+<p>If you need to parse a specific format, <code>scanf</code> can be handy:</p>
+<pre><code>int a, b;
+scanf("%d %d", &a, &b);</code></pre>
+<p>The <code>%d</code> means "decimal integer". For <code>long long</code> you'd use <code>%lld</code>. Note that you pass <em>pointers</em> to the variables (<code>&a</code>), not the variables themselves, because <code>scanf</code> needs to modify them.</p>
+
+<h2>Reading into a vector</h2>
+<p>A common pattern: read n integers into a vector.</p>
+<pre><code>int n;
+cin >> n;
+vector&ltint&gt arr(n);
+for (int i = 0; i < n; ++i) {
+    cin >> arr[i];
+}</code></pre>
+
+<h2>Going faster</h2>
+<p>If you're using <code>cin</code>, remember to add <code>ios::sync_with_stdio(false); cin.tie(0);</code> for speed. Without it, reading a million integers can be slow. With it, it's lightning.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>cin >></code> automatically skips whitespace.</li>
+  <li>Chain multiple reads with <code>>></code>.</li>
+  <li>Use <code>while(cin >> x)</code> to read until EOF.</li>
+  <li>With <code>scanf</code>, always pass the address (<code>&</code>) of the variable.</li>
+</ul>
+
+<blockquote>Reading input may seem trivial, but a single mistake here can waste hours of debugging. Know your tools so you can focus on the actual problem.</blockquote>
+`
 },
 
 
