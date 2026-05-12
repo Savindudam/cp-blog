@@ -898,6 +898,56 @@ fout << x * 2 << "\\n";</code></pre>
 
 <blockquote>File I/O might seem oldfashioned, but it's a necessary evil for a few contests. <code>freopen</code> makes the transition painless  two lines and you're done.</blockquote>
 `
+},{
+  slug: "integer-types-int-long-long",
+  title: "Integer Types: int, long long, and Their Ranges",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-08",
+  excerpt: "A detailed look at the integer data types in C++  their sizes, ranges, and when to use each one.",
+  tags: ["int", "long long", "integer types", "ranges"],
+  html: `
+<p>Picking the right integer type is one of the first decisions you make when writing a cp solution. Get it wrong, and your program might overflow, give negative results when you expect positive, or just fail on large test cases. Let's learn the types and their limits so you never get caught out.</p>
+
+<h2>The int type  32 bits of power</h2>
+<p><code>int</code> is the most common integer type in C++. On modern systems it's a 32bit <strong>signed</strong> integer. That means it uses 32 binary digits to store the value, with one bit reserved for the sign (positive or negative). So the range is roughly:</p>
+<pre><code>2,147,483,648  to  2,147,483,647</code></pre>
+<p>Or more simply: about <strong>210<sup>9</sup> to 210<sup>9</sup></strong>. If your numbers stay inside that range, <code>int</code> is perfectly fine and uses the least memory. Most loop counters, array indices, and small values should be <code>int</code>.</p>
+<pre><code>int a = 1000000;
+int b = 2000;
+int c = a + b; // no problem, 1,002,000 fits easily</code></pre>
+
+<h2>When int isn't enought  introducing long long</h2>
+<p>In many cp problems, values can grow larger than 2 billion. For example, if n = 10<sup>5</sup> and you need n(n+1)/2, that's about 510<sup>9</sup>  bigger than int can hold. <code>long long</code> is a 64bit signed integer with a massive range:</p>
+<pre><code>9,223,372,036,854,775,808  to  9,223,372,036,854,775,807</code></pre>
+<p>Or about <strong>910<sup>18</sup> to 910<sup>18</sup></strong>. That's enough for almost every cp problem. Most experienced programmers just <code>typedef long long ll;</code> and use <code>ll</code> for anything that could possibly get large.</p>
+<pre><code>long long n = 100000;
+long long sum = n * (n + 1) / 2; // safe, about 5e9, fits in long long</code></pre>
+
+<h2>Other integer types you might see</h2>
+<ul>
+  <li><strong>short</strong>  16bit, rarely used in cp. Range 32767.</li>
+  <li><strong>unsigned int</strong>  same 32 bits but only positive, range 0 to ~410<sup>9</sup>. Good for bitmasks.</li>
+  <li><strong>unsigned long long</strong>  0 to ~1.810<sup>19</sup>.</li>
+  <li><strong>char</strong>  8bit, often used for characters but can store small integers 128 to 127.</li>
+</ul>
+
+<h2>How to check the limits in code</h2>
+<p>You can print the maximum value of a type using <code>&ltlimits&gt</code> (included in bits/stdc++.h):</p>
+<pre><code>cout << INT_MAX << "\\n";      // 2147483647
+cout << LLONG_MAX << "\\n";    // 9223372036854775807</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>int</code> goes up to ~2.1e9. If values may exceed that, use <code>long long</code>.</li>
+  <li>Signed integers use one bit for sign, so the max positive is half the absoute range.</li>
+  <li>Unsigned types give you extra headroom if you know values are nonnegative.</li>
+  <li>When in doubt, <code>long long</code> is cheap on modern computers  use it liberally.</li>
+</ul>
+
+<blockquote>Understanding integer ranges is like knowing the speed limit. You can drive an int on a small road, but on the autobahn of cp, you better have a long long.</blockquote>
+`
 },
 
 
