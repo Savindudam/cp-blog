@@ -415,6 +415,61 @@ using std::vector;</code></pre>
 
 <blockquote>Think of <code>using namespace std;</code> as a shortcut that removes unecessary noise from your code. In a timed contest, every saved keystroke is a small victory.</blockquote>
 `
+},{
+  slug: "compiling-cpp-with-gpp-flags",
+  title: "Compiling C++ Code with g++ and Optimization Flags",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How to turn your .cpp file into a runnable program with g++ and what those magic flags like -O2 and -Wall actualy mean.",
+  tags: ["g++", "compiling", "flags", "optimization"],
+  html: `
+<p>Writing code is only half the job. You need to turn that <code>.cpp</code> file into a working executble. In cp we use <strong>g++</strong>, the GNU C++ compiler. The terminal command might look intimidatng at first but its realy just a few ingredients.</p>
+
+<h2>The basic compile command</h2>
+<pre><code>g++ -std=c++11 -O2 -Wall test.cpp -o test</code></pre>
+<p>Let's break it down piece by piece so you understand what each part does.</p>
+
+<h2>g++</h2>
+<p>This is the compiler itself. On Windows you typicly get it through MinGW; on Linux it's part of the <code>build-essential</code> package; on Mac you can get it via Xcode command line tools.</p>
+
+<h2>-std=c++11</h2>
+<p>This tells the compiler which version of the C++ standerd to use. Most modern judges support C++17, but C++11 is still a safe bet. With this flag you can use modern features like <code>auto</code>, rangebased for loops, and lambdas.</p>
+
+<h2>-O2</h2>
+<p>This is the <strong>optimization level</strong>. <code>-O2</code> tells the compiler to spend some extra time making your program run faster. It doesn't change the correctness, but can speed up your code by several times. Most cp solutions are compiled with <code>-O2</code>. You can also use <code>-O3</code> for slightly more agressive optimization, or <code>-Ofast</code> if you're feeling wild (but it might break some standard rules).</p>
+
+<h2>-Wall</h2>
+<p>This enables <strong>warnings</strong>. It tells the compiler to shout at you if it sees something suspicious  like using an uninitialized variable or a comparison that always comes out the same. These warnings are your friends; they catch bugs early. Always compile with <code>-Wall</code>.</p>
+
+<h2>test.cpp and -o test</h2>
+<p>The source file is <code>test.cpp</code>. The <code>-o test</code> part says "name the output execuitable <code>test</code>". On Windows this will become <code>test.exe</code>, on Linux it's just <code>test</code>. If you leave out <code>-o</code>, the default name is <code>a.out</code> (or <code>a.exe</code>).</p>
+
+<h2>Running the program</h2>
+<p>After compiling, you simply run:</p>
+<pre><code>./test</code></pre>
+<p>on Linux/Mac, or</p>
+<pre><code>test.exe</code></pre>
+<p>on Windows. The program will then wait for your input (as described in the problem) and print the output.</p>
+
+<h2>Other usefull flags</h2>
+<ul>
+  <li><code>-g</code>  includes debugging information for tools like GDB.</li>
+  <li><code>-DDEBUG</code>  defines a macro called DEBUG that you can use for conditional debug prints.</li>
+  <li><code>-Wextra</code>  even more warnings.</li>
+  <li><code>-std=c++17</code>  for C++17 (now widely supported).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always compile with at least <code>-O2</code> and <code>-Wall</code>.</li>
+  <li>The <code>-std</code> flag should match what the judge uses (usually C++11 or later).</li>
+  <li>On Windows, the executable may need to be in the same folder as any input files or you need to use full paths.</li>
+</ul>
+
+<blockquote>Compiling might seem like a boring step, but knowing how to squeeze every bit of performance with the right flags can save you from a TLE. Plus, warnings are like free code reviews  don't ignore them.</blockquote>
+`
 },
 
 
