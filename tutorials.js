@@ -194,8 +194,67 @@ if (x < 0) x += m;
 
 <blockquote>Overflow bugs are silent killers in competive programming. When in doubt, use <code>long long</code> and take modulo early. Your future self will thank you.</blockquote>
 `
+},{
+  slug: "input-and-output-in-cpp",
+  title: "Input And Output In C++",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-07",
+  excerpt: "All the ways to read input and write output in C++  from cin/cout to scanf/printf, plus file I/O.",
+  tags: ["input", "output", "cin", "cout", "scanf"],
+  html: `
+<p>Reading and writing data is the first thing your program does. In competive programming you'll normaly use <strong>standard input</strong> and <strong>standard output</strong>  that is, the terminal, or a file if the judge requires it. Let's master every method.</p>
+
+<h2>cin and cout  the easy way</h2>
+<p>These are the C++ stream objects. They're simple and safe:</p>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    int a, b;
+    cin >> a >> b;               // reads 2 integers
+    cout << a + b << "\\n";       // prints their sum
+    return 0;
+}</code></pre>
+<p><code>cin</code> skips whitespace (spaces, newlines) so you can read numbers however they're arranged.</p>
+
+<h2>Supercharging cin/cout</h2>
+<p>By default, cin/cout are a bit slow because they are synced with C's I/O. To make them blazing fast, add these two lines at the beginning of <code>main</code>:</p>
+<pre><code>ios::sync_with_stdio(false);
+cin.tie(0);</code></pre>
+<p>After that, don't mix <code>cin/cout</code> with <code>scanf/printf</code>  they may not work well together beof the unsynced buffers.</p>
+
+<h2>scanf and printf  the old C way</h2>
+<p>Some problems have huge input (millions of numbers). In those cases <code>scanf</code> and <code>printf</code> can still be a tiny bit faster.</p>
+<pre><code>int a, b;
+scanf("%d %d", &a, &b);
+printf("Sum: %d\\n", a + b);</code></pre>
+<p>The <code>%d</code> is for integers, <code>%lld</code> for long long, <code>%s</code> for strings. It's a bit more verbse, but sometimes worth it for the speed.</p>
+
+<h2>Reading whole lines and strings with spaces</h2>
+<p>If you need to read a full line that may contain spaces, use <code>getline</code>:</p>
+<pre><code>string sentence;
+getline(cin, sentence);</code></pre>
+<p>Beware: if you use <code>cin >></code> before <code>getline</code>, a leftover newline in the buffer can make <code>getline</code> read an empty line. The fix is <code>cin.ignore()</code> after the <code>cin >></code>.</p>
+
+<h2>Reading until endoffile</h2>
+<p>Sometimes the input size is not given; you have to read until there is no more data. This loop does it:</p>
+<pre><code>int x;
+wh(cin >> x) {
+    // process x
+}</code></pre>
+
+<h2>File input/output</h2>
+<p>Rarely, a contest requires reading from a file. You can redirect cin and cout with <code>freopen</code>:</p>
+<pre><code>freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);</code></pre>
+<p>Now all your <code>cin</code> calls read from the file, and <code>cout</code> writes to the file. Very conveniant.</p>
+
+<blockquote>I/O speed can mean the difference between Accepted and Time Limit Exceded. Always add the two speed-up lines unless you know for sure that scanf/printf is needed.</blockquote>
+`
 },
 
-
+e 
 
 ]
