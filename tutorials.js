@@ -1099,6 +1099,68 @@ long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
 
 <blockquote>Think of <code>__int128_t</code> as the nuclear option. It's there if you need it, but with great power comes great responsibility  and a bit of inconvenience.</blockquote>
 `
+}
+{
+  slug: "modular-arithmetic-basics-properties",
+  title: "Modular Arithmetic: Basics and Properties",
+  topic: "Numbers in C++",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-08",
+  excerpt: "Why modulo is everywhere in cp, how to compute with remainders, and the three magic properties that make it work.",
+  tags: ["modulo", "arithmetic", "properties", "big numbers"],
+  html: `
+<p>You've seen "output answer modulo 10<sup>9</sup>+7" so many times. But why? And how do you compute efficiently without the numbers blowing up? Modular arithmetic is the secret sauce that keeps everything compact. Let's break it down.</p>
+
+<h2>What is modulo?</h2>
+<p>The expression <code>x mod m</code> (or <code>x % m</code> in C++) gives the remainder when <code>x</code> is divided by <code>m</code>. So 17 mod 5 = 2 because 17 = 3×5 + 2. The remainder always lies between 0 and m−1 (if x is positive; C++ negative % gives negative results, we'll handle that later).</p>
+
+<h2>Why do we need it in cp?</h2>
+<p>Answers can be astronomically huge. The number of ways to rearrrange a 100‑element array is 100! ≈ 9×10<sup>157</sup> – way beyond any standard type. But if we only need the remainder mod 1e9+7, we can compute using small numbers that fit in <code>int</code> or <code>long long</code>. The judge checks if your remainder is correct; they don't expect the full integer.</p>
+
+<h2>The three golden properties</h2>
+<p>The beauty of modular arithmetic is that you can take the remainder before or after operations and get the same result:</p>
+<pre><code>(a + b) % m = ((a % m) + (b % m)) % m
+(a − b) % m = ((a % m) − (b % m)) % m
+(a × b) % m = ((a % m) × (b % m)) % m</code></pre>
+<p>This means you can do <code>% m</code> after every single addition or multiplication, and the numbers stay within [0, m−1]. They never grow! That's the whole trick.</p>
+
+<h2>Computing factorial modulo m</h2>
+<pre><code>const int MOD = 1000000007;
+long long fact = 1;
+for (int i = 2; i <= n; i++) {
+    fact = (fact * i) % MOD; // keep it small
+}
+cout << fact << "\\n";</code></pre>
+<p>Even if n is 10<sup>5</sup>, fact never exceeds MOD.</p>
+
+<h2>Handling subtraction and negative results</h2>
+<p>In C++, if you do <code>a % m</code> and a is negative, the result is negative or zero. For instance, <code>-10 % 7</code> is <code>-3</code>. But we want the remainder in [0, m−1] (i.e., 4). So after any subtraction, do:</p>
+<pre><code>int x = (a - b) % MOD;
+if (x < 0) x += MOD;</code></pre>
+<p>This trick guarantees a positive remainder. Always add <code>MOD</code> before modulo when you expect negatives.</p>
+
+<h2>Modular division is different</h2>
+<p>Notice I didn't list division. You can't just divide and take mod. For division, you need <strong>modular inverse</strong>, which we'll cover later under number theory. For now, just know that (a / b) % m is not (a % m) / (b % m). Forget that.</p>
+
+<h2>Common moduli in cp</h2>
+<ul>
+  <li><strong>1,000,000,007 (1e9+7)</strong> – a prime, very common.</li>
+  <li><strong>998,244,353</strong> – another prime, often used.</li>
+  <li><strong>10<sup>9</sup>+9</strong> – also prime.</li>
+  <li><strong>2<sup>64</sup></strong> – using unsigned long long overflow is effectively modulo 2<sup>64</sup> (but technically it's undefined behaviour in signed).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Take modulo after every operation to keep numbers small.</li>
+  <li>(a + b) % m = (a%m + b%m) % m, and same for − and ×.</li>
+  <li>Division is not allowed in modular arithmetic without inverse.</li>
+  <li>Always fix negative mod by adding MOD.</li>
+</ul>
+
+<blockquote>Mastering modular arithmetic turns impossibly large calculations into child's play. Once you internalise the three properties, you'll start sprinkling % MOD everywhere like hot sauce.</blockquote>
+`
 },
 
 
