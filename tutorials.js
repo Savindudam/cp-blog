@@ -253,6 +253,61 @@ freopen("output.txt", "w", stdout);</code></pre>
 
 <blockquote>I/O speed can mean the difference between Accepted and Time Limit Exceded. Always add the two speed-up lines unless you know for sure that scanf/printf is needed.</blockquote>
 `
+},{
+  slug: "cpp-competitive-programming-template",
+  title: "Setting Up a C++ Competitive Programming Template",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-07",
+  excerpt: "The exact code snippet every competive programmer keeps ready at the start of a contest.",
+  tags: ["cpp", "template", "setup"],
+  html: `
+<p>Every second matters in a contest. You don't want to waste time writing boilerplate code. That's where a template comes in. It's a prewritten skeleton that you copypaste at the beginning of each problm and it contains all the includes, typedefs, and speed up tricks you'll need.</p>
+
+<h2>The holy grail template</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+using ll = long long;
+const ll MOD = 1e9+7;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    // your solution code goes here
+    
+    return 0;
+}</code></pre>
+
+<h2>Linebyline explenation</h2>
+<ul>
+  <li><strong>#include &ltbits/stdc++.h&gt</strong>  includes almost the entire standard library. This header is specific to g++ (the compiler used on most judges) and saves you from including dozens of individual headers like <code>iostream</code>, <code>vector</code>, etc.</li>
+  <li><strong>using namespace std;</strong>  lets you write <code>cout</code> instead of <code>std::cout</code>. In competive programming, shorter is always better.</li>
+  <li><strong>using ll = long long;</strong>  gives a short name (<code>ll</code>) to the 64bit integer. Most people also add similar typedefs for <code>vi</code> (vector<int>), <code>pi</code> (pair<int,int>), etc.</li>
+  <li><strong>const ll MOD = 1e9+7;</strong>  the most common Modulo value. You'll use it everywhere.</li>
+  <li><strong>ios::sync_with_stdio(false);</strong>  disconnects C++ streams from C streams, making cin/cout much faster.</li>
+  <li><strong>cin.tie(0);</strong>  unties cin from cout, so that printing something doesn't force a flush of the output buffer before reading.</li>
+</ul>
+
+<h2>Adding your own macros</h2>
+<p>Many programmers add more linesto this template to make loops and pair access shorter:</p>
+<pre><code>#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i &lt= b; i++)</code></pre>
+<p>With these, <code>v.push_back(make_pair(x,y))</code> becomes just <code>v.PB(MP(x,y))</code> and loops become cleaner.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Create your template once and store it somewhere easily accessible.</li>
+  <li>You can even configure your editor to autoinsert it when you create a new file.</li>
+  <li>Don't overcomplicate it  keep it lite and fast to copy.</li>
+</ul>
+
+<blockquote>A good template is like a warmup that gets you into the coding zone instantly. Tune it to your liking and never start a contest without it.</blockquote>
+`
 },
 
 e 
