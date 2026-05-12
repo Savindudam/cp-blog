@@ -647,5 +647,72 @@ while (ss >> x) {
 
 <blockquote>String input can be a source of annoying bugs because invisible newline characters get left in the buffer. Always test your reading logic on a small sample before writing the rest of the solution.</blockquote>
 `
+},{
+  slug: "handling-unknown-amount-of-input",
+  title: "Handling Unknown Amount of Input with while(cin >> x)",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "What to do when you don't know how many numbers or strings the judge will send  the handy while(cin >> x) pattern.",
+  tags: ["input", "cin", "EOF", "loop"],
+  html: `
+<p>Somtimes a problem won't tell you how many test cases or numbers are comming. They just give you a stream of data and expect you to process it all. In C++, the cleanest way to handle this is the <code>while(cin >> x)</code> loop. Let's see how it works and why it's so usefull.</p>
+
+<h2>The basic pattern</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    int x;
+    while (cin >> x) {
+        // do something with x
+        cout << x * 2 << "\\n";
+    }
+    return 0;
+}</code></pre>
+<p>This loop reads integers one by one until there is no more input. Each time <code>cin >> x</code> is evaluated, it returns <em>true</em> if the read succeedded, and <em>false</em> if it failed (because we hit endoffile or the next thing in the input wasn't a number). So the loop stops automaticly when the input runs out.</p>
+
+<h2>How does it know when to stop?</h2>
+<p>Input in cp usually comes from a file (even if it's just standard input). When the judge sends all the data and closes the stream, <code>cin</code> enters an "EOF" state. The next read attempt will set the stream's fail bit, and <code>cin >> x</code> will evaluate to false, ending the loop.</p>
+
+<h2>What if the input has multiple data types?</h2>
+<p>You can read more complex structures inside the loop. For example, reading pairs:</p>
+<pre><code>int a, b;
+while (cin >> a >> b) {
+    cout << a + b << "\\n";
+}</code></pre>
+<p>This reads two integers per iteration. If the input has an odd number of numbers, the last <code>b</code> will fail and the loop will end without processing that incomplete pair. Be aware of that.</p>
+
+<h2>Reading until a specific sentinel value</h2>
+<p>Sometimes the input uses a special value to signal the end (like <code>0</code>). Then you can use a regular loop with a break condition:</p>
+<pre><code>int x;
+while (cin >> x) {
+    if (x == 0) break;
+    // process x
+}</code></pre>
+
+<h2>Reading strings without knowing the count</h2>
+<p>The same pattern works for strings:</p>
+<pre><code>string word;
+while (cin >> word) {
+    // process word
+}</code></pre>
+
+<h2>Mixing with getline</h2>
+<p>If you need to switch from <code>>></code> to <code>getline</code> inside the loop, watch out for leftover newlines. It's often better to read everything with <code>getline</code> and then parse each line with <code>stringstream</code> if you're not sure about the input format.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The condition <code>cin >> variable</code> returns a reference to the stream, which converts to <code>true</code> if the read succeeded, <code>false</code> otherwise.</li>
+  <li>Use this pattern when the number of input elements is unknowen.</li>
+  <li>Be carefull with the order of reads  if one read fails, the subsequent reads in the same condition will also fail.</li>
+</ul>
+
+<blockquote>The <code>while(cin >> x)</code> trick is one of those simple things that makes competive programming so much easier. It frees you from counting input sizes and lets you focus on the actual algorithm.</blockquote>
+`
 },
 ]
