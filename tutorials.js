@@ -998,6 +998,54 @@ int c = a / b * b; // (5/2)*2 = 2*2 = 4, not 5</code></pre>
 
 <blockquote>The overflow trap is subtle because your sample test might pass. Then the judge hits you with a test where numbers are just large enough to overflow. Learn to spot it before it bites.</blockquote>
 `
+},{
+  slug: "long-long-suffix-ll",
+  title: "The long long Suffix LL in C++",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-08",
+  excerpt: "Why you need to put LL after big constant numbers and what happends if you forget.",
+  tags: ["long long", "suffix", "LL", "constants"],
+  html: `
+<p>When you write a huge number literal like <code>1234567899999</code>, the compiler has to decide what type to give it. By default, an integer literal without a suffix is <code>int</code> if it fits, otherwise <code>long</code> or <code>long long</code>. But sometimes you want to force it to be <code>long long</code> to avoid overflow or match a function parameter. The <code>LL</code> suffix does exactly that.</p>
+
+<h2>What does LL stand for?</h2>
+<p><code>LL</code> means <strong>long long</strong>. You can use lowercase <code>ll</code> too, but uppercase is more readable. There's also <code>ULL</code> for <strong>unsigned long long</strong>.</p>
+<pre><code>auto a = 123456789123LL;       // a is long long
+auto b = 123456789123;         // b is int if it fits, but this number is too big, will be long long anyway
+auto c = 1000000 * 1000000;    // both operands int, overflow! Use 1000000LL
+auto d = 0LL;                  // force zero to be long long for type deduction</code></pre>
+
+<h2>When do you need LL?</h2>
+<p>Any time you're doing arithmetic with constants that might exceed <code>int</code> range, slap <code>LL</code> on them. For example, when initialising a large constant:</p>
+<pre><code>const long long MOD = 1000000007LL; // safe
+const long long BIG = 1e18; // 1e18 is double, not integer! Use 1000000000000000000LL</code></pre>
+<p>Also when you want to avoid implicit conversions in expressions with mixed types:</p>
+<pre><code>long long ans = 0;
+for (int i = 0; i < n; i++) {
+    ans += 1LL * arr[i] * (arr[i] - 1) / 2; // 1LL ensures 64bit multiplication
+}</code></pre>
+
+<h2>Without LL: a subtle bug</h2>
+<pre><code>long long x = 60 * 60 * 24 * 365; // 31,536,000, but wait: 60*60*24*365 = 31,536,000 fits in int? Actually 60*60*24*365 = 31,536,000, which fits.
+// But if we increase to 60*60*24*365*100: overflow because intermediate is int.
+long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
+
+<h2>What about ULL?</h2>
+<p>If you need an unsigned 64bit constant, append <code>ULL</code>. For example, when dealing with bitmasks of size 64:</p>
+<pre><code>unsigned long long mask = 1ULL << 63; // correct, because 1 << 63 is undefined for signed 32bit</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>LL</code> tells the compiler: "treat this constant as long long".</li>
+  <li>Use it to prevent overflow in constant expressions.</li>
+  <li>Don't rely on the compiler to promote constants to long long  be explicit.</li>
+  <li>For bitwise operations on 64bit values, use <code>ULL</code>.</li>
+</ul>
+
+<blockquote>The <code>LL</code> suffix is tiny but mighty. Omitting it has caused more midnight debugging sessions than many care to admit. Just develop the habbit of typing it.</blockquote>
+`
 },
 
 
