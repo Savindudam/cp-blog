@@ -308,6 +308,55 @@ int main() {
 
 <blockquote>A good template is like a warmup that gets you into the coding zone instantly. Tune it to your liking and never start a contest without it.</blockquote>
 `
+},{
+  slug: "include-bits-stdcpp",
+  title: "Including the Entire Standard Library with bits/stdc++.h",
+  topic: "Setup & Basics",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-07",
+  excerpt: "Why this single header replaces dozens of separate includes and when you should (and shouldn't) use it.",
+  tags: ["bits/stdc++.h", "includes", "header", "g++"],
+  html: `
+<p>You've probaly seen the line <code>#include &ltbits/stdc++.h&gt</code> in almost every competive programming code. It's not a standard C++ headerit's a <strong>GCC specific</strong> file that includes most of the standard library in one go. Let's talk about why we use it and when it's not a good idea.</p>
+
+<h2>What does bits/stdc++.h do?</h2>
+<p>Normaly, if you want to use <code>vector</code>, you have to write <code>#include &ltvector&gt</code>. For <code>algorithm</code>, <code>#include &ltalgorithm&gt</code>, and so on. With <code>bits/stdc++.h</code>, all of these are included at once because this header itself includes all of them. That saves you a lot of typing and ensures you never forget an include.</p>
+
+<h2>Why competive programmers love it</h2>
+<ul>
+  <li><strong>Speed</strong>  you don't waste time thinking about which headers to include.</li>
+  <li><strong>Simplicity</strong>  one line to rule them all. Your template becomes very short.</li>
+  <li><strong>Portability</strong>  every major online judge (Codeforces, AtCoder, CSES, etc.) uses g++ and supports this header.</li>
+</ul>
+
+<h2>The downside</h2>
+<p>This header includes a massive amount of code, which can slow down compilation a bit. But in competive programs (usually only a few hundred lines) the compilation time is neglegible. The bigger issue is that it's not portable to other compilers like MSVC or Clang without extra setup. However, for CP purposes it's perfectly fine.</p>
+
+<h2>What does it actually include?</h2>
+<p>Althought the exact contents depend on the compiler version, bits/stdc++.h typicaly includes:</p>
+<ul>
+  <li>&ltiostream&,..gt, &ltiomanip&gt, &ltfstream&gt</li>
+  <li>&ltstring&gt, &ltvector&gt, &ltdeque&gt, &ltlist&gt, &ltqueue&gt, &ltstack&gt</li>
+  <li>&ltset&gt, &ltmap&gt, &ltunordered_set&gt, &ltunordered_map&gt</li>
+  <li>&ltalgorithm&gt, &ltnumeric&gt, &ltfunctional&gt</li>
+  <li>&ltbitset&gt, &ltcomplex&gt, &ltrandom&gt</li>
+  <li>and many more...</li>
+</ul>
+<p>Pretty much anything you might need in a cp contest.</p>
+
+<h2>How to get it on your system</h2>
+<p>If you installed g++ (MinGW on Windows, or buildessential on Linux), bits/stdc++.h is already there. You can find it inside the compiler's include directory. In some older compilers it might be missing, but modern ones all have it.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always put this include at the very top of your file.</li>
+  <li>It's a g++ specific trick  don't expect it to work on arbitrary C++ compilers.</li>
+  <li>For production code, it's better to include only what you need to keep compile times low.</li>
+</ul>
+
+<blockquote>When the clock is ticking and you need to write a quick bugfree solution, bits/stdc++.h is your best friend. Just remember it's a cp hack, not a generalpurpose practice.</blockquote>
+`
 },
 
 e 
