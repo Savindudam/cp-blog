@@ -770,4 +770,75 @@ cout << fixed << setprecision(4) << pi << "\\n"; // 3.1416</code></pre>
 <blockquote>Output formatting is one of those things that seems trivial until you get a WA for a missing space. Always doublecheck the required format before submitting.</blockquote>
 `
 },
+
+{
+  slug: "using-scanf-and-printf",
+  title: "Using scanf and printf Fast I/O",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "The oldschool C way of doing input/output that can still be the fastest option for huge datasets.",
+  tags: ["scanf", "printf", "C I/O", "fast"],
+  html: `
+<p>Even though <code>cin</code> and <code>cout</code> can be made fast with the two magic lines, some problems with extreamly large input (millions of numbers) still benefit from <code>scanf</code> and <code>printf</code>. They are also more explicit about types. Let's learn how to use them properly.</p>
+
+<h2>scanf  reading values</h2>
+<p>The function <code>scanf</code> reads from standard input according to a <strong>format string</strong>. You tell it what type of data to expect and where to store it:</p>
+<pre><code>int a, b;
+scanf("%d %d", &a, &b);</code></pre>
+<p>The format string <code>"%d %d"</code> means "two decimal integers possibly separated by whitespace". The <code>&</code> is the addressof operator: <code>scanf</code> needs to know where in memory to put the values. Forgetting the <code>&</code> is a very common bug (but usually not for strings).</p>
+
+<h2>Format specifiers</h2>
+<ul>
+  <li><code>%d</code>  integer (<code>int</code>)</li>
+  <li><code>%lld</code>  long long integer</li>
+  <li><code>%f</code>  float</li>
+  <li><code>%lf</code>  double</li>
+  <li><code>%c</code>  single character</li>
+  <li><code>%s</code>  Cstyle string (char array); stops at whitespace</li>
+  <li><code>%x</code>  hexadecimal integer</li>
+</ul>
+<p>For <code>string</code> objects you can't use <code>%s</code> directly because <code>string</code> isn't a C array. Use <code>cin</code> for strings or read into a <code>char</code> buffer.</p>
+
+<h2>printf  printing values</h2>
+<p><code>printf</code> uses the same format specifiers but without the <code>&</code>:</p>
+<pre><code>int x = 42;
+long long big = 123456789LL;
+printf("x = %d, big = %lld\\n", x, big);</code></pre>
+<p>You can also control precision:</p>
+<pre><code>double pi = 3.14159;
+printf("%.2f\\n", pi); // 3.14</code></pre>
+
+<h2>Speed comparison</h2>
+<p>When reading or writing millions of numbers, <code>scanf</code>/<code>printf</code> can be slightly faster than <code>cin</code>/<code>cout</code> even with syncing disabled, because they have less overhead. However, for most problems the difference is negligible. Use what you are more comfortable with, but don't forget that mixing them after disabling sync is dangerous.</p>
+
+<h2>Common pitfalls</h2>
+<ul>
+  <li>Forgetting the <code>&</code> before nonpointer variables  segfault or garbge values.</li>
+  <li>Using the wrong format specifier (e.g., <code>%d</code> for <code>long long</code>)  undefined behavour.</li>
+  <li>Leaving whitespace in the format string that doesn't match the input exactly. But <code>%d</code> and others automaticly skip leading whitespace, so it's generally safe.</li>
+</ul>
+
+<h2>Reading a full line with fgets</h2>
+<p>If you need a whole line using C functions, you can use <code>fgets</code> on <code>stdin</code>, but it's more involved. In cp, getline(cin, str) is usually easier.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use <code>%d</code> for int, <code>%lld</code> for long long, <code>%lf</code> for double.</li>
+  <li>Always pass the address of variables to <code>scanf</code> (except strings/arrays).</li>
+  <li>Don't mix <code>scanf</code>/<code>printf</code> with fast <code>cin</code>/<code>cout</code> unless you know what you're doing.</li>
+</ul>
+
+<blockquote><code>scanf</code> and <code>printf</code> have been around for decades and they aren't going anywhere. Knowing them can save you when you hit a monstrous input file.</blockquote>
+`
+},
+
+
+
+
+
+
+
+
 ]
