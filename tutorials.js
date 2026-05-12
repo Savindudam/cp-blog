@@ -948,6 +948,56 @@ cout << LLONG_MAX << "\\n";    // 9223372036854775807</code></pre>
 
 <blockquote>Understanding integer ranges is like knowing the speed limit. You can drive an int on a small road, but on the autobahn of cp, you better have a long long.</blockquote>
 `
+},{
+  slug: "avoiding-overflow-multiplying-ints",
+  title: "Avoiding Overflow When Multiplying ints",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "The classic mistake: multiplying two ints and getting a wrong result even though you store it in a long long.",
+  tags: ["overflow", "multiplication", "int", "long long", "casting"],
+  html: `
+<p>This is probaly the number one bug that beginners hit. You wright a line like <code>long long result = a * a</code>, both a and a are ints, and the answer comes out completly garbled. Why? Because the multiplication happens <strong>before</strong> the assignment to <code>long long</strong>. Let's pick apart this sneaky pitfall.</p>
+
+<h2>The exact problem</h2>
+<pre><code>int a = 100000;
+long long b = a * a;
+cout << b << "\\n"; // you'd expect 10,000,000,000, but... SURPRISE!</code></pre>
+<p>What actually happens: the compiler sees <code>a * a</code> where both operands are <code>int</code>. So it performs a 32bit multiplication. The result is larger than 2.1 billion, so it overflows inside the <code>int</code> range, wraps around to some garbage value (maybe negative), and <em>then</em> that garbage is assigned to the <code>long long b</code>. The damage is already done.</p>
+
+<h2>How to fix it</h2>
+<p>You need to tell the compiler to perform the multiplication in 64bit space. The easiest way is to cast one of the operands to <code>long long</code>:</p>
+<pre><code>int a = 100000;
+long long b = (long long)a * a; // works correctly now</code></pre>
+<p>Or you can declare the variable as <code>long long</code> from the start:</p>
+<pre><code>long long a = 100000;
+long long b = a * a; // fine</code></pre>
+<p>Some people use a suffix <code>1LL</code> to force a constant into long long:</p>
+<pre><code>long long b = 1LL * a * a; // the 1LL ensures the whole expression is long long</code></pre>
+
+<h2>The same bug in other contexts</h2>
+<p>This issue isn't limited to multiplication. Similar problems can occur with <code>pow()</code>  which returns a <code>double</code>, not an integer. Or when mixing signed and unsigned types  the result can implicitly convert in suprising ways.</p>
+<p>Also, watch out for division before multiplication. Since integer division truncates, the order matters:</p>
+<pre><code>int a = 5, b = 2;
+int c = a / b * b; // (5/2)*2 = 2*2 = 4, not 5</code></pre>
+
+<h2>Using macros to prevent overflow</h2>
+<p>Some cp'ers define a macro to make sure they never forget:</p>
+<pre><code>#define int long long
+// now everything is 64bit, but careful: you may get MLE if you use large arrays</code></pre>
+<p>But this is a sledgehammer approach. It's better to be aware and explicit.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>In C++, the type of an expression is determined by the types of its operands, not by the type where the result is stored.</li>
+  <li>Always cast at least one operand to <code>long long</code> before doing multiplication if there's any chance of overflow.</li>
+  <li>Use <code>1LL * a * b</code> as a foolproof pattern.</li>
+  <li>Compiler warnings (<code>-Wall</code>) may catch some overflow cases, but not all.</li>
+</ul>
+
+<blockquote>The overflow trap is subtle because your sample test might pass. Then the judge hits you with a test where numbers are just large enough to overflow. Learn to spot it before it bites.</blockquote>
+`
 },
 
 
