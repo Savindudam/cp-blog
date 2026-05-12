@@ -1046,6 +1046,59 @@ long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
 
 <blockquote>The <code>LL</code> suffix is tiny but mighty. Omitting it has caused more midnight debugging sessions than many care to admit. Just develop the habbit of typing it.</blockquote>
 `
+},{
+  slug: "introduction-to-int128",
+  title: "Introduction to the __int128_t Type",
+  topic: "Numbers in C++",
+  difficulty: "Medium",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "When even long long is not enough  the mysterious 128bit integer type available in g++.",
+  tags: ["__int128", "128-bit", "large integers", "g++"],
+  html: `
+<p>Every once in a while you encounter a problem where the numbers are just obscenely huge  like 100-digit integers, or intermediate results bigger than 10<sup>18</sup>. <code>long long</code> tops out around 910<sup>18</sup>. But the g++ compiler offers a 128bit type, <code>__int128_t</code>, that can handle values up to about 10<sup>38</sup>. That's 170 undecillion  a number with 39 digits!</p>
+
+<h2>What is __int128_t?</h2>
+<p>It's a signed integer type that uses 128 bits of storage. The range is approximately:</p>
+<pre><code>170,141,183,460,469,231,731,687,303,715,884,105,728
+ to
+ 170,141,183,460,469,231,731,687,303,715,884,105,727</code></pre>
+<p>That's roughly 1.710<sup>38</sup> to 1.710<sup>38</sup>. Pretty huge. There's also <code>__uint128_t</code> for the unsigned version.</p>
+
+<h2>But it's not part of the C++ standard</h2>
+<p><code>__int128_t</code> is a <strong>compiler extension</strong> specific to g++ (and some versions of Clang). It's not guaranteed to work on all judges, especialy older ones or those using different compilers. However, most modern cp platforms (Codeforces, AtCoder) use g++ and support it. Still, use it sparingly.</p>
+
+<h2>Printing and reading __int128_t</h2>
+<p>Here's the catch: the standard I/O streams (<code>cin</code>/<code>cout</code>) don't know how to handle <code>__int128_t</code> directly. If you try to print one, you'll get a compile error. You need to write a helper function:</p>
+<pre><code>void print(__int128_t x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) print(x / 10);
+    putchar(x % 10 + '0');
+}</code></pre>
+<p>And to read, you'll likely read a string and parse it manualy. That's why many avoid <code>__int128</code> entirely and prefer using Python for problems needing gigantic integers.</p>
+
+<h2>When is it really needed?</h2>
+<p>Honestly, rarely. Most cp problems are designed so that <code>long long</code> suffices. But sometimes intermediate products during combinatorics or number theory can burst over <code>long long</code>. For example, multiplying two numbers around 10<sup>9</sup> gives 10<sup>18</sup>, which fits. But multiplying three such numbers overflows. If you need the exact integer without modulo for a comparison, <code>__int128</code> saves you.</p>
+
+<h2>Example: safe multiplication overflow check</h2>
+<pre><code>bool will_multiply_overflow(long long a, long long b) {
+    __int128_t res = (__int128_t)a * b;
+    return res > LLONG_MAX || res < LLONG_MIN;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>__int128_t</code> is g++ specific  not standard C++.</li>
+  <li>You can't use <code>cin</code>/<code>cout</code> with it directly; write your own print function.</li>
+  <li>Only use it when <code>long long</code> is genuinely insufficient.</li>
+  <li>Keep a fallback solution using strings or Python if the judge doesn't support it.</li>
+</ul>
+
+<blockquote>Think of <code>__int128_t</code> as the nuclear option. It's there if you need it, but with great power comes great responsibility  and a bit of inconvenience.</blockquote>
+`
 },
 
 
