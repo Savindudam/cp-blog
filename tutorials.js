@@ -832,6 +832,72 @@ printf("%.2f\\n", pi); // 3.14</code></pre>
 
 <blockquote><code>scanf</code> and <code>printf</code> have been around for decades and they aren't going anywhere. Knowing them can save you when you hit a monstrous input file.</blockquote>
 `
+},{
+  slug: "file-io-freopen-for-cp",
+  title: "File I/O: freopen for Competitive Programming",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How to redirect standard input/output to files using freopen  a required trick for some oldschool judges.",
+  tags: ["freopen", "file", "input", "output"],
+  html: `
+<p>In 99% of modern cp platforms you just read from standard input and write to standard output. But some older judges, or specific contests like USACO, require you to read from an input file and write to an output file. Instead of rewriting your I/O code, you can simply redirect <code>cin</code> and <code>cout</code> to files using <code>freopen</code>.</p>
+
+<h2>The magic lines</h2>
+<pre><code>freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);</code></pre>
+<p>Put these at the very beginning of <code>main()</code>, before any I/O. After that, every <code>cin</code> reads from <code>input.txt</code> and every <code>cout</code> writes to <code>output.txt</code>  just as if they were the terminal. You don't need to change any other part of your code.</p>
+
+<h2>What do the arguments mean?</h2>
+<ul>
+  <li><strong>First argument:</strong> the filename (a Cstyle string).</li>
+  <li><strong>Second argument:</strong> the mode. <code>"r"</code> = read mode, <code>"w"</code> = write mode (creates or overwrites the file), <code>"a"</code> = append mode.</li>
+  <li><strong>Third argument:</strong> the stream to redirect. <code>stdin</code> is standard input, <code>stdout</code> is standard output. The function returns <code>FILE*</code> which you can store if you need to close the file later, but for cp you usually don't need to.</li>
+</ul>
+
+<h2>Example</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+    
+    int n;
+    cin >> n;
+    vector&ltint&gt arr(n);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+    
+    // ... solve the problem ...
+    
+    cout << "Result: " << ans << "\\n";
+    return 0;
+}</code></pre>
+<p>The program reads from <code>in.txt</code> and writes to <code>out.txt</code> without a single change to the logic.</p>
+
+<h2>When to use file I/O vs standard I/O</h2>
+<p>Modern platforms (Codeforces, AtCoder, CSES) use standard I/O, so you can ignore <code>freopen</code> entirely. But if you're practicing old USACO problems or some regional contests, you'll need it. Check the problem statement: if it says "Input: file" or gives filenames like "gift.in", you must use files.</p>
+
+<h2>Using ifstream and ofstream as an alternative</h2>
+<p>Instead of redirecting standard streams, you can create your own file stream objects:</p>
+<pre><code>ifstream fin("input.txt");
+ofstream fout("output.txt");
+int x;
+fin >> x;
+fout << x * 2 << "\\n";</code></pre>
+<p>This is more objectoriented, but it means you have to replace every <code>cin</code>/<code>cout</code> with <code>fin</code>/<code>fout</code> in your code. <code>freopen</code> is less work because you don't need to findandreplace anything.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always place <code>freopen</code> before any I/O.</li>
+  <li>The file must exist (for reading) or be created (for writing) in the working directory.</li>
+  <li>On some systems, you may need to give the full path to the file if the judge doesn't use the current folder.</li>
+  <li>Don't forget to remove or comment out <code>freopen</code> when submitting to a standard I/O judge.</li>
+</ul>
+
+<blockquote>File I/O might seem oldfashioned, but it's a necessary evil for a few contests. <code>freopen</code> makes the transition painless  two lines and you're done.</blockquote>
+`
 },
 
 
