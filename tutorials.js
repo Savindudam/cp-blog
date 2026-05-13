@@ -1660,6 +1660,53 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 <blockquote>The harmonic series is a sneaky one  it looks like it might diverge quickly, but it's actualy a logaritmik crawler. Knowing its bound turns O(n * H(n)) into the familiar O(n log n).</blockquote>
 `
 },
+{
+  slug: "set-theory-for-competitive-programmers",
+  title: "Set Theory for Competitive Programmers",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-09",
+  excerpt: "The basic language of sets  a mustknow for reading problem statments and undrestanding algorithms.",
+  tags: ["sets", "set theory", "notation", "math", "basics"],
+  html: `
+<p>Before you can master <code>std::set</code> or bitmasks, you need to speak the language of sets. It's the foundaton for describing collections, subsets, and operations that appear in countless cp problems.</p>
+
+<h2>What is a set?</h2>
+<p>A set is a <strong>collecton of distinct elements</strong>. The order doesn't matter, and duplicates are ignored. For example, X = {2, 4, 7} is a set with three elements. The symble <code></code> or <code>{}</code> stands for the empty set.</p>
+<p>The notation <code>x  S</code> means "x is an element of S". If x is not in S, we write <code>x  S</code>.</p>
+
+<h2>Size (cardinallity)</h2>
+<p>The number of elements in a set S is denotd by <code>|S|</code>. So |{2,4,7}| = 3.</p>
+
+<h2>Subsets</h2>
+<p>A set A is a <strong>subset</strong> of B if every element of A is also in B. We write <code>A  B</code>. For example, {2,4}  {2,4,7}. The empty set is a subset of every set.</p>
+<p>Every set has itself as a subset. A <strong>proper</strong> subset is one that's strictly smaller, denotd <code>A  B</code>.</p>
+
+<h2>Important number sets</h2>
+<ul>
+  <li><strong></strong>  natural numbers (usualy 0,1,2,... or sometimes starting from 1).</li>
+  <li><strong></strong>  integers (... -2, -1, 0, 1, 2 ...).</li>
+  <li><strong></strong>  rational numbers (fractions).</li>
+  <li><strong></strong>  real numbers (includng , 2).</li>
+</ul>
+<p>You'll see these in problem statments, especialy in mathheavy tasks. They just describe the universal set from which elements are drawn.</p>
+
+<h2>Why sets matter in cp</h2>
+<p>Sets underpin many algorithms: graph nodes, visited states, DP subsets, and the <code>set</code> container itself. Knowing set notaton helps you read editorals and write clean reasoning.</p>
+<p>Plus, the fact that a set with n elements has exactly <strong>2<sup>n</sup></strong> subsets is a cornerstone of bruteforce and bitmask DP. We'll cover that in the next tutorial.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>A set is a collection of distinct, unordered elements.</li>
+  <li><code>|S|</code> gives size, <code></code> is empty.</li>
+  <li><code></code> means "belongs to", <code></code> means subset.</li>
+  <li>Common number sets: , , , .</li>
+</ul>
+
+<blockquote>Think of a set as a bag of unique stuff. Once you're comfotable with the notation, the rest of combinatorics becomes way easier.</blockquote>
+`
+},
 
 
 
