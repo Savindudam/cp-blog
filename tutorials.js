@@ -1499,6 +1499,65 @@ mivs m; // much shorter than the full type</code></pre>
 
 <blockquote>Shorter code is not just about laziness  it reduces visual clutter, making the logic easier to see. Start with <code>typedef long long ll;</code> and you've already improved your coding speed by 10%.</blockquote>
 `
+},{
+  slug: "defining-macros-with-define-in-cpp",
+  title: "Defining Macros with #define in C++",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-08",
+  excerpt: "How to use #define to create shortcuts, constants, and minifunctions  a powerfull but dangerous tool.",
+  tags: ["macros", "define", "preprocessor", "shorten"],
+  html: `
+<p>After <code>typedef</code>, the next weapon in the codeshortening arsenal is <code>#define</code>. This is a preprocessor directive that does text substitution before the compiler even sees your code. It can make loops, pair accesses, and common operations much shorter  but it can also cause nasty bugs if not used carefully.</p>
+
+<h2>How #define works</h2>
+<p>The compiler runs a "preprocessor" that scans your code and replaces every occurrence of the macro with its definition. It's pure textual substitution  no type checking, no scope, no safety.</p>
+<pre><code>#define MAX 100000
+int arr[MAX]; // becomes int arr[100000]; after preprocessing</code></pre>
+
+<h2>Simple constant macros</h2>
+<pre><code>#define MOD 1000000007
+#define PI 3.14159265358979
+#define INF 1e18</code></pre>
+<p>Now you can write <code>result % MOD</code> instead of <code>result % 1000000007</code>. Magic numbers become named, which also helps readability.</p>
+
+<h2>Functionlike macros</h2>
+<pre><code>#define SQ(x) (x)*(x)
+cout << SQ(5) << "\\n"; // 25</code></pre>
+<p>But beware! Because it's textual substitution, <code>SQ(3+2)</code> becomes <code>(3+2)*(3+2)</code> which is correct. But if you wrote the macro without parentheses around the parameters, disaster:</p>
+<pre><code>#define BAD_SQ(x) x*x
+cout << BAD_SQ(3+2) << "\\n"; // becomes 3+2*3+2 = 3+6+2 = 11, NOT 25!</code></pre>
+<p>Always wrap macro parameters and the entire macro expression in parentheses.</p>
+
+<h2>Macros for loops</h2>
+<p>A classic loop macro:</p>
+<pre><code>#define FOR(i, n) for (int i = 0; i < n; i++)
+FOR(i, 10) {
+    cout << i << " ";
+}</code></pre>
+<p>This cuts down typing alot. We'll cover more loop macros in a later tutorial.</p>
+
+<h2>Risks of macros</h2>
+<ul>
+  <li>They ignore scope  can conflict with variable names.</li>
+  <li>They have no type checking  passing wrong types leads to confusing errors.</li>
+  <li>Multiple evaluation: if a macro repeats an argument, like <code>#define MAX(a,b) ((a)>(b)?(a):(b))</code>, calling <code>MAX(x++, y++)</code> will increment x or y twice!</li>
+</ul>
+
+<h2>When to use macros in cp</h2>
+<p>Use them for simple constants, short loop abbreviations, and pair member access shortcuts (like <code>F</code> for <code>first</code>). Avoid overly complex macros that act like functions  inline functions or <code>auto</code> lambdas are safer and just as fast.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Macros are text substitution  they don't know C++.</li>
+  <li>Always wrap parameters in parentheses: <code>#define F(x) ((x)*(x))</code>.</li>
+  <li>They can lead to double evaluation bugs.</li>
+  <li>Use sparingly; not every shortcut is worth the risk.</li>
+</ul>
+
+<blockquote>Macros are like a sharp knife: incredibly usefull when handled correctly, but easy to cut yourself. Once you've been bitten by a missing parenthesis, you'll never forget it.</blockquote>
+`
 },
 
 
