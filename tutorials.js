@@ -1313,6 +1313,51 @@ if (r < 0) r += MOD;</code></pre>
 
 <blockquote>Floats are like that friend who's always "around there" but never exact. Learn to live with their imprecision and they'll serve you well in geometry and probability problems.</blockquote>
 `
+},{
+  slug: "printing-floats-printf-precision",
+  title: "Printing Floats with printf Precision",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How to output decimal numbers with exactly the right number of decimal places  because the judge cares about that a lot.",
+  tags: ["printf"precision", "double", "output"],
+  html: `
+<p>When the problem says "print the answer with exactly 6 decimal places", they mean it. A missing zero at the end can get you Wrong Answer. Let's learn to format floating point output like a pro.</p>
+
+<h2>The printf way (clean and controlable)</h2>
+<pre><code>double pi = 3.14159265358979;
+printf("%.2f\\n", pi);  // 3.14
+printf("%.6f\\n", pi);  // 3.141593 (rounded!)
+printf("%.10f\\n", pi); // 3.1415926536</code></pre>
+<p>The format specifier <code>%.nf</code> means: print with n digits after the decimal point. It will round the last digit automatically.</p>
+
+<h2>Printing with cout</h2>
+<p>If you prefer <code>cout</code>, you'll need a couple of manipulators:</p>
+<pre><code>#include &ltiomanip&gt // but bits/stdc++.h already includes it
+double pi = 3.14159265358979;
+cout << fixed << setprecision(6) << pi << "\\n"; // 3.141593</code></pre>
+<p><code>fixed</code> forces the number to be printed in normal decimal notation (not scientific). <code>setprecision(n)</code> sets the number of digits after the decimal.</p>
+
+<h2>Avoid scientific notation</h2>
+<p>Without <code>fixed</code>, large or small numbers might be printed in scientific notation like <code>1.23e+10</code>, which the judge won't accept. Always use <code>fixed</code> when the output format says decimal places.</p>
+
+<h2>Precision for long double</h2>
+<p>For <code>long double</code>, <code>printf</code> uses <code>"%Lf"</code> with the same precision specifier: <code>printf("%.9Lf\\n", ldpi);</code>. For <code>cout</code>, <code>setprecision</code> works the same way; just make sure the variable is <code>long double</code>.</p>
+
+<h2>Rounding behaviour</h2>
+<p>Both <code>printf</code> and <code>cout</code> use "round half to even" (banker's rounding) by default. So 2.5 might round to 2, not 3, in some cases. If you absolutley need a specific rounding direction, you'll need additional logic. But for most problems, the default rounding is fine.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always match the output format exactly  including trailing zeros.</li>
+  <li>Use <code>printf("%.Nf")</code> or <code>cout << fixed << setprecision(N)</code>.</li>
+  <li>Add <code>fixed</code> to cout to disable scientific notation.</li>
+  <li>Precision refers to digits <em>after</em> the decimal point, not total significant digits.</li>
+</ul>
+
+<blockquote>The judge doesn't care that 3.14 and 3.140000 are the same number mathematically  if they ask for 6 decimals and you give 2, you lose. Precision printing is nonnegotiable.</blockquote>
+`
 },
 
 
