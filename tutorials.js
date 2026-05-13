@@ -1927,6 +1927,66 @@ cout << ceil(-3.2) << "\\n"; // -3</code></pre>
 
 <blockquote>These little functions are the salt and pepper of cp code. Sprinkle them liberally, but don't let floating point errors ruin the dish.</blockquote>
 `
+},{
+  slug: "factorial-function-iterative-recursive",
+  title: "Factorial Function: Iterative and Recursive Definitions",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-09",
+  excerpt: "Two ways to compute n!  the simple loop and the elegant recursion  and why one is much faster.",
+  tags: ["factorial", "recursion", "iterative", "math"],
+  html: `
+<p>The factorial of n, writen <code>n!</code>, is the product of all positive integers up to n. It's a fundemental building block in combinatorics. You can define it iterativly or recursivly, and both are worth knowing.</p>
+
+<h2>The definions</h2>
+<p>Formally:</p>
+<pre><code>0! = 1
+n! = n  (n-1)!   for n > 0</code></pre>
+<p>Also expressed as a product: <code>n! = 1  2  3  ...  n</code>.</p>
+
+<h2>Iterative version (loop)</h2>
+<p>This is the most common in cp because it's fast and uses O(1) extra memory (besides the variable).</p>
+<pre><code>long long fact(int n) {
+    long long res = 1;
+    for (int i = 2; i <= n; i++) {
+        res *= i;
+    }
+    return res;
+}</code></pre>
+<p>It runs in O(n) time. For n up to 20, it fits in <code>long long</code>. Beyond that, you need modulo.</p>
+
+<h2>Recursive version</h2>
+<p>Directly from the definition:</p>
+<pre><code>long long fact_rec(int n) {
+    if (n == 0) return 1;
+    return n * fact_rec(n - 1);
+}</code></pre>
+<p>This is elegant but uses O(n) stack space and can be slower due to function call overhead. It's a classic example of recursion, though you'll rarley use it in cp for factorials.</p>
+
+<h2>Why recursion can be dangerus</h2>
+<p>For n around 10<sup>5</sup>, the recursive version will cause a stack overflow because each call adds a new stack frame. The iterative version runs fine. In general, prefer iteration when the recursion depth can be large.</p>
+
+<h2>Modular factorial</h2>
+<p>Since factorials explode, you usually compute them modulo some big prime M. Just multiply and take <code>% M</code> each step:</p>
+<pre><code>long long fact_mod(int n, long long MOD) {
+    long long res = 1;
+    for (int i = 2; i <= n; i++) {
+        res = (res * i) % MOD;
+    }
+    return res;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>0! = 1 (by convention).</li>
+  <li>Iterative factorial is O(n) and uses O(1) memory.</li>
+  <li>Recursive factorial is O(n) but uses O(n) stack; avoid for large n.</li>
+  <li>Always use modulo when n > 20 or so.</li>
+</ul>
+
+<blockquote>Factorials are the gateway drug to combinatorics. Once you can compute them efficently, combinations, permutations, and a whole world of counting problems become accessible.</blockquote>
+`
 },
 
 
