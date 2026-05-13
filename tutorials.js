@@ -1269,6 +1269,50 @@ if (r < 0) r += MOD;</code></pre>
 
 <blockquote>C++s modulo operator is like a mischievous gremlin. Feed it negative numbers and it bites. Tame it with that simple <code>if</code> statement and sleep soundly.</blockquote>
 `
+},{
+  slug: "floating-point-numbers-double-long-double",
+  title: "Floating Point Numbers: double vs long double",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-08",
+  excerpt: "Understanding how decimals are stored in C++, the difference between float, double, and long double, and when to use each.",
+  tags: ["floating point", "double", "long double", "precision"],
+  html: `
+<p>Not every number is a nice integer. For geometry, probability, or physics problems, you need decimal numbers. C++ provides several floating point types, and picking the right one can be the difference between a correct answer and a precision error.</p>
+
+<h2>The three musketeers</h2>
+<ul>
+  <li><strong>float</strong>  32bit, about 7 decimal digits of precision. Almost never used in cp; it's too imprecise.</li>
+  <li><strong>double</strong>  64bit, about 1516 decimal digits of precision. The standard choice. All the maths functions (<code>sqrt</code>, <code>sin</code>, etc.) work with <code>double</code>.</li>
+  <li><strong>long double</strong>  80bit (on g++), about 1819 decimal digits. Slightly more precise but slower, and not all judges support it uniformly. Use only if you really need the extra bits.</li>
+</ul>
+
+<h2>Why not just use long double always?</h2>
+<p>Because it may be emulated in software on some platforms, making it slower. Also, printing it might need different format specifiers (<code>%Lf</code> in C). Most of the time, <code>double</code> is enough.</p>
+
+<h2>Precision is not the same as accuracy</h2>
+<p>A <code>double</code> can hold huge numbers (up to 10<sup>308</sup>) but only about 15 significant digits. That means if you have a number like 12345678901234567890, double will store it approximatly as 1.2345678901234567e19, losing the last few digits. For cp, as long as you compare with epsilon or print with limited precision, it's fine.</p>
+
+<h2>Common pitfalls</h2>
+<ul>
+  <li>Never use <code>==</code> to compare two floating point numbers. Use an epsilon comparison.</li>
+  <li>Be aware that some decimal values cannot be represented exactly in binary (like 0.1). Tiny errors accumulate.</li>
+  <li>Input reading: <code>cin</code> handles <code>double</code> fine; <code>scanf("%lf")</code> for double, <code>scanf("%Lf")</code> for long double.</li>
+</ul>
+
+<h2>When to use double vs integer</h2>
+<p>If the problem involves decimals at any point, use <code>double</code>. But if the problem asks for integer results (like counting something modulo a prime), stick to integers. Mixing them can cause subtle bugs.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Default choice: <code>double</code>.</li>
+  <li>Use <code>long double</code> only if you need extreme precision and know the judge supports it.</li>
+  <li>Floating point numbers sacrifice perfect accuracy for huge range  treat them with care.</li>
+</ul>
+
+<blockquote>Floats are like that friend who's always "around there" but never exact. Learn to live with their imprecision and they'll serve you well in geometry and probability problems.</blockquote>
+`
 },
 
 
