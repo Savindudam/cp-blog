@@ -1099,7 +1099,7 @@ long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
 
 <blockquote>Think of <code>__int128_t</code> as the nuclear option. It's there if you need it, but with great power comes great responsibility  and a bit of inconvenience.</blockquote>
 `
-}
+},
 {
   slug: "modular-arithmetic-basics-properties",
   title: "Modular Arithmetic: Basics and Properties",
@@ -1160,6 +1160,63 @@ if (x < 0) x += MOD;</code></pre>
 </ul>
 
 <blockquote>Mastering modular arithmetic turns impossibly large calculations into child's play. Once you internalise the three properties, you'll start sprinkling % MOD everywhere like hot sauce.</blockquote>
+`
+},
+
+{
+  slug: "calculating-factorials-modulo-m",
+  title: "Calculating Factorials Modulo m",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "How to compute n! modulo a big prime without overflowing, using the modular trick you already know.",
+  tags: ["factorial", "modulo", "big numbers", "math"],
+  html: `
+<p>Factorials grow incredibly fast. 10! is 3.6 million, 20! is 2.410<sup>18</sup>  already pushing the limits of a 64bit integer. 100! is astronomically huge. If you need to compute n! modulo some number m, you can't just compute n! first and then modulo. You have to modulo at every single multiplication step. Let's see how.</p>
+
+<h2>The base case</h2>
+<p>By definition, 0! = 1, and 1! = 1. So we start <code>long long fact = 1;</code>. Then loop from 2 up to n, multiplying and modding each iteration.</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    const long long MOD = 1000000007;
+    long long fact = 1;
+    for (int i = 2; i <= n; i++) {
+        fact = (fact * i) % MOD;
+    }
+    cout << fact << "\\n";
+    return 0;
+}</code></pre>
+<p>That's it. Every time we multiply, the result is taken modulo <code>MOD</code>, so <code>fact</code> never exceeds <code>MOD-1</code>. Even for n = 10<sup>6</sup>, this loop runs fine.</p>
+
+<h2>Why not compute n! first then % MOD?</h2>
+<p>Because n! would have thousands of digits. C++ can't hold that. Even Python would struggle with memory and time for extremely large n. The iterative modulo approach keeps numbers small and fast.</p>
+
+<h2>Precomputing factorials for many queries</h2>
+<p>If your problem asks for factorial of different numbers multiple times, precompute an array <code>fact[0..MAX]</code> once and answer each query in O(1):</p>
+<pre><code>const int MAX = 200000;
+long long fact[MAX+1];
+fact[0] = 1;
+for (int i = 1; i <= MAX; i++) {
+    fact[i] = (fact[i-1] * i) % MOD;
+}
+// later: cout << fact[query] << "\\n";</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>0! = 1, not 0.</li>
+  <li>Use <code>long long</code> for intermediate product to avoid overflow before modulo.</li>
+  <li>Take <code>% MOD</code> after every multiplication, not only at the end.</li>
+  <li>Precompute if you need many factorial values  it's O(MAX) once, O(1) per query.</li>
+</ul>
+
+<blockquote>Factorials are a building block for combinatorics, DP, and probability. Mastering the modular version early will pay off tenfold later.</blockquote>
 `
 },
 
