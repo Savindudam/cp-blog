@@ -1987,6 +1987,66 @@ n! = n  (n-1)!   for n > 0</code></pre>
 
 <blockquote>Factorials are the gateway drug to combinatorics. Once you can compute them efficently, combinations, permutations, and a whole world of counting problems become accessible.</blockquote>
 `
+},{
+  slug: "fibonacci-numbers-recursive-binet",
+  title: "Fibonacci Numbers: Recursive and Closed-Form (Binet)",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-09",
+  excerpt: "The famous Fibonacci sequence  how to compute it quickly with loops, and the surprizing closedform formula.",
+  tags: ["fibonacci", "recursion", "Binet", "closed form", "math"],
+  html: `
+<p>The Fibonacci numbers are one of the most famous sequences in math. They appear in nature, art, and... competive programming. Learn them well.</p>
+
+<h2>The sequence</h2>
+<pre><code>F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2)  for n > 1</code></pre>
+<p>The first few are: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...</p>
+
+<h2>Recursive (naive) approach</h2>
+<p>Directly translating the definition into recursion leads to exponental time O(2<sup>n</sup>).</p>
+<pre><code>int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}</code></pre>
+<p>This is terrible for n > 30; it recomputes the same values millions of times. Never use this in cp unless n is tiny.</p>
+
+<h2>Iterative (loop)  O(n) time, O(1) space</h2>
+<p>The efficient way:</p>
+<pre><code>long long fib(int n) {
+    if (n == 0) return 0;
+    long long a = 0, b = 1;
+    for (int i = 2; i <= n; i++) {
+        long long c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}</code></pre>
+<p>This runs quickly and gives exact results up to n  92, beyond which <code>long long</code> overflows.</p>
+
+<h2>Binet's closedform formula</h2>
+<p>Astonishingly, there is an exact formula using the golden ratio :</p>
+<pre><code>F(n) = (^n - ^n) / 5
+where  = (1+5)/2  1.618,  = (1-5)/2  -0.618</code></pre>
+<p> is the golden ratio,  is its negative recprocal. Since || < 1, ^n becomes negligibale for large n, so F(n)  ^n / 5 (rounded to the nearest integer). This gives an O(1) approximation, but floating point errors make it unrelyable for larger n. In cp, stick to the iterative method or use matrix exponentiation for O(log n) (which we'll cover later).</p>
+
+<h2>Modular Fibonacci</h2>
+<p>Fibonaci numbers grow so fast that they're often computed modulo something. In the iterative method, just do <code>c = (a + b) % MOD</code>. That's enough for most problems.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Fibonacci is defined by F(0)=0, F(1)=1, F(n)=F(n-1)+F(n-2).</li>
+  <li>Naive recursion is O(2^n)  avoid it.</li>
+  <li>Iterative loop is O(n) and very simple.</li>
+  <li>Binet's formula is cool but not practical for large n due to precision.</li>
+  <li>Use modulo for large Fibonacci numbers.</li>
+</ul>
+
+<blockquote>Fibonacci numbers are like the hello world of dynamic programming. They teach you how to go from a simple recursive formula to an efficent iterative solution.</blockquote>
+`
 },
 
 
