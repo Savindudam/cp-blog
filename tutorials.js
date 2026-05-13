@@ -1618,6 +1618,47 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>Some say these macros are ugly. I say they're beautiful. In the heat of a contest, every saved character brings you closer to the finish line.</blockquote>
 `
+},{
+  slug: "harmonic-sum-upper-bound-log2",
+  title: "Harmonic Sum Upper Bound with log2",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-09",
+  excerpt: "How the harmonic series 1 + 1/2 + 1/3 + ... + 1/n grows, and why its upper bound is log2(n) + 1.",
+  tags: ["harmonic sum", "logarithm", "upper bound", "analysis"],
+  html: `
+<p>The harmonik sum is one of those things that pops up when you're anaylzing algoritms  especialy nested loops that run n/1 + n/2 + n/3 + ... times. Let's understand how it behaves and what bound we can use for it.</p>
+
+<h2>What is the harmonic sum?</h2>
+<p>It's the sum of recopricals of the first n integers:</p>
+<pre><code>H(n) = 1 + 1/2 + 1/3 + 1/4 + ... + 1/n</code></pre>
+<p>It grows very slowly  even for n = 10<sup>9</sup>, H(n) is only about 21. So it's a very slowgrowng function, much slower than log n itself.</p>
+
+<h2>The upper bound: log(n) + 1</h2>
+<p>We can aproximate H(n) by grouping terms by powers of two. The trick is to round each denomintor down to the neerest power of two that doesn't exceed it. For example, for n = 6:</p>
+<pre><code>1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6
+ 1 + 1/2 + 1/2 + 1/4 + 1/4 + 1/4</code></pre>
+<p>Now, each group has a certain number of terms: the 1's? Actually we start with 1 (which is  1), then 1/2 ( 1/2), then 1/3 and 1/4 become two copies of 1/4? Wait, the classic method: group the terms into blocks of size 1, 2, 4, 8, ... doubling each time. Within block k (terms from 2<sup>k-1</sup>+1 to 2<sup>k</sup>), each term is at most 1/2<sup>k-1</sup>, and there are 2<sup>k-1</sup> terms, so the block sum  1. Thus H(n)  number of complete blocks + 1 (for the last partial block). Since the number of blocks up to n is about log(n), we get H(n)  log(n) + 1.</p>
+
+<p>This bound is tight enough for most cp purposes. It tells us that if an algorithm does n/1 + n/2 + ... + n/n operations, it's O(n log n) because H(n) = O(log n).</p>
+
+<h2>Why is this importent?</h2>
+<p>Many algorithms, like the Sieve of Eratosthenes, have running time O(n log log n) but the simpler analysis using harmonic sum gives O(n log n). The harmonic bound helps in amortised analysis and when you need a quick upperbound for a series.</p>
+
+<h2>The exact approximation</h2>
+<p>The harmonic numbers can be closely approximated by ln(n) + , where   0.57721 is the EulerMascheroni constant. But the log bound is sufficient and easier to remember.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Harmonic sum H(n) = 1 + 1/2 + ... + 1/n.</li>
+  <li>H(n)  log(n) + 1  great for quick complexity bounds.</li>
+  <li>It grows very slowly; H(10^6)  14.4.</li>
+  <li>Use grouping by powers of two to prove the bound.</li>
+</ul>
+
+<blockquote>The harmonic series is a sneaky one  it looks like it might diverge quickly, but it's actualy a logaritmik crawler. Knowing its bound turns O(n * H(n)) into the familiar O(n log n).</blockquote>
+`
 },
 
 
