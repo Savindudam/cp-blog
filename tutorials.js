@@ -1785,6 +1785,57 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>The 2<sup>n</sup> rule is the reason bruteforce search is possible for small n. Once you encode a subset as an integer, you can manipulate it with bitwise operations  fast and clean.</blockquote>
 `
+},{
+  slug: "logic-operators-and-or-not",
+  title: "Logic Operators: AND, OR, NOT, IMPLIES, EQUIV",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-09",
+  excerpt: "The truth tables and meanings of logical connectives  the building blocks of problem conditions and proofs.",
+  tags: ["logic", "truth table", "AND", "OR", "NOT", "implication"],
+  html: `
+<p>Every condition in an <code>if</code> statment is a logical expression. Understanding the formal logic behind AND, OR, NOT, and the less obvious IMPLIES and EQUIV will make you better at reading proofs and constructing complex conditions.</p>
+
+<h2>Truth values</h2>
+<p>In binary logic, a statment is either <strong>true (1)</strong> or <strong>false (0)</strong>. The following table summrises the basic operators:</p>
+
+<table border="1" cellpadding="4">
+  <tr><th>A</th><th>B</th><th>A</th><th>A  B</th><th>A  B</th><th>A  B</th><th>A  B</th></tr>
+  <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+</table>
+
+<h2>NOT ()  negaton</h2>
+<p>The simplest: flips the truth value. In C++: <code>!A</code>.</p>
+
+<h2>AND ()  conjuction</h2>
+<p>True only if <strong>both</strong> operands are true. In C++: <code>A && B</code>.</p>
+
+<h2>OR ()  disjunction</h2>
+<p>True if <strong>at least one</strong> operand is true. In C++: <code>A || B</code>.</p>
+
+<h2>IMPLIES ()  implcation</h2>
+<p>"If A then B". The only case where it's false is when A is true and B is false. This sometimes confuses beginers: if the premise is false, the implication is considered true regardless of B. For example, "If I win the lottery, I'll buy a car"  if you don't win the lottery, the promise is still valid. In logic, false  anything is true.</p>
+
+<h2>EQUIV ()  equivelence</h2>
+<p>True when A and B have the same truth value. In C++: <code>A == B</code> for booleans.</p>
+
+<h2>Quantifiers:  and </h2>
+<p>While not exactly operators, you'll see <strong></strong> (for all) and <strong></strong> (there exists) in problem statements. They describe conditions over a set: <code>x  S: P(x)</code> means "for every element x in S, property P holds". <code>x  S: P(x)</code> means "there is at least one x in S such that P(x) holds". In code,  is a loop that checks all elements;  is a loop that can stop early.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li> = AND,  = OR,  = NOT.</li>
+  <li> (implies) is only false when true  false.</li>
+  <li> (iff) is true when both are equal.</li>
+  <li>Quantifiers turn "all" and "exists" into precise logic.</li>
+</ul>
+
+<blockquote>Logic is the skeleton of an algorithm. If you can translate a problem's conditions into logical expressons, you're halfway to the solution.</blockquote>
+`
 },
 
 
