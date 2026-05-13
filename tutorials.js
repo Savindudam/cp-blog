@@ -2108,6 +2108,47 @@ int main() {
 
 <blockquote>Logarithms are the secret sauce behind efficent algorithms. They turn astronomically large input sizes into manageable step counts. Once you start thinking in logs, you'll never look at complexity the same way.</blockquote>
 `
+},{
+  slug: "properties-of-logarithms",
+  title: "Properties of Logarithms: Product, Quotient, Power",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-09",
+  excerpt: "Three simple rules that make logarithms easy to work with  and why they matter for algorithm analysis.",
+  tags: ["logarithms", "properties", "product", "quotient", "power"],
+  html: `
+<p>You don't need to become a math wizard, but knowing the basic propertis of logarithms helps enormusly with algorithm analysis and sometimes even in coding formulas. Let's go through the three main rules one by one.</p>
+
+<h2>1. Product rule</h2>
+<pre><code>log_k(a  b) = log_k(a) + log_k(b)</code></pre>
+<p>In words: the logarithm of a product is the sum of the logarithms. This makes sense: if you take two numbers and multiply them, you're adding their "orders of magnitude". For example, log_2(84) = log_2(32) = 5, and log_2(8) + log_2(4) = 3 + 2 = 5. Matches.</p>
+
+<h2>2. Quotient rule</h2>
+<pre><code>log_k(a / b) = log_k(a) - log_k(b)</code></pre>
+<p>Similarly, division becomes subtraction. So log_2(32 / 4) = log_2(8) = 3, and log_2(32) - log_2(4) = 5 - 2 = 3. This rule is handy when you're dealing with ratios.</p>
+
+<h2>3. Power rule (the most importent one)</h2>
+<pre><code>log_k(a^n) = n  log_k(a)</code></pre>
+<p>This is the game changer. It says that the logarithm of a number raised to a power is that power times the log of the base number. For algorithm analysis, this means: if an algorithm has complexity proportional to n<sup>2</sup>, then log of that is 2  log(n). More importantly, it tells us that the number of digits in 2<sup>n</sup> is about n  log<sub>10</sub>(2).</p>
+
+<h2>Why are these usefull in cp?</h2>
+<ul>
+  <li>Analyzing nested loops: if an algorithm does O(n<sup>k</sup>) operations, the log of that is k log n.</li>
+  <li>Understanding why O(n log n) is so common: log(n!)  n log n by using the product rule repeatedly.</li>
+  <li>Working with huge numbers: if a number is too big to store, its logarithm might still be manageable for comparisions.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Product  sum of logs.</li>
+  <li>Quotient  difference of logs.</li>
+  <li>Power  multiply the log.</li>
+  <li>These rules work for any base k.</li>
+</ul>
+
+<blockquote>Logarithms turn scary operations into simple additions and multiplications. That's why we love them  they shrink exponential problems down to linear size in log space.</blockquote>
+`
 },
 
 
