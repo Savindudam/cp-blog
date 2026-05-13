@@ -1402,6 +1402,48 @@ if (abs(a - b) < eps) {
 
 <blockquote>Embracing epsilon is a rite of passage for every cp coder. Once you accept that floats are "close enough", a whole new world of geometry and numeric problems opens up.</blockquote>
 `
+},{
+  slug: "integers-exactly-in-floating-point",
+  title: "Representing Integers Exactly in Floating Point",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "Belive it or not, double can hold whole numbers exactly up to a huge limit  learn the rule so you can use it safely.",
+  tags: ["double", "integers", "precision", "representation"],
+  html: `
+<p>We just said floating point numbers are imprecise, but there's a twist: small integers can be stored <strong>exactly</strong> in <code>double</code>. Knowing where the boundry is can save you from unnecessary <code>long long</code> gymnastics.</p>
+
+<h2>The magic number: 2<sup>53</sup></h2>
+<p>A 64bit <code>double</code> uses 53 bits to store the mantissa (the actual digits). That means it can exactly represent all integers whose absolute value is less than or equal to <strong>2<sup>53</sup></strong>, which is roughly <code>9,007,199,254,740,992</code> (9e15). So any integer between 9e15 and 9e15 is stored without any loss.</p>
+<pre><code>double d = 123456789012345; // exact! fits in 53 bits
+cout << fixed << setprecision(0) << d << "\\n"; // prints exactly 123456789012345</code></pre>
+
+<h2>Above that limit, things get wobbly</h2>
+<p>Try storing 2<sup>53</sup> + 1 in a double:</p>
+<pre><code>double d = 9007199254740993; // 2^53 + 1
+cout << fixed << setprecision(0) << d << "\\n"; // might print 9007199254740992 -> wrong!</code></pre>
+<p>Because the double can't represent odd numbers above 2<sup>53</sup>, it rounds to the nearest representable number. For large numbers, <code>double</code> acts like a sieve: only some integers pass through, the rest are approximated.</p>
+
+<h2>When is this usefull in cp?</h2>
+<ul>
+  <li>When you need to do integer arithmetic but also need square roots or divisions that produce decimals. You can cast an <code>int</code> to <code>double</code>, do your operation, and cast back  as long as the intermediate value stays under 2<sup>53</sup>.</li>
+  <li>In geometry problems, coordinates are often up to 10<sup>9</sup>; storing them as <code>double</code> is fine because 10<sup>9</sup> is way below 2<sup>53</sup>.</li>
+</ul>
+
+<h2>Comparison with long long</h2>
+<p>A <code>long long</code> can hold up to ~9e18, which is larger than 2<sup>53</sup> (~9e15), but <code>long long</code> can't hold decimals. So they are used for different purposes. Don't use <code>double</code> for exact integer arithmetic if numbers exceed 2<sup>53</sup>.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Integers  2<sup>53</sup> are perfectly represented in <code>double</code>.</li>
+  <li>Beyond that, <code>double</code> loses precision and starts rounding to multiples of 2, 4, etc.</li>
+  <li>Use <code>long long</code> for exact large integer counting; use <code>double</code> only when decimal operations are unavoidable.</li>
+  <li>Don't be fooled: <code>double</code> can hold integers, but it's not a replacement for <code>long long</code> in modular arithmetic.</li>
+</ul>
+
+<blockquote>Floats aren't evil; they just have strict boundries. Below 2<sup>53</sup>, they're your best friend; above that, they become a guessing game. Know the limit and you'll never be suprised.</blockquote>
+`
 },
 
 
