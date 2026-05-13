@@ -2047,6 +2047,67 @@ where  = (1+5)/2  1.618,  = (1-5)/2  -0.618</code></pre>
 
 <blockquote>Fibonacci numbers are like the hello world of dynamic programming. They teach you how to go from a simple recursive formula to an efficent iterative solution.</blockquote>
 `
+},{
+  slug: "logarithms-log2-log10-natural-log",
+  title: "Logarithms: log2, log10, and Natural Log",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-09",
+  excerpt: "Understanding logarithms in base 2, 10, and e  the math that explains why O(log n) algorithms are so fast.",
+  tags: ["logarithm", "log2", "log10", "natural log", "math"],
+  html: `
+<p>Algorithms like binary search, balanced trees, and divideandconquer all have O(log n) complextiy. But what exactly is a logarithm, and how do you compute it in C++? Let's demystify logs.</p>
+
+<h2>The intuition: how many divisions?</h2>
+<p><code>log<sub>k</sub>(x)</code> answers: <strong>how many times can I divide x by k until I get to 1?</strong></p>
+<p>For example, log<sub>2</sub>(32) = 5, because 32  16  8  4  2  1 (five halvings). That's exactly the number of steps in binary search on an array of size 32.</p>
+<p>Equivalently, k<sup>a</sup> = x means a = log<sub>k</sub>(x). So log<sub>2</sub>(8) = 3 because 2 = 8.</p>
+
+<h2>Common bases in cp</h2>
+<ul>
+  <li><strong>Base 2 (log2)</strong>: most common. It tells you the number of bits needed to represent n (ceil(log2(n))). The depth of a balanced tree. The number of times you can halve n.</li>
+  <li><strong>Base 10 (log10)</strong>: number of decimal digits = floor(log10(n)) + 1.</li>
+  <li><strong>Natural log (ln, base e)</strong>: used in calculus and probability. In cp, you might use it for the harmonic series bound ln(n)+.</li>
+</ul>
+
+<h2>Computing logs in C++</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    double x = 1000;
+    cout << log2(x) << "\\n";   // 9.96578...   (binary log)
+    cout << log10(x) << "\\n";  // 3            (decimal log)
+    cout << log(x) << "\\n";    // 6.90775...   (natural log, base e)
+    // Note: log2 and log10 are in cmath, included via bits/stdc++.h
+    return 0;
+}</code></pre>
+<p>These return <code>double</code>. For integer log2, it's often faster and more precise to use bit operations: <code>31 - __builtin_clz(x)</code> (for a 32bit unsigned int). We'll cover bit tricks later.</p>
+
+<h2>Properties of logarithms</h2>
+<p>You don't need to prove these, just know they exist:</p>
+<ul>
+  <li>log(a  b) = log(a) + log(b)</li>
+  <li>log(a / b) = log(a) - log(b)</li>
+  <li>log(a<sup>n</sup>) = n  log(a)</li>
+  <li>Change of base: log<sub>u</sub>(x) = log<sub>k</sub>(x) / log<sub>k</sub>(u). So log<sub>2</sub>(x) = log(x) / log(2) if needed.</li>
+</ul>
+
+<h2>Logarithmic time  the holy grail</h2>
+<p>In cp, O(log n) is next best after O(1). For n = 10<sup>18</sup>, log<sub>2</sub>(n)  60. That's just 60 steps! That's why binary search is so powerfull.</p>
+<p>When you see a problem with huge constraints but a solution involing "cut in half", you're probably dealing with a logarithmic algorithm.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>log<sub>2</sub>(n) = number of times you can halve n.</li>
+  <li><code>log2(x)</code> in C++ returns double; use <code>__builtin_clz</code> for integer log2.</li>
+  <li>log10 helps count decimal digits.</li>
+  <li>Logarithms turn products into sums  usefull for avoiding overflow in some contexts.</li>
+</ul>
+
+<blockquote>Logarithms are the secret sauce behind efficent algorithms. They turn astronomically large input sizes into manageable step counts. Once you start thinking in logs, you'll never look at complexity the same way.</blockquote>
+`
 },
 
 
