@@ -1558,6 +1558,66 @@ FOR(i, 10) {
 
 <blockquote>Macros are like a sharp knife: incredibly usefull when handled correctly, but easy to cut yourself. Once you've been bitten by a missing parenthesis, you'll never forget it.</blockquote>
 `
+},{
+  slug: "using-macros-for-f-s",
+  title: "Using Macros for F(first) and S(second)",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-08",
+  excerpt: "How a tiny #define can save you endless typing when accessing elements of a pair or a map iterator.",
+  tags: ["macros", "first", "second", "pair"],
+  html: `
+<p>Working with <code>std::pair</code> is constant in cp  for coordinates, events, or storing two related values. Accessing <code>.first</code> and <code>.second</code> can become tedious. The solution: two simple macros.</p>
+
+<h2>The classic pair macros</h2>
+<pre><code>#define F first
+#define S second</code></pre>
+<p>Now, instead of writing:</p>
+<pre><code>int x = p.first + q.second;
+v.push_back(make_pair(y, x));
+sort(v.begin(), v.end(), [](pair&ltint,int&gt a, pair&ltint,int&gt b) {
+    return a.first < b.first;
+});</code></pre>
+<p>You write:</p>
+<pre><code>int x = p.F + q.S;
+v.PB(MP(y, x)); // if you also have PB and MP macros
+sort(v.begin(), v.end(), [](pi a, pi b) {
+    return a.F < b.F;
+});</code></pre>
+<p>It's a tiny change, but it saves a ton of typing across hundreds of lines. The code becomes more compact and easier to scan.</p>
+
+<h2>What about maps?</h2>
+<p>When iterating over a <code>map</code>, each element is a <code>pair&ltconst key_type, value_type&gt</code>. You can use <code>F</code> and <code>S</code> there too:</p>
+<pre><code>map&ltstring, int&gt freq;
+for (auto p
+req) {
+    cout << p.F << " appears " << p.S << " times\\n";
+}</code></pre>
+
+<h2>Possible pitfalls</h2>
+<ul>
+  <li>If you later use <code>F</code> as a variable name, it will be replaced by the macro. So avoid naming variables <code>F</code> or <code>S</code>. Use <code>first</code> and <code>second</code> as variable names only without macros.</li>
+  <li>Don't use these macros in header files or code that others might import, as it alters their code too.</li>
+</ul>
+
+<h2>Together with other macros</h2>
+<p>These are usually combined with <code>PB</code> (push_back) and <code>MP</code> (make_pair):</p>
+<pre><code>#define PB push_back
+#define MP make_pair
+v.PB(MP(1, 2));
+cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>#define F first</code> and <code>#define S second</code> are universal shortcuts in cp.</li>
+  <li>They work on pairs, map entries, and any type with <code>.first</code>/<code>.second</code>.</li>
+  <li>Avoid naming your own variables <code>F</code> or <code>S</code> after defining these macros.</li>
+  <li>Combine with <code>PB</code> and <code>MP</code> for maximum laziness  I mean, productivity.</li>
+</ul>
+
+<blockquote>Some say these macros are ugly. I say they're beautiful. In the heat of a contest, every saved character brings you closer to the finish line.</blockquote>
+`
 },
 
 
