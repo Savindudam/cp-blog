@@ -1881,6 +1881,52 @@ for (int x : arr) {
 
 <blockquote>Quantifiers make informal conditions formal. If a problem says "every pair satisfies...", you know exactly what to loop over. They're like the exclamation marks of logical sentences.</blockquote>
 `
+},{
+  slug: "functions-floor-ceil-min-max",
+  title: "Functions: Floor, Ceil, Min, Max in C++",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-09",
+  excerpt: "The four most common utility functions in cp  how they work and how to use them without traps.",
+  tags: ["functions", "floor", "ceil", "min", "max", "cmath"],
+  html: `
+<p>Four tiny functions that you'll use in almost every contest: <code>floor</code>, <code>ceil</code>, <code>min</code>, and <code>max</code>. They're simple, but a few subtelties can bite you.</p>
+
+<h2>min and max  the easy ones</h2>
+<p>Defined in the standard library (included via bits/stdc++.h), <code>min(a,b)</code> returns the smaller value, <code>max(a,b)</code> the larger. Works for ints, doubles, and any comparable types.</p>
+<pre><code>int a = 5, b = 10;
+cout << min(a, b) << "\\n"; // 5
+cout << max(a, b) << "\\n"; // 10</code></pre>
+<p>You can also pass an initializer list to get the min/max of several values: <code>min({a, b, c})</code>.</p>
+
+<h2>floor  round down</h2>
+<p><code>floor(x)</code> returns the greatest integer  x. For positive numbers it's like truncation, but for negatives it's different: floor(-2.3) = -3, because -3  -2.3 and -2 > -2.3.</p>
+<pre><code>cout << floor(3.7) << "\\n";  // 3
+cout << floor(-3.7) << "\\n"; // -4</code></pre>
+<p>For integers, you don't need floor  just use integer division, but remember it truncates towards zero, not down!</p>
+
+<h2>ceil  round up</h2>
+<p><code>ceil(x)</code> returns the smallest integer  x. So ceil(3.2) = 4, ceil(-3.2) = -3.</p>
+<pre><code>cout << ceil(3.2) << "\\n";  // 4
+cout << ceil(-3.2) << "\\n"; // -3</code></pre>
+
+<h2>Floating point dangers</h2>
+<p>Because of floating point errors, <code>ceil(something)</code> might give an offbyone result. For example, if a computation should give exactly 3.0 but due to precision is 2.9999999999, ceil will give 3? Wait, 2.9999 ceil is 3 anyway? Actually ceil(2.9999999) = 3, so it's safe in that direction. But if a value is supposed to be an integer but becomes 3.0000000001, ceil gives 4, which is wrong. The safe way: avoid floating ceil/floor for integer arithmetic and use integer formulas instead.</p>
+
+<h2>Integer ceil division trick</h2>
+<p>To compute ceil(a / b) for positive integers a and b, do: <code>(a + b - 1) / b</code>. For example, ceil(10 / 3) = (10+3-1)/3 = 12/3 = 4. This avoids floats entirely.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>min(a,b) and max(a,b) are in <code>&ltalgorithm&gt</code>, but bits/stdc++.h includes them.</li>
+  <li>floor goes down, ceil goes up  watch negative numbers.</li>
+  <li>Avoid floating floor/ceil for integer division; use the integer trick.</li>
+  <li>Prefer integer arithmetic whenever possible.</li>
+</ul>
+
+<blockquote>These little functions are the salt and pepper of cp code. Sprinkle them liberally, but don't let floating point errors ruin the dish.</blockquote>
+`
 },
 
 
