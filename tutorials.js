@@ -1444,6 +1444,61 @@ cout << fixed << setprecision(0) << d << "\\n"; // might print 9007199254740992 
 
 <blockquote>Floats aren't evil; they just have strict boundries. Below 2<sup>53</sup>, they're your best friend; above that, they become a guessing game. Know the limit and you'll never be suprised.</blockquote>
 `
+},{
+  slug: "shortening-code-with-typedef",
+  title: "Shortening Code with typedef (ll, vi, pi)",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "How to make long type names shorter using typedef  the first step to writing lite, fast cp code.",
+  tags: ["typedef", "shorten", "long long", "vector", "pair"],
+  html: `
+<p>In competive programming, typing speed matters. Writing <code>long long</code> every time you declare a variable is tedious. The <code>typedef</code> keyword lets you create aliases for existing types. Almost every cp'er uses it to shrink their code.</p>
+
+<h2>The most common typedefs</h2>
+<pre><code>typedef long long ll;
+typedef vector&ltint&gt vi;
+typedef pair&ltint, int&gt pi;
+typedef vector&ltpi&gt vpi;</code></pre>
+<p>Now you can write:</p>
+<pre><code>ll a = 123456789123LL;
+vi arr = {1, 2, 3};
+pi point = {5, 10};
+vpi points;
+points.push_back({1, 2});</code></pre>
+<p>Much cleaner! This saves dozens of keystrokes over a 2hour contest.</p>
+
+<h2>Modern alternative: using</h2>
+<p>In modern C++ (C++11 and later), you can also use the <code>using</code> keyword:</p>
+<pre><code>using ll = long long;
+using vi = vector&ltint&gt;</code></pre>
+<p>Both <code>typedef</code> and <code>using</code> do the same thing. <code>using</code> is a bit more readable, especially for complex types. You can pick either; they compile to identical code.</p>
+
+<h2>More complex typedefs</h2>
+<p>You can alias anything. For example, a vector of vectors (2D array):</p>
+<pre><code>typedef vector&ltvi&gt vvi;  // or: using vvi = vector&ltvi&gt;
+vvi grid(10, vi(10, 0)); // 10x10 grid of zeros</code></pre>
+<p>Or a map from int to vector of strings:</p>
+<pre><code>typedef map&ltint, vector&ltstring&gt&gt mivs;
+mivs m; // much shorter than the full type</code></pre>
+
+<h2>When to typedef</h2>
+<p>Typedef anything you use more than two or three times in a program. In cp, <code>ll</code> is basically mandatory. Many people also typedef <code>vector&ltll&gt</code> to <code>vl</code>, <code>pair&ltll, ll&gt</code> to <code>pll</code>, etc.</p>
+
+<h2>Potential pitfall: readability</h2>
+<p>If you go overboard and typedef everything to single letters, your code might become unreadable to others. Strike a balance. But in cp, where only you and the judge read it, short is usually fine.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>typedef</code> creates an alias for a type.</li>
+  <li>Use <code>typedef long long ll</code> in every template.</li>
+  <li>Also alias <code>vector&ltint&gt</code> to <code>vi</code> and <code>pair&ltint,int&gt</code> to <code>pi</code>.</li>
+  <li>The modern <code>using</code> syntax is equivalent and sometimes clearer.</li>
+</ul>
+
+<blockquote>Shorter code is not just about laziness  it reduces visual clutter, making the logic easier to see. Start with <code>typedef long long ll;</code> and you've already improved your coding speed by 10%.</blockquote>
+`
 },
 
 
