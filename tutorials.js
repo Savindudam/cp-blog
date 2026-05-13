@@ -1748,6 +1748,43 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>Set operations are like the grammar of combinatoral reasoning. Once you internalise them, many problems reduce to simple unions and intersections.</blockquote>
 `
+},{
+  slug: "subsets-counting-2-power-n",
+  title: "Subsets of a Set and Counting 2^n",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-09",
+  excerpt: "Every set with n elements has exactly 2 subsets. Why this is true, and how it connects to binary representation.",
+  tags: ["subsets", "counting", "2^n", "bitmask", "combinatorics"],
+  html: `
+<p>This is one of the most fundamental facts in all of cp: a set with n elements has exactly <strong>2<sup>n</sup></strong> distinct subsets. This includes the empty set and the set itself. Understanding this opens the door to bruteforce search, DP over subsets, and bitmask techniques.</p>
+
+<h2>Why 2<sup>n</sup>?</h2>
+<p>For each element, you have two choices: include it in the subset or exclude it. Since there are n independant choices, the total number of combinations is 22...2 (n times) = 2<sup>n</sup>. Simple but powerfull.</p>
+
+<h2>Example: set {1,2,3}</h2>
+<p>Its 8 subsets are: , {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3}. You can see each element appears in exactly half of the subsets.</p>
+
+<h2>Link to binary representaton</h2>
+<p>If we assign each element an index 0,1,...,n-1, then every subset can be represented as an nbit integer where bit i is 1 if element i is included. For exmaple, for n=3, the subset {0,2} corresponds to the binary number 101 = 5. So loopng an integer from 0 to 2<sup>n</sup>-1 iterates through all subsets. This is the basis of bitmask iteration.</p>
+<pre><code>for (int mask = 0; mask < (1 << n); mask++) {
+    // process subset represented by mask
+}</code></pre>
+
+<h2>Counting subsets of a subset</h2>
+<p>A set with k elements has 2<sup>k</sup> subsets. So if you have a subset of a larger set, you can quickly know how many subsubsets exist. This is a common trick in DP.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>A set of size n has exactly 2<sup>n</sup> subsets.</li>
+  <li>Each element's inclusion/exclusion is independant  2 choices per element.</li>
+  <li>Bitmasks are a direct implementation of this idea.</li>
+  <li>For n  20, iterating 2<sup>n</sup> (~10<sup>6</sup>) subsets is feasible.</li>
+</ul>
+
+<blockquote>The 2<sup>n</sup> rule is the reason bruteforce search is possible for small n. Once you encode a subset as an integer, you can manipulate it with bitwise operations  fast and clean.</blockquote>
+`
 },
 
 
