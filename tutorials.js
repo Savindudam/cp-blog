@@ -1218,6 +1218,57 @@ for (int i = 1; i <= MAX; i++) {
 
 <blockquote>Factorials are a building block for combinatorics, DP, and probability. Mastering the modular version early will pay off tenfold later.</blockquote>
 `
+},{
+  slug: "handling-negative-remainders-cpp",
+  title: "Handling Negative Remainders in C++",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "C++ modulo operator behaves badly with negative numbers  here is the oneline fix you need to know.",
+  tags: ["modulo", "negative", "remainder", "fix"],
+  html: `
+<p>If you've ever written <code>cout << -10 % 7;</code> and expected <code>4</code>, you were in for a shock. C++ gives you <code>-3</code>. That's because the <code>%</code> operator in C++ returns a remainder with the same sign as the left operand (the dividend). But in mathematics, we usually want the remainder to be in the range <code>[0, m-1]</code>. Let's see why this matters and how to fix it.</p>
+
+<h2>The problem illustrated</h2>
+<pre><code>int a = -10;
+int m = 7;
+int r = a % m;
+cout << r << "\\n"; // prints -3</code></pre>
+<p>In mathematical terms: -10 = (-2)*7 + 4. So the positive remainder is 4. But C++ chooses truncation towards zero: -10 = (-1)*7 + (-3). So it returns -3.</p>
+
+<h2>When does this bite you?</h2>
+<p>Any time you do modular subtraction. For example, in DP where you have <code>dp[i] = (dp[i-1] - something) % MOD</code>. If <code>dp[i-1]</code> was smaller than <code>something</code>, the result is negative, and <code>% MOD</code> makes it even more negative. Then later additions may still be negative, leading to wrong answers.</p>
+
+<h2>The universal fix</h2>
+<pre><code>int fix_mod(int x, int m) {
+    x %= m;
+    if (x < 0) x += m;
+    return x;
+}</code></pre>
+<p>Or inline:</p>
+<pre><code>int r = (a - b) % MOD;
+if (r < 0) r += MOD;</code></pre>
+<p>Some people write a oneliner:</p>
+<pre><code>int r = ((a - b) % MOD + MOD) % MOD;</code></pre>
+<p>The extra <code>+MOD</code> ensures the value is positive before the final modulo. This works but can be slightly overkill.</p>
+
+<h2>When is the native behaviour okay?</h2>
+<p>If you only do additions and multiplications and always mod positive numbers, it's fine. Also, some bitwise operations rely on the native behaviour. But in cp, 99% of the time you want the mathematical positive remainder.</p>
+
+<h2>Negative mod with long long</h2>
+<p>Same rules apply. Just use <code>fix_mod</code> for <code>long long</code> too.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>In C++, <code>a % m</code> has the same sign as <code>a</code>.</li>
+  <li>Always apply <code>if (r < 0) r += m;</code> after subtractions in modular arithmetic.</li>
+  <li>The fix is cheap and prevents mysterious negative outputs.</li>
+  <li>Don't rely on <code>%</code> to do what you think it does  test it!</li>
+</ul>
+
+<blockquote>C++s modulo operator is like a mischievous gremlin. Feed it negative numbers and it bites. Tame it with that simple <code>if</code> statement and sleep soundly.</blockquote>
+`
 },
 
 
