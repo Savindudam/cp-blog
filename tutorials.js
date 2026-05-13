@@ -1708,7 +1708,47 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 `
 },
 
+{
+  slug: "set-operations-union-intersection",
+  title: "Set Operations: Union, Intersection, Complement",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-09",
+  excerpt: "The four basic ways to combine sets  and how they map directly to C++ set functions and bitmasks.",
+  tags: ["sets", "union", "intersection", "complement", "operations"],
+  html: `
+<p>Now that we know what sets are, let's learn the basic opperations you can perform on them. These form the buliding blocks for solving problems involving collections of objects.</p>
 
+<h2>Intersection (A  B)</h2>
+<p>The intersection of two sets contains only the elements that are in <strong>both</strong> A and B. For example, if A = {1,2,3} and B = {2,3,4}, then A  B = {2,3}. In C++, you can compute this with <code>std::set_intersection</code> or simply by checking membership.</p>
+
+<h2>Union (A  B)</h2>
+<p>The union combines all elements from A and B, without duplicates. So {1,2}  {2,3} = {1,2,3}. The union of two sets is the smallest set that contains both. In code, you can insert all elements from one set into another, or use <code>std::set_union</code>.</p>
+
+<h2>Complement ( or A<sup>c</sup>)</h2>
+<p>The complement of a set A consists of all elements (from a universal set U) that are <strong>not</strong> in A. For instance, if the universe is {1,2,3,4} and A = {1,2}, then the complement of A is {3,4}. Complements are often used in counting problems: sometimes it's easyer to count what you <em>don't</em> want and subtract from the total.</p>
+
+<h2>Difference (A \\ B)</h2>
+<p>The difference A \ B contains elements in A but not in B. So {1,2,3} \ {2,4} = {1,3}. Note that B might have elements not in A  they are ignored. This is handy when you need to exclude certian values.</p>
+
+<h2>Visualising with Venn diagrams</h2>
+<p>It helps to draw cirles overlapping. The intersection is the overlapping part, the union is both circles combined, the differnce is one circle with the overlap removed.</p>
+
+<h2>How this connects to cp</h2>
+<p>When you use <code>set<int></code> in C++, you're working with ordered sets. The operations <code>insert</code>, <code>erase</code>, and <code>count</code> are basic, but you can also think in terms of union/ intersection when merging data. More importantly, when working with bitmasks for small sets, union becomes <code>|</code>, intersection becomes <code>&</code>, and complement becomes <code>~</code>. That's a powerfull link that we'll exploite later.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Intersection = elements common to both.</li>
+  <li>Union = all elements from both (no duplicates).</li>
+  <li>Complement = everything not in the set (requires a universal set).</li>
+  <li>Difference = elements in A but not in B.</li>
+</ul>
+
+<blockquote>Set operations are like the grammar of combinatoral reasoning. Once you internalise them, many problems reduce to simple unions and intersections.</blockquote>
+`
+},
 
 
 
