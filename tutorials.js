@@ -1358,6 +1358,50 @@ cout << fixed << setprecision(6) << pi << "\\n"; // 3.141593</code></pre>
 
 <blockquote>The judge doesn't care that 3.14 and 3.140000 are the same number mathematically  if they ask for 6 decimals and you give 2, you lose. Precision printing is nonnegotiable.</blockquote>
 `
+},{
+  slug: "floating-point-equality-epsilon",
+  title: "Floating Point Equality Comparison with Epsilon",
+  topic: "Numbers in C++",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "Why you should never compare floats with == and how to do it correctly using a tiny epsilon value.",
+  tags: ["floating point", "epsilon", "comparison", "precision"],
+  html: `
+<p>Here's a classic pitfall: you write <code>if (x == 1.0)</code> where <code>x</code> was computed as <code>0.1 + 0.1 + ...</code> ten times. Somehow, <code>x</code> ends up as 0.99999999999999989 and the condition fails. That's because floating point numbers are binary approximations, and some decimal numbers cannot be represented exactly. The fix: always compare with a tolerance, called epsilon.</p>
+
+<h2>The golden rule</h2>
+<p>Never use <code>==</code> on floats. Instead, check if the absolute difference is very small:</p>
+<pre><code>double eps = 1e-9; // 0.000000001
+if (abs(a - b) < eps) {
+    // a and b are effectively equal
+}</code></pre>
+<p>The value of <code>eps</code> depends on the problem. 1e-9 is a common safe choice for double. For long double, you might use 1e-12 or 1e-15.</p>
+
+<h2>Why does this happen?</h2>
+<p>Computers store numbers in binary. Just like 1/3 cannot be written exactly in decimal (0.33333...), simple numbers like 0.1 have an infinite repeating representation in binary. When you do arithmetic, these tiny approximations accumulate. So the result of a calculation that should matematically be 1.0 might be 0.9999999999999999 or 1.0000000000000002.</p>
+
+<h2>Comparing to zero</h2>
+<p>Similarly, don't check <code>if (x == 0.0)</code>; use <code>if (abs(x) < eps)</code>.</p>
+
+<h2>What about &lt; and &gt;</h2>
+<p>Lessthan and greaterthan comparisons are generally safe because they are not as affected by tiny errors. However, if a value is supposed to be exactly 0.5 and it's 0.500000000000001, then <code>if (x < 0.5)</code> will be false  perhaps incorrectly. In critical cases, you might want to use epsilon there too: <code>if (x < 0.5 - eps)</code> to be safe.</p>
+
+<h2>Epsilon for equality in geometry</h2>
+<p>In geometry problems, coordinates are often integers, but distances and intersections involve square roots and divisions. Epsilon comparisons become crucial. A common value is 1e-9 for double and 1e-12 for long double.</p>
+
+<h2>When can you skip epsilon?</h2>
+<p>If the problem states that the inputs and outputs are integers and all operations are integeronly, you should stick to integers. Also, if you're only using floating point for output (like printing a rounded value), you might only need epsilon in internal logic, not in printing.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Never use <code>==</code> on floats  always <code>abs(a - b) < eps</code>.</li>
+  <li>Choose epsilon based on required precision: 1e-9 is typical for double.</li>
+  <li>Floating point errors are not bugs  they're a fundamental limitation of binary representation.</li>
+</ul>
+
+<blockquote>Embracing epsilon is a rite of passage for every cp coder. Once you accept that floats are "close enough", a whole new world of geometry and numeric problems opens up.</blockquote>
+`
 },
 
 
