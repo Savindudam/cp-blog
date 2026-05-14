@@ -2193,6 +2193,53 @@ cout << fixed << setprecision(2) << log3_81 << "\\n"; // prints 4.00</code></pre
 
 <blockquote>Change of base is the universal adapter for logarithms. Once you know it, you can work in whatever base makes the problem easiest.</blockquote>
 `
+},{
+  slug: "number-of-digits-in-base-b-using-log",
+  title: "Number of Digits in Base b Using logb",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-15",
+  excerpt: "A neat little formula that tells you how many digits a number has in any base, using logarithms.",
+  tags: ["digits", "base", "logarithm", "formula"],
+  html: `
+<p>How many bits does the number 1024 need? How many decimal digits in 10<sup>9</sup>? There's a simple logbased formula that answers these questions instantly.</p>
+
+<h2>The formula</h2>
+<pre><code>Digits of integer x in base b = floor(log_b(x)) + 1</code></pre>
+<p>Provided x > 0. For x = 0, it's 1 digit (just "0").</p>
+
+<h2>Example: decimal digits of 1234</h2>
+<p>log_10(1234)  3.0913  floor = 3  +1 = 4 digits. Indeede, 1234 has 4 digits.</p>
+
+<h2>Example: binary bits for 32</h2>
+<p>log_2(32) = 5  floor = 5  +1 = 6 bits? Wait, 32 in binary is 100000, which has 6 bits. Correct. So a number that is exactly a power of 2 still follows the rule because floor(log2(32)) = 5.</p>
+
+<h2>In code</h2>
+<pre><code>int digits_decimal(int x) {
+    return floor(log10(x)) + 1;
+}
+int bits_binary(int x) {
+    return floor(log2(x)) + 1;
+}</code></pre>
+<p>But beware: floatingpoint precision might give you wrong floor for large x. For integers, you can often compute bits using <code>31 - __builtin_clz(x)</code> for 32bit unsigned ints, which is exact. For decimal digits, a loop dividing by 10 is safe and still O(log_10(n)).</p>
+
+<h2>Why it's useful</h2>
+<ul>
+  <li>Determining array sizes when converting numbers to strings.</li>
+  <li>Checking if a number fits in a certain bit width.</li>
+  <li>Analyzing the growth of numbers in DP states.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Digits in base b = floor(log_b(x)) + 1.</li>
+  <li>For binary, use builtin bit operations for exactness.</li>
+  <li>The formula works because b<sup>k-1</sup>  x < b<sup>k</sup> means k = floor(log_b(x)) + 1.</li>
+</ul>
+
+<blockquote>A tiny formula, but it'll save you when you need to preallocate arrays or understand the size of your data. Logs make counting digits a breeze.</blockquote>
+`
 },
 
 
