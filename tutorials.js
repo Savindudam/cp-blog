@@ -2337,6 +2337,71 @@ int bits_binary(int x) {
 
 <blockquote>Estimating complexity is like having a crystal ball. Before you run your code, you can predict if it'll pass or TLE. Master this, and you'll save hours of wasted submissions.</blockquote>
 `
+},{
+  slug: "reading-whole-line-getline",
+  title: "Reading a Whole Line with getline",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-15",
+  excerpt: "How to read an entire line of text including spaces using getline, and the common newline trap after cin.",
+  tags: ["getline", "strings", "input", "newline"],
+  html: `
+<p>Somtimes you need to read a full line that may contain spaces  like a sentence or a whole paragraph. The <code>getline</code> function is your freind. But beware: mixing <code>cin >></code> and <code>getline</code> can cause a classic bug that leaves you scratching your head. Let's clear it up.</p>
+
+<h2>Basic getline usage</h2>
+<pre><code>string line;
+getline(cin, line);</code></pre>
+<p>This reads everything from the current input position until a newline character (<code>'\\n'</code>). The newline itself is consumed but not stored. So <code>line</code> will contain the whole line (including spaces).</p>
+
+<h2>The famous newline trap</h2>
+<p>Imagine this code:</p>
+<pre><code>int n;
+cin >> n;
+string s;
+getline(cin, s);  // s ends up empty!</code></pre>
+<p>Why does <code>s</code> stay empty? After <code>cin >> n</code>, the input still contains a newline character (the one you typed after the number). <code>getline</code> sees that newline immediatly and reads it as an empty line. To fix it, call <code>cin.ignore()</code> after the <code>cin >></code>:</p>
+<pre><code>int n;
+cin >> n;
+cin.ignore(); // discard the leftover newline
+string s;
+getline(cin, s); // now reads the actual line</code></pre>
+
+<h2>Reading an unknown number of lines</h2>
+<p>If the input consists of several lines, you can loop until EOF:</p>
+<pre><code>string line;
+while (getline(cin, line)) {
+    // process each line
+}</code></pre>
+<p>This works even if lines are empty  <code>getline</code> will return an empty string for blank lines, but the stream stays good.</p>
+
+<h2>Parsing a line after reading</h2>
+<p>Often you read a line containing several numbers. Use a <code>stringstream</code> to split it:</p>
+<pre><code>string line;
+getline(cin, line);
+stringstream ss(line);
+int x;
+while (ss >> x) {
+    // x is each integer on the line
+}</code></pre>
+
+<h2>When to prefer getline over cin &gt;&gt;</h2>
+<ul>
+  <li>When you need to preserve spaces inside a string.</li>
+  <li>When the problem gives data line by line and each line may contain spaces.</li>
+  <li>When you want to read until a specific delimiter (getline can take a third argument as delimiter).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>getline(cin, str)</code> reads a whole line (stops at newline).</li>
+  <li>After <code>cin >></code>, always call <code>cin.ignore()</code> before <code>getline</code> to skip the leftover newline.</li>
+  <li>Use <code>stringstream</code> to parse a line after reading it.</li>
+  <li><code>getline</code> can also accept a delimiter: <code>getline(cin, str, ',')</code> reads until a comma.</li>
+</ul>
+
+<blockquote>Newline characters are invisible but powerfull. Mastering <code>getline</code> and <code>cin.ignore()</code> will save you from one of the most common beginner bugs in competitive programming.</blockquote>
+`
 },
 
 
