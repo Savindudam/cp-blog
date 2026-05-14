@@ -2402,6 +2402,51 @@ while (ss >> x) {
 
 <blockquote>Newline characters are invisible but powerfull. Mastering <code>getline</code> and <code>cin.ignore()</code> will save you from one of the most common beginner bugs in competitive programming.</blockquote>
 `
+},{
+  slug: "loop-macros-rep-for-cleaner-code",
+  title: "Loop Macros: REP(i,a,b) for Cleaner Code",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-15",
+  excerpt: "How to define macros that make writing loops much shorter and less errorprone  a cp classic.",
+  tags: ["macros", "loops", "REP", "coding style"],
+  html: `
+<p>Typing <code>for (int i = 0; i < n; i++)</code> over and over gets old fast. In competitive programming, we often define macros that turn that into something like <code>REP(i, n)</code>. It saves keystrokes and, more importantly, makes the code more readable by hiding the boilerplate.</p>
+
+<h2>The classic REP macro</h2>
+<pre><code>#define REP(i, n) for (int i = 0; i < n; i++)</code></pre>
+<p>Now you can write:</p>
+<pre><code>REP(i, 10) {
+    cout << i << " ";
+}</code></pre>
+<p>That's so much cleaner. You can also make a version that takes a starting point:</p>
+<pre><code>#define REP1(i, a, b) for (int i = a; i <= b; i++)</code></pre>
+<p>Now <code>REP1(i, 2, 5)</code> loops i = 2,3,4,5. Some people prefere <code>FOR</code> instead of <code>REP</code>. Use whatever you like.</p>
+
+<h2>Reverse loops</h2>
+<p>Going backwards? No problem:</p>
+<pre><code>#define RREP(i, n) for (int i = n-1; i >= 0; i--)</code></pre>
+
+<h2>Common mistakes with loop macros</h2>
+<ul>
+  <li>Forgetting the semicolon after the macro definition. The macro should NOT have a semicolon at the end of the <code>#define</code> line, but you will put a semicolon when you use it.</li>
+  <li>Using the same variable name inside nested loops  the macro just pastes the text, so two <code>REP(i, n)</code> loops nested will use the same <code>i</code>! That's a bug. Always use different variable names or define a separate macro for inner loops.</li>
+</ul>
+
+<h2>A safer approach with unique variable names</h2>
+<p>Some advanced macro trickery can generate unique names, but it's not worth the complexity. In cp, just be careful: use <code>REP(i, n)</code> for outer and <code>REP(j, m)</code> for inner.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Macros are text substitution  they don't create a new scope.</li>
+  <li>Use different loop variable names for nested loops.</li>
+  <li>Define your loop macros once in your template and reuse them everywhere.</li>
+  <li>Don't overcomplicate: a simple <code>#define REP(i,n) for(int i=0;i<(n);i++)</code> is enough.</li>
+</ul>
+
+<blockquote>Loop macros are like a swiss army knife  they won't solve every problem, but they'll save you from carpal tunnel syndrome during a 5hour contest.</blockquote>
+`
 },
 
 
