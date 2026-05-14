@@ -2282,6 +2282,61 @@ int bits_binary(int x) {
 
 <blockquote>Time complexity is the compass that guides your algorithmic choices. Before you write a single line, ask: is my idea going to be fast enough? Big O gives you the answer.</blockquote>
 `
+},{
+  slug: "estimating-algorithm-efficiency-big-o",
+  title: "Estimating Algorithm Efficiency with Big O",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-15",
+  excerpt: "How to look at an algorithm and quikly figure out its complexity by analysing loops and recursion.",
+  tags: ["time complexity", "Big O", "estimation", "loops", "recursion"],
+  html: `
+<p>Now that we know what Big O is, let's learn how to calculat it for a piece of code. This is a skill that becomes second nature after some practice.</p>
+
+<h2>Rule 1: Loops</h2>
+<p>A loop that runs n times, doing constanttime work inside, is O(n).</p>
+<pre><code>for (int i = 0; i < n; i++) {
+    // O(1) work
+}</code></pre>
+<p>Two nested loops over n are O(n<sup>2</sup>):</p>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        // O(1) work
+    }
+}</code></pre>
+<p>If the inner loop depends on the outer, you sum the iterations: sum_{i=1}^{n} i  n^2/2 = O(n^2).</p>
+
+<h2>Rule 2: Consecutive blocks</h2>
+<p>If you have multiple blocks after each other, the total complexity is the <strong>maximum</strong> of them. O(n) + O(n<sup>2</sup>) = O(n<sup>2</sup>). The slowest block dominates.</p>
+
+<h2>Rule 3: Recursion</h2>
+<p>A recursive function that calls itself once with parameter n-1, like factorial, runs n times  O(n).</p>
+<p>A function that calls itself twice with n-1 (like naive Fibonacci) creates an exponential tree  O(2<sup>n</sup>).</p>
+<p>Divideandconquer that splits input in half and processes both halves, then merges in O(n), like merge sort: T(n) = 2T(n/2) + O(n)  O(n log n).</p>
+
+<h2>Rule 4: Multiple variables</h2>
+<p>If the loop depends on two different input sizes n and m, the complexity is O(nm) or O(n+m) depending. Always check which variables the problem gives.</p>
+
+<h2>Common patterns</h2>
+<ul>
+  <li>Iterating over all pairs of n elements  O(n<sup>2</sup>).</li>
+  <li>Iterating over all subsets of n elements  O(2<sup>n</sup>).</li>
+  <li>Iterating over all permutations of n elements  O(n!).</li>
+  <li>Sorting  O(n log n).</li>
+  <li>Binary search  O(log n).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Count loop iterations; multiply nested loops.</li>
+  <li>Consecutive phases: take the worst.</li>
+  <li>Recursion: write the recurrence and solve it (or know the common ones).</li>
+  <li>Always check input constraints to choose the right algorithm.</li>
+</ul>
+
+<blockquote>Estimating complexity is like having a crystal ball. Before you run your code, you can predict if it'll pass or TLE. Master this, and you'll save hours of wasted submissions.</blockquote>
+`
 },
 
 
