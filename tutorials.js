@@ -2151,7 +2151,49 @@ int main() {
 `
 },
 
+{
+  slug: "change-of-base-formula-logarithms",
+  title: "Change of Base Formula for Logarithms",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-15",
+  excerpt: "How to convert between different log bases  a mustknow trick for computing logs in code.",
+  tags: ["logarithms", "change of base", "formula", "math"],
+  html: `
+<p>Your computer can compute natural logs (base e), base10 logs, and base2 logs directly. But what if you need log in some other base, like log_3(x)? The changeofbase formula rescues you.</p>
 
+<h2>The formula</h2>
+<pre><code>log_u(x) = log_k(x) / log_k(u)</code></pre>
+<p>In words: to compute the log of x in base u, pick any convinent base k (like e or 10), compute both logs in that base, and divide them. It's that simple.</p>
+
+<h2>Example: log_3(81)</h2>
+<p>We know 3^4 = 81, so log_3(81) = 4. Using change of base with natural log:</p>
+<pre><code>log(81) / log(3)  4.394449 / 1.098612  4.0</code></pre>
+<p>Works perfectly. In C++:</p>
+<pre><code>double log3_81 = log(81) / log(3);
+cout << fixed << setprecision(2) << log3_81 << "\\n"; // prints 4.00</code></pre>
+
+<h2>Converting to log2</h2>
+<p>If your compiler doesn't have <code>log2()</code> (it does in modern C++), you could do <code>log(x) / log(2)</code>. But it's better to use the builtin <code>log2(x)</code> for accuracy and speed. The changeofbase is still valuble for other bases like 3, 5, etc.</p>
+
+<h2>Why it matters</h2>
+<ul>
+  <li>Algorithms with divideby3 require log_3(n) analysis.</li>
+  <li>Some problems ask about digits in base b; you need log_b(10) or similar.</li>
+  <li>You may need to compare two logs with different bases; change one to the other's base.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>log_u(x) = log_k(x) / log_k(u) for any positive k  1.</li>
+  <li>Choose k = e (natural log) or k = 10 for computation.</li>
+  <li>The formula works because logarithms are basically exponents.</li>
+</ul>
+
+<blockquote>Change of base is the universal adapter for logarithms. Once you know it, you can work in whatever base makes the problem easiest.</blockquote>
+`
+},
 
 
 
