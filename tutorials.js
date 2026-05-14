@@ -2240,6 +2240,48 @@ int bits_binary(int x) {
 
 <blockquote>A tiny formula, but it'll save you when you need to preallocate arrays or understand the size of your data. Logs make counting digits a breeze.</blockquote>
 `
+},{
+  slug: "time-complexity-intro-big-o",
+  title: "Time Complexity Introduction and Big O Notation",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-15",
+  excerpt: "What time complexity is, why it's the most importent concept in cp, and how to read Big O.",
+  tags: ["time complexity", "Big O", "analysis", "algorithms"],
+  html: `
+<p>Time complexity is the language we use to describe how fast an algorithm is. In competive programming, an algorithm that's too slow is as good as wrong. Big O notation gives us a way to talk about speed without getting lost in hardware details.</p>
+
+<h2>What is time complexity?</h2>
+<p>It's an estimation of how the running time of an algorithm grows as the input size n grows. We don't count exact seconds (that depends on the CPU, compiler, etc.). Instead, we count the number of basic operations (additions, comparisons, array accesses) as a function of n, and then we keep only the dominant term, ignoring constants.</p>
+
+<h2>Big O  the formal definishion (lite)</h2>
+<p>We say an algorithm is <strong>O(f(n))</strong> if its running time is bounded by some constant times f(n) for large n. For example, O(n) means "roughly proportional to n". O(n<sup>2</sup>) means "roughly proportional to n squared". We drop lowerorder terms and constant multipliers because they don't matter for large n.</p>
+
+<h2>Examples</h2>
+<ul>
+  <li>A single loop through n elements: <strong>O(n)</strong>.</li>
+  <li>Two nested loops each running n times: <strong>O(n<sup>2</sup>)</strong>.</li>
+  <li>Binary search on a sorted array: <strong>O(log n)</strong>.</li>
+  <li>Sorting with merge sort: <strong>O(n log n)</strong>.</li>
+</ul>
+
+<h2>Why ignore constants?</h2>
+<p>Because constants vary by implementation, language, and hardware. An O(n) algorithm that does 100n operations and an O(n) algorithm that does 2n operations are both O(n). The difference matters in practice but not in Big O analysis. In cp, constant factors do matter sometimes, but first we care about the asymptotic growth.</p>
+
+<h2>How to read O(...)</h2>
+<p>"O" stands for "order of". So O(n log n) means "on the order of n log n". You'll hear people say "that's an O(n^2) solution", meaning its time grows quadratically with the input size.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Big O estimates growth rate, not exact time.</li>
+  <li>We keep only the dominant term: O(n^2 + n) becomes O(n^2).</li>
+  <li>Constant factors are hidden: O(5n) = O(n).</li>
+  <li>It's a worstcase bound unless stated otherwise.</li>
+</ul>
+
+<blockquote>Time complexity is the compass that guides your algorithmic choices. Before you write a single line, ask: is my idea going to be fast enough? Big O gives you the answer.</blockquote>
+`
 },
 
 
