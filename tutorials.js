@@ -2533,6 +2533,49 @@ int z = MAX(x++, y++);
 
 <blockquote>The first time I saw n(n+1)/2 I thought it was magic. It's not  it's just simple math that saves you from writing O(n) loops. Keep it in your back pocket.</blockquote>
 `
+},{
+  slug: "sum-of-squares-formula-derivation",
+  title: "Sum of Squares Formula Derivation",
+  topic: "Mathematics",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-15",
+  excerpt: "Where does n(n+1)(2n+1)/6 come from? A quick derivation so you don't have to just memorize it.",
+  tags: ["sum of squares", "derivation", "formula", "math"],
+  html: `
+<p>The formula for the sum of squares appears in many cp problems  from calculating variance to summing certain series. But memorizing it without understanding is risky. Let me show you one way to derive it.</p>
+
+<h2>The formula</h2>
+<pre><code>1 + 2 + 3 + ... + n = n(n+1)(2n+1) / 6</code></pre>
+<p>For n=3: 1+4+9=14, and 3*4*7/6 = 84/6 = 14. Works.</p>
+
+<h2>Derivation using binomial coefficients</h2>
+<p>We know that (k+1) = k + 3k + 3k + 1. Rearranging:</p>
+<pre><code>3k = (k+1) - k - 3k - 1</code></pre>
+<p>Sum both sides from k=1 to n:</p>
+<pre><code>3 * k = [(k+1) - k] - 3k - 1</code></pre>
+<p>The first sum telescopes: [(k+1) - k] = (n+1) - 1 = n + 3n + 3n + 1 - 1 = n + 3n + 3n.</p>
+<p>k = n(n+1)/2. 1 = n.</p>
+<p>So:</p>
+<pre><code>3 * S = (n + 3n + 3n) - 3 * [n(n+1)/2] - n</code></pre>
+<p>Simplify and solve for S. After algebra (which I'll skip here), you get S = n(n+1)(2n+1)/6.</p>
+
+<h2>Why you care in cp</h2>
+<p>You'll rarely need to derive it, but knowing where it comes from helps you remember it. Also, the telescoping trick is usefull for many other sums.</p>
+
+<h2>Sum of cubes  even easier</h2>
+<p>Using the same method, you can derive k = [n(n+1)/2]. That one is neat because it's the square of the sum of integers.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>k = n(n+1)(2n+1)/6  memorize it.</li>
+  <li>k = (n(n+1)/2)  also handy.</li>
+  <li>Use <code>long long</code> because n(n+1)(2n+1) can be huge  up to ~6e27 for n=1e9, which doesn't fit, but if you take modulo or use Python, fine.</li>
+  <li>In cp, you'll often compute these sums modulo M, so do each multiplication mod M.</li>
+</ul>
+
+<blockquote>Derivations are like training wheels  you don't need them forever, but they give you confidence when the formula slips your mind.</blockquote>
+`,
 },
 
 
