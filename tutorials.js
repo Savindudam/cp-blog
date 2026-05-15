@@ -2491,6 +2491,48 @@ int z = MAX(x++, y++);
 
 <blockquote>Macros are powerful, but they bite. Every missing parenthesis is a landmine. Follow these rules, or you'll spend hours debugging a macro that looks perfectly fine.</blockquote>
 `
+},{
+  slug: "sum-formulas-1-to-n-closed-forms",
+  title: "Sum Formulas: 1+2+...+n and Closed Forms",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-15",
+  excerpt: "The one formula you'll use more than any other: n(n+1)/2. Learn it, love it, and never write a loop for it again.",
+  tags: ["sum", "formula", "arithmetic series", "math"],
+  html: `
+<p>If you ever write a loop to compute the sum of the first n natural numbers, stop. There's a closedform formula that's O(1) and avoids overflow if you're careful. This is the first of many sum formulas you'll memorize.</p>
+
+<h2>The classic: 1 + 2 + ... + n</h2>
+<pre><code>sum = n * (n + 1) / 2</code></pre>
+<p>That's it. For n = 100, the loop would run 100 times, but the formula does one multiplication and one division. Proof? Pair the first and last: (1+n) + (2+n-1) + ... = (n+1) repeated n/2 times. So sum = n(n+1)/2.</p>
+
+<h2>Watch out for integer division</h2>
+<p>In C++, <code>n * (n+1) / 2</code> is fine if n is even because n*(n+1) is always even, so integer division gives exact result. But if you write <code>(n/2)*(n+1)</code>, you'll lose the half when n is odd. Always multiply first then divide.</p>
+
+<h2>Sum of the first n odd numbers</h2>
+<p>1 + 3 + 5 + ... + (2n-1) = n<sup>2</sup>. That's a neat one. For n = 5: 1+3+5+7+9 = 25 = 5.</p>
+
+<h2>Sum of the first n even numbers</h2>
+<p>2 + 4 + 6 + ... + 2n = n(n+1). Because it's twice the sum of 1..n.</p>
+
+<h2>Sum of squares and cubes (preview)</h2>
+<p>We'll cover those in the next tutorials, but here's the teaser:</p>
+<ul>
+  <li>1 + 2 + ... + n = n(n+1)(2n+1)/6</li>
+  <li>1 + 2 + ... + n = [n(n+1)/2]</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>1+2+...+n = n(n+1)/2  memorize it.</li>
+  <li>Always multiply before dividing to keep integer precision.</li>
+  <li>Use <code>long long</code> if n is larger than about 1e5, because n(n+1)/2 can exceed 2e9.</li>
+  <li>These formulas are your best friends in combinatorics and algorithm analysis.</li>
+</ul>
+
+<blockquote>The first time I saw n(n+1)/2 I thought it was magic. It's not  it's just simple math that saves you from writing O(n) loops. Keep it in your back pocket.</blockquote>
+`
 },
 
 
