@@ -1321,7 +1321,7 @@ if (r < 0) r += MOD;</code></pre>
   readMinutes: 6,
   date: "2026-05-08",
   excerpt: "How to output decimal numbers with exactly the right number of decimal places  because the judge cares about that a lot.",
-  tags: ["printf"precision", "double", "output"],
+  tags: ["printf","precision", "double", "output"],
   html: `
 <p>When the problem says "print the answer with exactly 6 decimal places", they mean it. A missing zero at the end can get you Wrong Answer. Let's learn to format floating point output like a pro.</p>
 
@@ -2533,7 +2533,9 @@ int z = MAX(x++, y++);
 
 <blockquote>The first time I saw n(n+1)/2 I thought it was magic. It's not  it's just simple math that saves you from writing O(n) loops. Keep it in your back pocket.</blockquote>
 `
-},{
+},
+
+{
   slug: "sum-of-squares-formula-derivation",
   title: "Sum of Squares Formula Derivation",
   topic: "Mathematics",
@@ -2576,19 +2578,48 @@ int z = MAX(x++, y++);
 
 <blockquote>Derivations are like training wheels  you don't need them forever, but they give you confidence when the formula slips your mind.</blockquote>
 `,
-},{
-  slug: "arithmetic-progression-sum-a-to-b",
-  title: "Arithmetic Progression Sum (a+...+b)",
+},
+
+{
+  slug: "geometric-progression-sum-formula",
+  title: "Geometric Progression Sum Formula",
   topic: "Mathematics",
   difficulty: "Easy",
-  readMinutes: 6,
+  readMinutes: 7,
   date: "2026-05-15",
-  excerpt: "Summing numbers from a to b (not just 1 to n)  the general formula for arithmetic sequences.",
-  tags: ["arithmetic progression", "sum", "formula", "sequence"],
+  excerpt: "Summing a, ar, ar², ... ar^(n-1) – the closed form that involves powers and division, and why modulo makes it tricky.",
+  tags: ["geometric progression", "sum", "formula", "ratio"],
   html: `
-<p>What if you need the sum from a to b, like 10 + 11 + ... + 100? The formula for 1..n is nice, but you can adapt it easily. This is the general arithmetic progre
+<p>Arithmetic progressions add the same difference each time. Geometric progressions multiply by the same ratio. The sum formula is a bit more involved, but still O(1) if you have fast exponentiation.</p>
 
+<h2>The formula for finite geometric series</h2>
+<pre><code>S = a * (r^n - 1) / (r - 1)   for r ≠ 1</code></pre>
+<p>Where a is the first term, r is the common ratio, and n is the number of terms. If r = 1, then S = a * n.</p>
 
+<h2>Example</h2>
+<p>Sum of 1 + 2 + 4 + 8 + 16 (a=1, r=2, n=5): S = 1*(2^5 - 1)/(2-1) = (32-1)/1 = 31. Correct.</p>
+
+<h2>The infinite geometric series (|r| < 1)</h2>
+<p>If |r| < 1 and you sum to infinity: S = a / (1 - r). Not common in cp because inputs are finite, but good to know.</p>
+
+<h2>Modular arithmetic problem</h2>
+<p>In cp, you'll often compute geometric sum modulo M. But division by (r-1) is not allowed directly – you need the modular inverse of (r-1) modulo M. That's fine if M is prime and (r-1) is not divisible by M. But if r-1 and M are not coprime, you can't use modular inverse. Then you need a different approach (like binary exponentiation with matrix or divide and conquer).</p>
+
+<h2>Computing without division (for large n)</h2>
+<p>You can use recursion: sum(a, r, n) = sum(a, r, n/2) + r^(n/2) * sum(a, r, n/2) etc. That's O(log n) and avoids division. Many cp libraries implement that.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Geometric sum: a*(r^n - 1)/(r-1).</li>
+  <li>If r = 1, sum = a*n.</li>
+  <li>In modulo world, replace division with modular inverse (if coprime).</li>
+  <li>For non‑coprime or when you want to avoid inverse, use binary exponentiation style recursion.</li>
+  <li>r^n can be huge – use fast exponentiation and modulo.</li>
+</ul>
+
+<blockquote>Geometric series pop up in combinatorics, probability, and even some graph algorithms. The formula is easy to memorize, but the modular version requires extra care.</blockquote>
+`,
+},
 
 
 ]
