@@ -2576,7 +2576,17 @@ int z = MAX(x++, y++);
 
 <blockquote>Derivations are like training wheels  you don't need them forever, but they give you confidence when the formula slips your mind.</blockquote>
 `,
-},
+},{
+  slug: "arithmetic-progression-sum-a-to-b",
+  title: "Arithmetic Progression Sum (a+...+b)",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-15",
+  excerpt: "Summing numbers from a to b (not just 1 to n)  the general formula for arithmetic sequences.",
+  tags: ["arithmetic progression", "sum", "formula", "sequence"],
+  html: `
+<p>What if you need the sum from a to b, like 10 + 11 + ... + 100? The formula for 1..n is nice, but you can adapt it easily. This is the general arithmetic progre
 
 
 
