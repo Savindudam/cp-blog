@@ -59,8 +59,8 @@ You can read and understand every line of code in minutes.
 
 ## Updates with the time 
 
- 2026-05-09 :
-               Made 50 tutorials. 
+ 2026-05-13 :
+               Made 50 tutorials + vs code setup. 
                Updated the UI.
                Some functions edited.
                Applied theme switch possible.
