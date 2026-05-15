@@ -137,7 +137,9 @@ cin >> name;</code></pre>
 
 <blockquote>Getting comftable with basic input and output is the foundation of everything else. Once you can read data and print answers reliably, the real algorithm fun begins.</blockquote>
 `
-},{
+},
+
+{
   slug: "working-with-numbers-in-cpp",
   title: "Working With Numbers In C++",
   topic: "Numbers & Mathematics",
@@ -194,7 +196,9 @@ if (x < 0) x += m;
 
 <blockquote>Overflow bugs are silent killers in competive programming. When in doubt, use <code>long long</code> and take modulo early. Your future self will thank you.</blockquote>
 `
-},{
+},
+
+{
   slug: "input-and-output-in-cpp",
   title: "Input And Output In C++",
   topic: "Setup & Basics",
@@ -223,7 +227,7 @@ int main() {
 <p>By default, cin/cout are a bit slow because they are synced with C's I/O. To make them blazing fast, add these two lines at the beginning of <code>main</code>:</p>
 <pre><code>ios::sync_with_stdio(false);
 cin.tie(0);</code></pre>
-<p>After that, don't mix <code>cin/cout</code> with <code>scanf/printf</code>  they may not work well together beof the unsynced buffers.</p>
+<p>After that, don't mix <code>cin/cout</code> with <code>scanf/printf</code>  they may not work well together because of the unsynced buffers.</p>
 
 <h2>scanf and printf  the old C way</h2>
 <p>Some problems have huge input (millions of numbers). In those cases <code>scanf</code> and <code>printf</code> can still be a tiny bit faster.</p>
@@ -253,7 +257,9 @@ freopen("output.txt", "w", stdout);</code></pre>
 
 <blockquote>I/O speed can mean the difference between Accepted and Time Limit Exceded. Always add the two speed-up lines unless you know for sure that scanf/printf is needed.</blockquote>
 `
-},{
+},
+
+{
   slug: "cpp-competitive-programming-template",
   title: "Setting Up a C++ Competitive Programming Template",
   topic: "Setup & Basics",
@@ -308,7 +314,9 @@ int main() {
 
 <blockquote>A good template is like a warmup that gets you into the coding zone instantly. Tune it to your liking and never start a contest without it.</blockquote>
 `
-},{
+},
+
+{
   slug: "include-bits-stdcpp",
   title: "Including the Entire Standard Library with bits/stdc++.h",
   topic: "Setup & Basics",
@@ -357,7 +365,9 @@ int main() {
 
 <blockquote>When the clock is ticking and you need to write a quick bugfree solution, bits/stdc++.h is your best friend. Just remember it's a cp hack, not a generalpurpose practice.</blockquote>
 `
-},{
+},
+
+{
   slug: "understanding-using-namespace-std",
   title: "Understanding the using namespace std Directive",
   topic: "Setup & Basics",
@@ -393,7 +403,7 @@ int main() {
     cout << v[0] << "\\n";
     return 0;
 }</code></pre>
-<p>Much cleaner! Now the compiutomaticaly looks inside the <code>std</code> namespace when it sees <code>cout</code> or <code>vector</code>. This makes the code shorter and easier to reach is exactly what we want in a contest.</p>
+<p>Much cleaner! Now the compiler automaticaly looks inside the <code>std</code> namespace when it sees <code>cout</code> or <code>vector</code>. This makes the code shorter and easier to read, which is exactly what we want in a contest.</p>
 
 <h2>Is it dangrous?</h2>
 <p>In large projects, using the whole <code>std</code> namespace can cause name conflicts (collisions). But in competive programming you normaly write short programs of a few hundred lines at most, so conflicts are super rare. Almost every cp'r uses it.</p>
@@ -415,7 +425,9 @@ using std::vector;</code></pre>
 
 <blockquote>Think of <code>using namespace std;</code> as a shortcut that removes unecessary noise from your code. In a timed contest, every saved keystroke is a small victory.</blockquote>
 `
-},{
+},
+
+{
   slug: "compiling-cpp-with-gpp-flags",
   title: "Compiling C++ Code with g++ and Optimization Flags",
   topic: "Setup & Basics",
@@ -470,7 +482,9 @@ using std::vector;</code></pre>
 
 <blockquote>Compiling might seem like a boring step, but knowing how to squeeze every bit of performance with the right flags can save you from a TLE. Plus, warnings are like free code reviews  don't ignore them.</blockquote>
 `
-},{
+},
+
+{
   slug: "fast-io-ios-sync-stdio-cin-tie",
   title: "Fast I/O: ios::sync_with_stdio and cin.tie",
   topic: "Setup & Basics",
@@ -526,7 +540,9 @@ int main() {
 
 <blockquote>Two lines of code can turn a TLE into an AC. Never forget to speed up your I/O  it's one of the simplest and most impactfull optimizations you can do.</blockquote>
 `
-},{
+},
+
+{
   slug: "reading-integers-from-standard-input",
   title: "Reading Integers from Standard Input in C++",
   topic: "Input/Output",
@@ -647,7 +663,9 @@ while (ss >> x) {
 
 <blockquote>String input can be a source of annoying bugs because invisible newline characters get left in the buffer. Always test your reading logic on a small sample before writing the rest of the solution.</blockquote>
 `
-},{
+},
+
+{
   slug: "handling-unknown-amount-of-input",
   title: "Handling Unknown Amount of Input with while(cin >> x)",
   topic: "Input/Output",
@@ -714,7 +732,9 @@ while (cin >> word) {
 
 <blockquote>The <code>while(cin >> x)</code> trick is one of those simple things that makes competive programming so much easier. It frees you from counting input sizes and lets you focus on the actual algorithm.</blockquote>
 `
-},{
+},
+
+{
   slug: "output-formatting-cout-newline",
   title: "Output Formatting with cout and Newline",
   topic: "Input/Output",
@@ -832,7 +852,76 @@ printf("%.2f\\n", pi); // 3.14</code></pre>
 
 <blockquote><code>scanf</code> and <code>printf</code> have been around for decades and they aren't going anywhere. Knowing them can save you when you hit a monstrous input file.</blockquote>
 `
-},{
+},
+
+{
+  slug: "reading-whole-line-getline",
+  title: "Reading a Whole Line with getline",
+  topic: "Input/Output",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-15",
+  excerpt: "How to read an entire line of text including spaces using getline, and the common newline trap after cin.",
+  tags: ["getline", "strings", "input", "newline"],
+  html: `
+<p>Somtimes you need to read a full line that may contain spaces  like a sentence or a whole paragraph. The <code>getline</code> function is your freind. But beware: mixing <code>cin >></code> and <code>getline</code> can cause a classic bug that leaves you scratching your head. Let's clear it up.</p>
+
+<h2>Basic getline usage</h2>
+<pre><code>string line;
+getline(cin, line);</code></pre>
+<p>This reads everything from the current input position until a newline character (<code>'\\n'</code>). The newline itself is consumed but not stored. So <code>line</code> will contain the whole line (including spaces).</p>
+
+<h2>The famous newline trap</h2>
+<p>Imagine this code:</p>
+<pre><code>int n;
+cin >> n;
+string s;
+getline(cin, s);  // s ends up empty!</code></pre>
+<p>Why does <code>s</code> stay empty? After <code>cin >> n</code>, the input still contains a newline character (the one you typed after the number). <code>getline</code> sees that newline immediatly and reads it as an empty line. To fix it, call <code>cin.ignore()</code> after the <code>cin >></code>:</p>
+<pre><code>int n;
+cin >> n;
+cin.ignore(); // discard the leftover newline
+string s;
+getline(cin, s); // now reads the actual line</code></pre>
+
+<h2>Reading an unknown number of lines</h2>
+<p>If the input consists of several lines, you can loop until EOF:</p>
+<pre><code>string line;
+while (getline(cin, line)) {
+    // process each line
+}</code></pre>
+<p>This works even if lines are empty  <code>getline</code> will return an empty string for blank lines, but the stream stays good.</p>
+
+<h2>Parsing a line after reading</h2>
+<p>Often you read a line containing several numbers. Use a <code>stringstream</code> to split it:</p>
+<pre><code>string line;
+getline(cin, line);
+stringstream ss(line);
+int x;
+while (ss >> x) {
+    // x is each integer on the line
+}</code></pre>
+
+<h2>When to prefer getline over cin &gt;&gt;</h2>
+<ul>
+  <li>When you need to preserve spaces inside a string.</li>
+  <li>When the problem gives data line by line and each line may contain spaces.</li>
+  <li>When you want to read until a specific delimiter (getline can take a third argument as delimiter).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>getline(cin, str)</code> reads a whole line (stops at newline).</li>
+  <li>After <code>cin >></code>, always call <code>cin.ignore()</code> before <code>getline</code> to skip the leftover newline.</li>
+  <li>Use <code>stringstream</code> to parse a line after reading it.</li>
+  <li><code>getline</code> can also accept a delimiter: <code>getline(cin, str, ',')</code> reads until a comma.</li>
+</ul>
+
+<blockquote>Newline characters are invisible but powerfull. Mastering <code>getline</code> and <code>cin.ignore()</code> will save you from one of the most common beginner bugs in competitive programming.</blockquote>
+`
+},
+
+{
   slug: "file-io-freopen-for-cp",
   title: "File I/O: freopen for Competitive Programming",
   topic: "Input/Output",
@@ -898,7 +987,9 @@ fout << x * 2 << "\\n";</code></pre>
 
 <blockquote>File I/O might seem oldfashioned, but it's a necessary evil for a few contests. <code>freopen</code> makes the transition painless  two lines and you're done.</blockquote>
 `
-},{
+},
+
+{
   slug: "integer-types-int-long-long",
   title: "Integer Types: int, long long, and Their Ranges",
   topic: "Numbers in C++",
@@ -948,7 +1039,9 @@ cout << LLONG_MAX << "\\n";    // 9223372036854775807</code></pre>
 
 <blockquote>Understanding integer ranges is like knowing the speed limit. You can drive an int on a small road, but on the autobahn of cp, you better have a long long.</blockquote>
 `
-},{
+},
+
+{
   slug: "avoiding-overflow-multiplying-ints",
   title: "Avoiding Overflow When Multiplying ints",
   topic: "Numbers in C++",
@@ -998,7 +1091,9 @@ int c = a / b * b; // (5/2)*2 = 2*2 = 4, not 5</code></pre>
 
 <blockquote>The overflow trap is subtle because your sample test might pass. Then the judge hits you with a test where numbers are just large enough to overflow. Learn to spot it before it bites.</blockquote>
 `
-},{
+},
+
+{
   slug: "long-long-suffix-ll",
   title: "The long long Suffix LL in C++",
   topic: "Numbers in C++",
@@ -1046,7 +1141,9 @@ long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
 
 <blockquote>The <code>LL</code> suffix is tiny but mighty. Omitting it has caused more midnight debugging sessions than many care to admit. Just develop the habbit of typing it.</blockquote>
 `
-},{
+},
+
+{
   slug: "introduction-to-int128",
   title: "Introduction to the __int128_t Type",
   topic: "Numbers in C++",
@@ -1100,6 +1197,7 @@ long long y = 60 * 60 * 24 * 365 * 100LL; // one LL fixes it</code></pre>
 <blockquote>Think of <code>__int128_t</code> as the nuclear option. It's there if you need it, but with great power comes great responsibility  and a bit of inconvenience.</blockquote>
 `
 },
+
 {
   slug: "modular-arithmetic-basics-properties",
   title: "Modular Arithmetic: Basics and Properties",
@@ -1218,7 +1316,9 @@ for (int i = 1; i <= MAX; i++) {
 
 <blockquote>Factorials are a building block for combinatorics, DP, and probability. Mastering the modular version early will pay off tenfold later.</blockquote>
 `
-},{
+},
+
+{
   slug: "handling-negative-remainders-cpp",
   title: "Handling Negative Remainders in C++",
   topic: "Numbers in C++",
@@ -1269,7 +1369,9 @@ if (r < 0) r += MOD;</code></pre>
 
 <blockquote>C++s modulo operator is like a mischievous gremlin. Feed it negative numbers and it bites. Tame it with that simple <code>if</code> statement and sleep soundly.</blockquote>
 `
-},{
+},
+
+{
   slug: "floating-point-numbers-double-long-double",
   title: "Floating Point Numbers: double vs long double",
   topic: "Numbers in C++",
@@ -1313,7 +1415,9 @@ if (r < 0) r += MOD;</code></pre>
 
 <blockquote>Floats are like that friend who's always "around there" but never exact. Learn to live with their imprecision and they'll serve you well in geometry and probability problems.</blockquote>
 `
-},{
+},
+
+{
   slug: "printing-floats-printf-precision",
   title: "Printing Floats with printf Precision",
   topic: "Numbers in C++",
@@ -1321,7 +1425,7 @@ if (r < 0) r += MOD;</code></pre>
   readMinutes: 6,
   date: "2026-05-08",
   excerpt: "How to output decimal numbers with exactly the right number of decimal places  because the judge cares about that a lot.",
-  tags: ["printf","precision", "double", "output"],
+  tags: ["printf", "precision", "double", "output"],
   html: `
 <p>When the problem says "print the answer with exactly 6 decimal places", they mean it. A missing zero at the end can get you Wrong Answer. Let's learn to format floating point output like a pro.</p>
 
@@ -1358,7 +1462,9 @@ cout << fixed << setprecision(6) << pi << "\\n"; // 3.141593</code></pre>
 
 <blockquote>The judge doesn't care that 3.14 and 3.140000 are the same number mathematically  if they ask for 6 decimals and you give 2, you lose. Precision printing is nonnegotiable.</blockquote>
 `
-},{
+},
+
+{
   slug: "floating-point-equality-epsilon",
   title: "Floating Point Equality Comparison with Epsilon",
   topic: "Numbers in C++",
@@ -1402,7 +1508,9 @@ if (abs(a - b) < eps) {
 
 <blockquote>Embracing epsilon is a rite of passage for every cp coder. Once you accept that floats are "close enough", a whole new world of geometry and numeric problems opens up.</blockquote>
 `
-},{
+},
+
+{
   slug: "integers-exactly-in-floating-point",
   title: "Representing Integers Exactly in Floating Point",
   topic: "Numbers in C++",
@@ -1444,7 +1552,9 @@ cout << fixed << setprecision(0) << d << "\\n"; // might print 9007199254740992 
 
 <blockquote>Floats aren't evil; they just have strict boundries. Below 2<sup>53</sup>, they're your best friend; above that, they become a guessing game. Know the limit and you'll never be suprised.</blockquote>
 `
-},{
+},
+
+{
   slug: "shortening-code-with-typedef",
   title: "Shortening Code with typedef (ll, vi, pi)",
   topic: "Coding Style",
@@ -1499,7 +1609,9 @@ mivs m; // much shorter than the full type</code></pre>
 
 <blockquote>Shorter code is not just about laziness  it reduces visual clutter, making the logic easier to see. Start with <code>typedef long long ll;</code> and you've already improved your coding speed by 10%.</blockquote>
 `
-},{
+},
+
+{
   slug: "defining-macros-with-define-in-cpp",
   title: "Defining Macros with #define in C++",
   topic: "Coding Style",
@@ -1558,7 +1670,9 @@ FOR(i, 10) {
 
 <blockquote>Macros are like a sharp knife: incredibly usefull when handled correctly, but easy to cut yourself. Once you've been bitten by a missing parenthesis, you'll never forget it.</blockquote>
 `
-},{
+},
+
+{
   slug: "using-macros-for-f-s",
   title: "Using Macros for F(first) and S(second)",
   topic: "Coding Style",
@@ -1618,7 +1732,335 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>Some say these macros are ugly. I say they're beautiful. In the heat of a contest, every saved character brings you closer to the finish line.</blockquote>
 `
-},{
+},
+
+{
+  slug: "loop-macros-rep-i-a-b",
+  title: "Loop Macros: REP(i,a,b) for Cleaner Code",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "Define a macro that makes writing for loops a breeze  REP(i, a, b) is the most beloved cp shortcut.",
+  tags: ["macros", "loops", "REP", "for loop", "shorten"],
+  html: `
+<p>How many times do you write <code>for (int i = 0; i &lt n; i++)</code>? Hundreds per contest, maybe. That's a lot of boilerplate. The macro <code>REP(i, a, b)</code> compresses that into just a few characters. Let's see how it's defined and used.</p>
+
+<h2>The definition</h2>
+<pre><code>#define REP(i, a, b) for (int i = a; i &lt= b; i++)</code></pre>
+<p>This macro creates a loop variable <code>i</code> that starts at <code>a</code>, runs while <code>i &lt= b</code>, and increments by 1 each time. So <code>REP(i, 1, n)</code> is a common way to iterate from 1 to n inclusive.</p>
+
+<h2>Examples</h2>
+<pre><code>// print numbers 1 to 10
+REP(i, 1, 10) {
+    cout << i << " ";
+}
+
+// fill an array
+REP(i, 0, n-1) {
+    cin >> arr[i];
+}
+
+// nested loops
+REP(i, 1, n) {
+    REP(j, 1, m) {
+        dp[i][j] = ...;
+    }
+}</code></pre>
+
+<h2>Variations</h2>
+<p>Some programmers use slightly different macros:</p>
+<ul>
+  <li><code>#define REP(i, n) for (int i = 0; i &lt n; i++)</code>  when you always start from 0.</li>
+  <li><code>#define REP1(i, n) for (int i = 1; i &lt= n; i++)</code>  for 1based loops.</li>
+  <li><code>#define FOR(i, a, b) for (int i = a; i &lt b; i++)</code>  halfopen interval [a, b).</li>
+</ul>
+<p>Pick whichever you're comftable with and stick to it.</p>
+
+<h2>Why inclusive bounds (a to b)?</h2>
+<p>In cp, many problems are 1indexed. Using <code>&lt= b</code> saves you from writing <code>i &lt n+1</code> or remembering to add 1. It feels more natural.</p>
+
+<h2>Dangers of loop macros</h2>
+<p>If you use <code>REP(i, 1, 3*n)</code>, the condition becomes <code>i &lt= 3*n</code>. That's fine. But if you write <code>REP(i, 1, n/2)</code>, the macro becomes <code>for (int i = 1; i &lt= n/2; i++)</code>. That's still okay because the division is evaluated on each iteration, but it's not a problem. The only real danger is forgetting the parentheses in the definition (but in our case we don't need them because <code>a</code> and <code>b</code> are just expressions, not arguments of a functionlike macro).</p>
+<p>Still, one must be careful: if <code>b</code> is a function call like <code>getSize()</code>, it will be called on each iteration. That could be inefficient. Usually it's fine.</p>
+
+<h2>Combining with other macros</h2>
+<p>With <code>REP</code>, your code can become very compact:</p>
+<pre><code>#define REP(i, a, b) for (int i = a; i &lt= b; i++)
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+int main() {
+    int n; cin >> n;
+    vector&ltpi&gt events;
+    REP(i, 1, n) {
+        int l, r; cin >> l >> r;
+        events.PB(MP(l, r));
+    }
+    sort(events.begin(), events.end(), [](pi a, pi b) { return a.F &lt b.F; });
+    // ...
+}</code></pre>
+<p>That's the dream  all set up in five macros, and your code flows without any visual clutter.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>REP(i, a, b)</code> runs from a to b inclusive.</li>
+  <li>You can define variations for 0based or halfopen loops.</li>
+  <li>Loop macros save a huge amount of typing over a contest.</li>
+  <li>Test your macros on a small program first to make sure parentheses aren't missing.</li>
+</ul>
+
+<blockquote>The REP macro is a love letter to lazy programmers. Write it once, and then forget <code>for (int i = ...</code> exists. Your keyboard will thank you.</blockquote>
+`
+},
+
+{
+  slug: "avoiding-pitfalls-macro-parameters",
+  title: "Avoiding Pitfalls with Macro Parameters",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "Why macros can betray you when you pass expressions as arguments  and the simple fix that saves you.",
+  tags: ["macros", "define", "pitfalls", "parentheses"],
+  html: `
+<p>We just learned how powerfull macros are for shortening code. But they have a dark side. Because macros do blind text substitution, passing complex expresions can lead to disasterous results. Let's look at the common traps and how to avoid them.</p>
+
+<h2>The classic trap: missing parentheses</h2>
+<pre><code>#define SQ(a) a*a
+cout << SQ(3+3) << "\\n"; // Expect 36, but prints 15!</code></pre>
+<p>What happened? The preprocessor replaced <code>SQ(3+3)</code> with <code>3+3*3+3</code>. C++ operator precedence then evaluated this as <code>3 + (3*3) + 3 = 3 + 9 + 3 = 15</code>. The multiplication binds tighter than addition, so the squaring only hapened to the second 3.</p>
+<p>The fix: always wrap the macro's parameters and the entire expression in parentheses.</p>
+<pre><code>#define SQ(a) ((a)*(a))
+cout << SQ(3+3) << "\\n"; // ((3+3)*(3+3)) = 6*6 = 36. Correct!</code></pre>
+
+<h2>The double evaluation trap</h2>
+<p>Suppose you write a macro to return the maximum of two numbers:</p>
+<pre><code>#define MAX(a,b) ((a)>(b)?(a):(b))
+int x = 5, y = 3;
+cout << MAX(x++, y++) << "\\n"; // looks innocent?</code></pre>
+<p>After substitution: <code>((x++)>(y++)?(x++):(y++))</code>. If x > y, x is incremented twice, y once. If y > x, y is incremented twice. This leads to very confusing bugs. The lesson: don't use macros for things that might have side effects (increment, function calls, etc.). In modern C++, <code>inline</code> functions or <code>std::max</code> are safer.</p>
+
+<h2>Macro name collisions</h2>
+<p>Since macros don't respect namespaces or scoping, your macro might overwrite a variable name or a standard library name. For example, <code>#define max(a,b)</code> would clash with <code>std::max</code>. Or if you name your macro <code>left</code>, it will replace any variable called <code>left</code>. To avoid this, some programmers use long, distinctive macro names, but in cp short names are usually fine as long as you remember not to use them as variables.</p>
+
+<h2>Multistatement macros</h2>
+<p>When a macro contains multiple statments, wrap it in a <code>do { ... } while(0)</code> block so it acts as a single statement.</p>
+<pre><code>#define CHECK(x) do { if ((x) < 0) cout << "error\\n"; } while(0)
+if (flag) CHECK(value); else ... // works correctly now</code></pre>
+<p>Without <code>do...while(0)</code>, the <code>if</code> / <code>else</code> might attach incorrectly.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always wrap macro parameters and the whole result in parentheses: <code>#define F(a) ((a)*(a))</code>.</li>
+  <li>Never use macros with arguments that have side effects (like <code>x++</code> or function calls).</li>
+  <li>For multistatement macros, use <code>do { ... } while(0)</code> to avoid breaking control flow.</li>
+  <li>Prefer <code>inline</code> functions or <code>constexpr</code> over functionlike macros when possible.</li>
+</ul>
+
+<blockquote>Macros are like a wild horse: powerfull but unpredictable. Treat them with respect, wrap everything in parentheses, and they'll serve you well. Ignore these rules and they'll buck you off at the worst possible moment.</blockquote>
+`
+},
+
+{
+  slug: "sum-formulas-natural-numbers",
+  title: "Sum Formulas: 1+2+...+n and Closed Forms",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "The most famous sum formula in all of cp  how young Gauss solved it and why you'll use it constantly.",
+  tags: ["sum", "formula", "Gauss", "O(1)", "math"],
+  html: `
+<p>If there's one math formula you absolutly must memorise for cp, it's this: the sum of the first n integers. You could write a loop, but why would you when it takes O(1) with a formula? Meet the "Gauss trick".</p>
+
+<h2>The formula</h2>
+<pre><code>1 + 2 + 3 + ... + n = n * (n + 1) / 2</code></pre>
+<p>Legend says Carl Friedrich Gauss discovered this when he was around 10 years old. His teacher asked the class to add all numbers from 1 to 100, expecting them to be busy for a while. Gauss notised that you can pair up numbers from the ends: 1+100=101, 2+99=101, 3+98=101... there are 50 such pairs, so total = 50*101 = 5050. Genius.</p>
+
+<h2>Why this is so importent</h2>
+<p>In cp, you often need to compute sums over ranges, or count pairs, or analyze loops. Knowing that 1..n sums to n(n+1)/2 lets you replace an O(n) loop with a single expression. For n = 10<sup>9</sup>, the loop would TLE; the formula gives the answer instantly.</p>
+<pre><code>long long n; cin >> n;
+cout << n * (n + 1) / 2 << "\\n";</code></pre>
+
+<h2>Be carefull of overflow</h2>
+<p>If n is up to 10<sup>9</sup>, n*(n+1) is about 10<sup>18</sup>, which fits in <code>long long</code>. Use <code>long long</code> for the calculation. If n is even larger (like 10<sup>18</sup>), the product might exceed 64bit, but that's rare in cp.</p>
+
+<h2>General closedform formulas</h2>
+<p>For any sum of the form <code>_{x=1}^{n} x^k</code>, there's a polynomial formula of degree k+1. For k=1 we just saw; for k=2 it's n(n+1)(2n+1)/6 (next tutorial); for higher powers there are formulas too, but they're less common. The key takeaway: if you see a sum over a range, think "closed form" before looping.</p>
+
+<h2>Example: counting pairs</h2>
+<p>How many unordered pairs (i, j) with 1  i < j  n? That's exactly (n choose 2) = n*(n-1)/2. This is the Gauss formula shifted. You'll see this in combinatorics and graph problems all the time.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sum of 1..n = n*(n+1)/2. Memorise it! It's the single most usefull math formula in cp.</li>
+  <li>Always use <code>long long</code> to avoid overflow.</li>
+  <li>Look for symetry: many sums can be reduced to this base formula.</li>
+</ul>
+
+<blockquote>Gauss saved himself an hour of boring addition; you can save yourself a Time Limit Exceeded. When in doubt, think: can I replace this loop with n*(n+1)/2?</blockquote>
+`
+},
+
+{
+  slug: "sum-of-squares-formula",
+  title: "Sum of Squares Formula Derivation",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-08",
+  excerpt: "The formula for 1+2+...+n  less common than the Gauss sum, but still shows up in variance and geometry problems.",
+  tags: ["sum of squares", "formula", "math", "closed form"],
+  html: `
+<p>After the simple sum, the next formula to tuck in your pocket is the sum of squares. You won't use it as often as n(n+1)/2, but when you need it, you'll be glad you memorised it.</p>
+
+<h2>The formula</h2>
+<pre><code>1 + 2 + 3 + ... + n = n * (n + 1) * (2n + 1) / 6</code></pre>
+<p>So for n=5: 1+4+9+16+25 = 55. The formula gives 5*6*11/6 = 330/6 = 55. Matches.</p>
+
+<h2>Where it comes from (quick intuition)</h2>
+<p>The sum of squares can be proven by induction, but a nice geometric proof uses pyramids of cubes. Or you can remember that it's a cubic polynomial (degree 3) because we're summing a quadratic term. The coefficients can be found by solving a few equations. But you don't need the proof  just remember the formula.</p>
+
+<h2>When does it appear in cp?</h2>
+<ul>
+  <li>Problems about variance or standard deviation: variance = (sum of squares)/n - (mean).</li>
+  <li>Some geometry: squared distances often involve sums of squares.</li>
+  <li>Counting problems: for example, the number of pairs (a,b) with certain properties might involve squares.</li>
+  <li>Loop analysis: nested loops where something runs i times.</li>
+</ul>
+
+<h2>Overflow warning (again)</h2>
+<p>n up to 10<sup>6</sup> gives n  10<sup>18</sup>, which fits in <code>long long</code>. For n = 10<sup>9</sup>, n = 10<sup>27</sup>  way too big. But then you'd usually need modulo arithmetic. So use <code>long long</code> with modulo if needed.</p>
+<pre><code>const long long MOD = 1e9+7;
+long long sum_squares_mod(long long n) {
+    // (n*(n+1)*(2n+1)/6) % MOD, but division requires modular inverse
+    // We can do: n%MOD * ((n+1)%MOD) %MOD * ((2*n+1)%MOD) %MOD * inv6 %MOD
+    // But that's for later.
+}</code></pre>
+
+<h2>Other common sum formulas</h2>
+<ul>
+  <li>Sum of cubes: 1+2+...+n = [n(n+1)/2] (square of the Gauss sum!).</li>
+  <li>Sum of first n even numbers: 2+4+...+2n = n(n+1).</li>
+  <li>Sum of first n odd numbers: 1+3+...+2n-1 = n.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sum of squares = n(n+1)(2n+1)/6.</li>
+  <li>It's a cubic formula, so use big integer types.</li>
+  <li>Don't confuse with the sum of first n numbers (which is quadratic).</li>
+  <li>Sum of cubes is the square of the Gauss sum  a cute fact.</li>
+</ul>
+
+<blockquote>Sums of squares pop up when you least expect them. Keep this formula in your mental toolbox  it's another O(n) loop killer.</blockquote>
+`
+},
+
+{
+  slug: "arithmetic-progression-sum",
+  title: "Arithmetic Progression Sum (a+...+b)",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "How to add up a sequence with constant step, like 3+7+11+15, instantly using the average trick.",
+  tags: ["arithmetic progression", "sum", "formula", "average"],
+  html: `
+<p>An arithmetic progression (AP) is just a sequence where the difference between consecutive terms is constant. For example, 3, 7, 11, 15 has a common differnce of 4. The sum of such a sequence is super easy: just multiply the average of the first and last term by the number of terms.</p>
+
+<h2>The formula</h2>
+<pre><code>Sum = (first term + last term) * (number of terms) / 2</code></pre>
+<p>More formally: if the sequence is a, a+d, a+2d, ..., b (with d not zero), the number of terms n = (b - a)/d + 1 (assuming b-a is divisible by d). Then sum = n * (a + b) / 2.</p>
+
+<h2>Why it works</h2>
+<p>Pair up the first and last, second and secondlast, etc. Each pair sums to a+b. There are n/2 such pairs. So total = (a+b) * n/2. Same Gauss trick, just applied to a general AP.</p>
+
+<h2>Example 1: 3+7+11+15</h2>
+<p>First=3, last=15, n=4. Sum = 4*(3+15)/2 = 4*18/2 = 36.</p>
+<pre><code>// code
+int a = 3, b = 15, d = 4;
+int n = (b - a)/d + 1; // 4
+int sum = n * (a + b) / 2; // 36</code></pre>
+
+<h2>Example 2: sum of all multiples of k between L and R</h2>
+<p>Multiples of k form an AP: k, 2k, 3k, ... So the sum of multiples of k up to N is k * (1 + 2 + ... + floor(N/k)) = k * (m*(m+1)/2) where m = N/k. You can combine this with the range sum.</p>
+
+<h2>When is this usefull?</h2>
+<ul>
+  <li>Problems asking for sum of numbers with certain properties (divisible by k, leave remainder r, etc.).</li>
+  <li>Loop analysis: if an inner loop runs i times starting at something and ending at something else, the total iterations can be expressed as AP sum.</li>
+  <li>Any time you need to sum a range of numbers that are aritmetically spaced.</li>
+</ul>
+
+<h2>Handling large ranges</h2>
+<p>Always use <code>long long</code> for the sum. n can be huge. And be careful with integer division: the formula involves a multiplication and then division by 2. Since the mathematical sum is always an integer, the product n*(a+b) is always even. So integer division is safe as long as you use exact arithmetic. Best practice: compute <code>(a + b) * n / 2</code> in one line with <code>long long</code>.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>AP sum = (first+last)*n/2.</li>
+  <li>Number of terms n = (last - first)/d + 1.</li>
+  <li>The formula works for any AP  ascending or descending.</li>
+  <li>Always use <code>long long</code> and do multiplication before division.</li>
+</ul>
+
+<blockquote>The arithmetic progression sum is the Gauss trick on steroids. Once you see sequences with constant step, your brain should scream "AP sum!".</blockquote>
+`
+},
+
+{
+  slug: "geometric-progression-sum-formula",
+  title: "Geometric Progression Sum Formula",
+  topic: "Mathematics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-08",
+  excerpt: "How to sum sequences that grow (or shrink) by a constant ratio, like powers of 2 or repeating fractions.",
+  tags: ["geometric progression", "sum", "formula", "ratio"],
+  html: `
+<p>A geometric progression (GP) is a sequence where each term is multiplied by a constant ratio to get the next. For example, 3, 6, 12, 24 has ratio 2. The sum of such a sequence has a nice closed form that appears in many algorithm analysis and bitmask problems.</p>
+
+<h2>The formula</h2>
+<pre><code>Sum = (first term * (ratio^n - 1)) / (ratio - 1)</code></pre>
+<p>Where n is the number of terms. Equivalent form: sum = (last term * ratio - first term) / (ratio - 1). The second one is often handier when you know the last term.</p>
+
+<h2>Derivation (quick sketch)</h2>
+<p>Let S = a + ar + ar + ... + ar^{n-1}. Multiply by r: rS = ar + ar + ... + ar^n. Subtract: rS - S = ar^n - a => S = a(r^n - 1)/(r - 1). This is valid for any r  1. If r = 1, it's just n*a.</p>
+
+<h2>Special case: powers of 2</h2>
+<p>One of the most common GPs in cp is 1 + 2 + 4 + 8 + ... + 2^{k-1} = 2^k - 1. This appears everywhere in bitmasks: the sum of all powers of 2 up to 2^{k-1} equals the number with k ones in binary (i.e., 2^k - 1). For example, 1+2+4+8 = 15 = 2^4 - 1.</p>
+<pre><code>// sum of first n powers of 2 starting from 1
+long long sum = (1LL << n) - 1; // 2^n - 1</code></pre>
+
+<h2>Another example: sum of 5, 25, 125, 625 (ratio 5, n=4)</h2>
+<p>a=5, r=5, n=4 => sum = 5*(5^4-1)/(5-1) = 5*(625-1)/4 = 5*624/4 = 5*156 = 780. Check: 5+25=30, +125=155, +625=780. Correct.</p>
+
+<h2>Infinite GP sum (|r| < 1)</h2>
+<p>If the ratio's absolute value is less than 1 and we go to infinity, the sum converges to <strong>a / (1 - r)</strong>. This appears in probability problems (e.g., expected number of trials). For example, 1 + 1/2 + 1/4 + 1/8 + ... = 2. But in cp we rarely need infinite sums; usually it's finite.</p>
+
+<h2>When to use in cp</h2>
+<ul>
+  <li>Bitmask problems: sum of 2's powers is always 2^k - 1.</li>
+  <li>Recurrence relations: some DP transitions lead to geometric series.</li>
+  <li>Probability: expected value problems often have geometric distribution, which uses the GP sum.</li>
+  <li>Modular arithmetic: GP sum modulo m needs careful handling of division (modular inverse). We'll cover that in number theory.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>GP sum: a*(r^n - 1)/(r - 1).</li>
+  <li>Power of 2 sum: 1+2+...+2^{k-1} = 2^k - 1.</li>
+  <li>If ratio is 1, sum = n*a (trivial).</li>
+  <li>Watch out for integer division: numerator is always divisible by (r-1) mathematically, but in code use <code>long long</code> to avoid overflow before division.</li>
+</ul>
+
+<blockquote>Geometric progressions sneak into problems about exponential growth. When you see numbers doubling or halving, think GP, and pull out the formula.</blockquote>
+`
+},
+
+{
   slug: "harmonic-sum-upper-bound-log2",
   title: "Harmonic Sum Upper Bound with log2",
   topic: "Mathematics",
@@ -1660,6 +2102,7 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 <blockquote>The harmonic series is a sneaky one  it looks like it might diverge quickly, but it's actualy a logaritmik crawler. Knowing its bound turns O(n * H(n)) into the familiar O(n log n).</blockquote>
 `
 },
+
 {
   slug: "set-theory-for-competitive-programmers",
   title: "Set Theory for Competitive Programmers",
@@ -1748,7 +2191,9 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>Set operations are like the grammar of combinatoral reasoning. Once you internalise them, many problems reduce to simple unions and intersections.</blockquote>
 `
-},{
+},
+
+{
   slug: "subsets-counting-2-power-n",
   title: "Subsets of a Set and Counting 2^n",
   topic: "Mathematics",
@@ -1785,7 +2230,9 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>The 2<sup>n</sup> rule is the reason bruteforce search is possible for small n. Once you encode a subset as an integer, you can manipulate it with bitwise operations  fast and clean.</blockquote>
 `
-},{
+},
+
+{
   slug: "logic-operators-and-or-not",
   title: "Logic Operators: AND, OR, NOT, IMPLIES, EQUIV",
   topic: "Mathematics",
@@ -1836,7 +2283,9 @@ cout << v[0].F << " " << v[0].S << "\\n";</code></pre>
 
 <blockquote>Logic is the skeleton of an algorithm. If you can translate a problem's conditions into logical expressons, you're halfway to the solution.</blockquote>
 `
-},{
+},
+
+{
   slug: "universal-existential-quantifiers-logic",
   title: "Universal and Existential Quantifiers in Logic",
   topic: "Mathematics",
@@ -1881,7 +2330,9 @@ for (int x : arr) {
 
 <blockquote>Quantifiers make informal conditions formal. If a problem says "every pair satisfies...", you know exactly what to loop over. They're like the exclamation marks of logical sentences.</blockquote>
 `
-},{
+},
+
+{
   slug: "functions-floor-ceil-min-max",
   title: "Functions: Floor, Ceil, Min, Max in C++",
   topic: "Mathematics",
@@ -1927,7 +2378,9 @@ cout << ceil(-3.2) << "\\n"; // -3</code></pre>
 
 <blockquote>These little functions are the salt and pepper of cp code. Sprinkle them liberally, but don't let floating point errors ruin the dish.</blockquote>
 `
-},{
+},
+
+{
   slug: "factorial-function-iterative-recursive",
   title: "Factorial Function: Iterative and Recursive Definitions",
   topic: "Mathematics",
@@ -1987,7 +2440,9 @@ n! = n  (n-1)!   for n > 0</code></pre>
 
 <blockquote>Factorials are the gateway drug to combinatorics. Once you can compute them efficently, combinations, permutations, and a whole world of counting problems become accessible.</blockquote>
 `
-},{
+},
+
+{
   slug: "fibonacci-numbers-recursive-binet",
   title: "Fibonacci Numbers: Recursive and Closed-Form (Binet)",
   topic: "Mathematics",
@@ -2047,7 +2502,9 @@ where  = (1+5)/2  1.618,  = (1-5)/2  -0.618</code></pre>
 
 <blockquote>Fibonacci numbers are like the hello world of dynamic programming. They teach you how to go from a simple recursive formula to an efficent iterative solution.</blockquote>
 `
-},{
+},
+
+{
   slug: "logarithms-log2-log10-natural-log",
   title: "Logarithms: log2, log10, and Natural Log",
   topic: "Mathematics",
@@ -2108,7 +2565,9 @@ int main() {
 
 <blockquote>Logarithms are the secret sauce behind efficent algorithms. They turn astronomically large input sizes into manageable step counts. Once you start thinking in logs, you'll never look at complexity the same way.</blockquote>
 `
-},{
+},
+
+{
   slug: "properties-of-logarithms",
   title: "Properties of Logarithms: Product, Quotient, Power",
   topic: "Mathematics",
@@ -2157,7 +2616,7 @@ int main() {
   topic: "Mathematics",
   difficulty: "Easy",
   readMinutes: 5,
-  date: "2026-05-15",
+  date: "2026-05-09",
   excerpt: "How to convert between different log bases  a mustknow trick for computing logs in code.",
   tags: ["logarithms", "change of base", "formula", "math"],
   html: `
@@ -2193,13 +2652,15 @@ cout << fixed << setprecision(2) << log3_81 << "\\n"; // prints 4.00</code></pre
 
 <blockquote>Change of base is the universal adapter for logarithms. Once you know it, you can work in whatever base makes the problem easiest.</blockquote>
 `
-},{
+},
+
+{
   slug: "number-of-digits-in-base-b-using-log",
   title: "Number of Digits in Base b Using logb",
   topic: "Mathematics",
   difficulty: "Easy",
   readMinutes: 5,
-  date: "2026-05-15",
+  date: "2026-05-09",
   excerpt: "A neat little formula that tells you how many digits a number has in any base, using logarithms.",
   tags: ["digits", "base", "logarithm", "formula"],
   html: `
@@ -2240,13 +2701,15 @@ int bits_binary(int x) {
 
 <blockquote>A tiny formula, but it'll save you when you need to preallocate arrays or understand the size of your data. Logs make counting digits a breeze.</blockquote>
 `
-},{
+},
+
+{
   slug: "time-complexity-intro-big-o",
   title: "Time Complexity Introduction and Big O Notation",
   topic: "Algorithm Analysis",
   difficulty: "Easy",
   readMinutes: 7,
-  date: "2026-05-15",
+  date: "2026-05-09",
   excerpt: "What time complexity is, why it's the most importent concept in cp, and how to read Big O.",
   tags: ["time complexity", "Big O", "analysis", "algorithms"],
   html: `
@@ -2282,13 +2745,15 @@ int bits_binary(int x) {
 
 <blockquote>Time complexity is the compass that guides your algorithmic choices. Before you write a single line, ask: is my idea going to be fast enough? Big O gives you the answer.</blockquote>
 `
-},{
+},
+
+{
   slug: "estimating-algorithm-efficiency-big-o",
   title: "Estimating Algorithm Efficiency with Big O",
   topic: "Algorithm Analysis",
   difficulty: "Easy",
   readMinutes: 7,
-  date: "2026-05-15",
+  date: "2026-05-09",
   excerpt: "How to look at an algorithm and quikly figure out its complexity by analysing loops and recursion.",
   tags: ["time complexity", "Big O", "estimation", "loops", "recursion"],
   html: `
@@ -2337,289 +2802,6 @@ int bits_binary(int x) {
 
 <blockquote>Estimating complexity is like having a crystal ball. Before you run your code, you can predict if it'll pass or TLE. Master this, and you'll save hours of wasted submissions.</blockquote>
 `
-},{
-  slug: "reading-whole-line-getline",
-  title: "Reading a Whole Line with getline",
-  topic: "Input/Output",
-  difficulty: "Easy",
-  readMinutes: 6,
-  date: "2026-05-15",
-  excerpt: "How to read an entire line of text including spaces using getline, and the common newline trap after cin.",
-  tags: ["getline", "strings", "input", "newline"],
-  html: `
-<p>Somtimes you need to read a full line that may contain spaces  like a sentence or a whole paragraph. The <code>getline</code> function is your freind. But beware: mixing <code>cin >></code> and <code>getline</code> can cause a classic bug that leaves you scratching your head. Let's clear it up.</p>
-
-<h2>Basic getline usage</h2>
-<pre><code>string line;
-getline(cin, line);</code></pre>
-<p>This reads everything from the current input position until a newline character (<code>'\\n'</code>). The newline itself is consumed but not stored. So <code>line</code> will contain the whole line (including spaces).</p>
-
-<h2>The famous newline trap</h2>
-<p>Imagine this code:</p>
-<pre><code>int n;
-cin >> n;
-string s;
-getline(cin, s);  // s ends up empty!</code></pre>
-<p>Why does <code>s</code> stay empty? After <code>cin >> n</code>, the input still contains a newline character (the one you typed after the number). <code>getline</code> sees that newline immediatly and reads it as an empty line. To fix it, call <code>cin.ignore()</code> after the <code>cin >></code>:</p>
-<pre><code>int n;
-cin >> n;
-cin.ignore(); // discard the leftover newline
-string s;
-getline(cin, s); // now reads the actual line</code></pre>
-
-<h2>Reading an unknown number of lines</h2>
-<p>If the input consists of several lines, you can loop until EOF:</p>
-<pre><code>string line;
-while (getline(cin, line)) {
-    // process each line
-}</code></pre>
-<p>This works even if lines are empty  <code>getline</code> will return an empty string for blank lines, but the stream stays good.</p>
-
-<h2>Parsing a line after reading</h2>
-<p>Often you read a line containing several numbers. Use a <code>stringstream</code> to split it:</p>
-<pre><code>string line;
-getline(cin, line);
-stringstream ss(line);
-int x;
-while (ss >> x) {
-    // x is each integer on the line
-}</code></pre>
-
-<h2>When to prefer getline over cin &gt;&gt;</h2>
-<ul>
-  <li>When you need to preserve spaces inside a string.</li>
-  <li>When the problem gives data line by line and each line may contain spaces.</li>
-  <li>When you want to read until a specific delimiter (getline can take a third argument as delimiter).</li>
-</ul>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li><code>getline(cin, str)</code> reads a whole line (stops at newline).</li>
-  <li>After <code>cin >></code>, always call <code>cin.ignore()</code> before <code>getline</code> to skip the leftover newline.</li>
-  <li>Use <code>stringstream</code> to parse a line after reading it.</li>
-  <li><code>getline</code> can also accept a delimiter: <code>getline(cin, str, ',')</code> reads until a comma.</li>
-</ul>
-
-<blockquote>Newline characters are invisible but powerfull. Mastering <code>getline</code> and <code>cin.ignore()</code> will save you from one of the most common beginner bugs in competitive programming.</blockquote>
-`
-},{
-  slug: "loop-macros-rep-for-cleaner-code",
-  title: "Loop Macros: REP(i,a,b) for Cleaner Code",
-  topic: "Coding Style",
-  difficulty: "Easy",
-  readMinutes: 6,
-  date: "2026-05-15",
-  excerpt: "How to define macros that make writing loops much shorter and less errorprone  a cp classic.",
-  tags: ["macros", "loops", "REP", "coding style"],
-  html: `
-<p>Typing <code>for (int i = 0; i < n; i++)</code> over and over gets old fast. In competitive programming, we often define macros that turn that into something like <code>REP(i, n)</code>. It saves keystrokes and, more importantly, makes the code more readable by hiding the boilerplate.</p>
-
-<h2>The classic REP macro</h2>
-<pre><code>#define REP(i, n) for (int i = 0; i < n; i++)</code></pre>
-<p>Now you can write:</p>
-<pre><code>REP(i, 10) {
-    cout << i << " ";
-}</code></pre>
-<p>That's so much cleaner. You can also make a version that takes a starting point:</p>
-<pre><code>#define REP1(i, a, b) for (int i = a; i <= b; i++)</code></pre>
-<p>Now <code>REP1(i, 2, 5)</code> loops i = 2,3,4,5. Some people prefere <code>FOR</code> instead of <code>REP</code>. Use whatever you like.</p>
-
-<h2>Reverse loops</h2>
-<p>Going backwards? No problem:</p>
-<pre><code>#define RREP(i, n) for (int i = n-1; i >= 0; i--)</code></pre>
-
-<h2>Common mistakes with loop macros</h2>
-<ul>
-  <li>Forgetting the semicolon after the macro definition. The macro should NOT have a semicolon at the end of the <code>#define</code> line, but you will put a semicolon when you use it.</li>
-  <li>Using the same variable name inside nested loops  the macro just pastes the text, so two <code>REP(i, n)</code> loops nested will use the same <code>i</code>! That's a bug. Always use different variable names or define a separate macro for inner loops.</li>
-</ul>
-
-<h2>A safer approach with unique variable names</h2>
-<p>Some advanced macro trickery can generate unique names, but it's not worth the complexity. In cp, just be careful: use <code>REP(i, n)</code> for outer and <code>REP(j, m)</code> for inner.</p>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li>Macros are text substitution  they don't create a new scope.</li>
-  <li>Use different loop variable names for nested loops.</li>
-  <li>Define your loop macros once in your template and reuse them everywhere.</li>
-  <li>Don't overcomplicate: a simple <code>#define REP(i,n) for(int i=0;i<(n);i++)</code> is enough.</li>
-</ul>
-
-<blockquote>Loop macros are like a swiss army knife  they won't solve every problem, but they'll save you from carpal tunnel syndrome during a 5hour contest.</blockquote>
-`
-},{
-  slug: "avoiding-pitfalls-macro-parameters",
-  title: "Avoiding Pitfalls with Macro Parameters",
-  topic: "Coding Style",
-  difficulty: "Easy",
-  readMinutes: 7,
-  date: "2026-05-15",
-  excerpt: "Why your macro might explode when you give it something like x+1  and how to wrap parentheses to stay safe.",
-  tags: ["macros", "parameters", "parentheses", "pitfalls"],
-  html: `
-<p>Macros look like functions, but they are NOT functions. They are pure text replacement. If you write a macro that takes parameters, you must be super careful about parentheses, or you'll get weird bugs. Let me show you the classic traps.</p>
-
-<h2>The parenless disaster</h2>
-<pre><code>#define SQUARE(x) x * x
-cout << SQUARE(3+2); // becomes 3+2 * 3+2 = 3 + 6 + 2 = 11, not 25!</code></pre>
-<p>See? Because of operator precedence, multiplication happens before addition. The fix is to wrap each parameter and the whole expression in parentheses:</p>
-<pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
-<p>Now <code>SQUARE(3+2)</code> becomes <code>((3+2) * (3+2)) = 25</code>. Much better.</p>
-
-<h2>Double evaluation  the silent killer</h2>
-<p>If your macro evaluates its argument more than once, and that argument has a side effect (like <code>i++</code> or a function call), you're in trouble:</p>
-<pre><code>#define MAX(a,b) ((a) > (b) ? (a) : (b))
-int x = 1, y = 2;
-int z = MAX(x++, y++);
-// after this, x and y are incremented TWICE? Let's see:
-// ((x++) > (y++) ? (x++) : (y++))  y++ appears twice, so y increments twice!</code></pre>
-<p>Never use macros with side effects. For max/min, use <code>std::max</code> (which is a function, not a macro).</p>
-
-<h2>Multistatement macros</h2>
-<p>If your macro contains multiple statements, wrap them in <code>do { ... } while(0)</code> so it behaves like a single block:</p>
-<pre><code>#define LOG(x) do { cout << #x << " = " << x << endl; } while(0)</code></pre>
-<p>Without the <code>do-while</code>, an <code>if</code> before the macro would only execute the first statement.</p>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li>Always wrap macro parameters in parentheses: <code>((x))</code> not just <code>(x)</code>.</li>
-  <li>Wrap the entire macro body in parentheses if it's an expression.</li>
-  <li>Avoid macros that evaluate parameters more than once.</li>
-  <li>For multistatements, use <code>do { ... } while(0)</code>.</li>
-  <li>Prefer inline functions or lambdas for anything complex  they are typesafe and don't have these issues.</li>
-</ul>
-
-<blockquote>Macros are powerful, but they bite. Every missing parenthesis is a landmine. Follow these rules, or you'll spend hours debugging a macro that looks perfectly fine.</blockquote>
-`
-},{
-  slug: "sum-formulas-1-to-n-closed-forms",
-  title: "Sum Formulas: 1+2+...+n and Closed Forms",
-  topic: "Mathematics",
-  difficulty: "Easy",
-  readMinutes: 6,
-  date: "2026-05-15",
-  excerpt: "The one formula you'll use more than any other: n(n+1)/2. Learn it, love it, and never write a loop for it again.",
-  tags: ["sum", "formula", "arithmetic series", "math"],
-  html: `
-<p>If you ever write a loop to compute the sum of the first n natural numbers, stop. There's a closedform formula that's O(1) and avoids overflow if you're careful. This is the first of many sum formulas you'll memorize.</p>
-
-<h2>The classic: 1 + 2 + ... + n</h2>
-<pre><code>sum = n * (n + 1) / 2</code></pre>
-<p>That's it. For n = 100, the loop would run 100 times, but the formula does one multiplication and one division. Proof? Pair the first and last: (1+n) + (2+n-1) + ... = (n+1) repeated n/2 times. So sum = n(n+1)/2.</p>
-
-<h2>Watch out for integer division</h2>
-<p>In C++, <code>n * (n+1) / 2</code> is fine if n is even because n*(n+1) is always even, so integer division gives exact result. But if you write <code>(n/2)*(n+1)</code>, you'll lose the half when n is odd. Always multiply first then divide.</p>
-
-<h2>Sum of the first n odd numbers</h2>
-<p>1 + 3 + 5 + ... + (2n-1) = n<sup>2</sup>. That's a neat one. For n = 5: 1+3+5+7+9 = 25 = 5.</p>
-
-<h2>Sum of the first n even numbers</h2>
-<p>2 + 4 + 6 + ... + 2n = n(n+1). Because it's twice the sum of 1..n.</p>
-
-<h2>Sum of squares and cubes (preview)</h2>
-<p>We'll cover those in the next tutorials, but here's the teaser:</p>
-<ul>
-  <li>1 + 2 + ... + n = n(n+1)(2n+1)/6</li>
-  <li>1 + 2 + ... + n = [n(n+1)/2]</li>
-</ul>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li>1+2+...+n = n(n+1)/2  memorize it.</li>
-  <li>Always multiply before dividing to keep integer precision.</li>
-  <li>Use <code>long long</code> if n is larger than about 1e5, because n(n+1)/2 can exceed 2e9.</li>
-  <li>These formulas are your best friends in combinatorics and algorithm analysis.</li>
-</ul>
-
-<blockquote>The first time I saw n(n+1)/2 I thought it was magic. It's not  it's just simple math that saves you from writing O(n) loops. Keep it in your back pocket.</blockquote>
-`
 },
-
-{
-  slug: "sum-of-squares-formula-derivation",
-  title: "Sum of Squares Formula Derivation",
-  topic: "Mathematics",
-  difficulty: "Medium",
-  readMinutes: 8,
-  date: "2026-05-15",
-  excerpt: "Where does n(n+1)(2n+1)/6 come from? A quick derivation so you don't have to just memorize it.",
-  tags: ["sum of squares", "derivation", "formula", "math"],
-  html: `
-<p>The formula for the sum of squares appears in many cp problems  from calculating variance to summing certain series. But memorizing it without understanding is risky. Let me show you one way to derive it.</p>
-
-<h2>The formula</h2>
-<pre><code>1 + 2 + 3 + ... + n = n(n+1)(2n+1) / 6</code></pre>
-<p>For n=3: 1+4+9=14, and 3*4*7/6 = 84/6 = 14. Works.</p>
-
-<h2>Derivation using binomial coefficients</h2>
-<p>We know that (k+1) = k + 3k + 3k + 1. Rearranging:</p>
-<pre><code>3k = (k+1) - k - 3k - 1</code></pre>
-<p>Sum both sides from k=1 to n:</p>
-<pre><code>3 * k = [(k+1) - k] - 3k - 1</code></pre>
-<p>The first sum telescopes: [(k+1) - k] = (n+1) - 1 = n + 3n + 3n + 1 - 1 = n + 3n + 3n.</p>
-<p>k = n(n+1)/2. 1 = n.</p>
-<p>So:</p>
-<pre><code>3 * S = (n + 3n + 3n) - 3 * [n(n+1)/2] - n</code></pre>
-<p>Simplify and solve for S. After algebra (which I'll skip here), you get S = n(n+1)(2n+1)/6.</p>
-
-<h2>Why you care in cp</h2>
-<p>You'll rarely need to derive it, but knowing where it comes from helps you remember it. Also, the telescoping trick is usefull for many other sums.</p>
-
-<h2>Sum of cubes  even easier</h2>
-<p>Using the same method, you can derive k = [n(n+1)/2]. That one is neat because it's the square of the sum of integers.</p>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li>k = n(n+1)(2n+1)/6  memorize it.</li>
-  <li>k = (n(n+1)/2)  also handy.</li>
-  <li>Use <code>long long</code> because n(n+1)(2n+1) can be huge  up to ~6e27 for n=1e9, which doesn't fit, but if you take modulo or use Python, fine.</li>
-  <li>In cp, you'll often compute these sums modulo M, so do each multiplication mod M.</li>
-</ul>
-
-<blockquote>Derivations are like training wheels  you don't need them forever, but they give you confidence when the formula slips your mind.</blockquote>
-`,
-},
-
-{
-  slug: "geometric-progression-sum-formula",
-  title: "Geometric Progression Sum Formula",
-  topic: "Mathematics",
-  difficulty: "Easy",
-  readMinutes: 7,
-  date: "2026-05-15",
-  excerpt: "Summing a, ar, ar², ... ar^(n-1) – the closed form that involves powers and division, and why modulo makes it tricky.",
-  tags: ["geometric progression", "sum", "formula", "ratio"],
-  html: `
-<p>Arithmetic progressions add the same difference each time. Geometric progressions multiply by the same ratio. The sum formula is a bit more involved, but still O(1) if you have fast exponentiation.</p>
-
-<h2>The formula for finite geometric series</h2>
-<pre><code>S = a * (r^n - 1) / (r - 1)   for r ≠ 1</code></pre>
-<p>Where a is the first term, r is the common ratio, and n is the number of terms. If r = 1, then S = a * n.</p>
-
-<h2>Example</h2>
-<p>Sum of 1 + 2 + 4 + 8 + 16 (a=1, r=2, n=5): S = 1*(2^5 - 1)/(2-1) = (32-1)/1 = 31. Correct.</p>
-
-<h2>The infinite geometric series (|r| < 1)</h2>
-<p>If |r| < 1 and you sum to infinity: S = a / (1 - r). Not common in cp because inputs are finite, but good to know.</p>
-
-<h2>Modular arithmetic problem</h2>
-<p>In cp, you'll often compute geometric sum modulo M. But division by (r-1) is not allowed directly – you need the modular inverse of (r-1) modulo M. That's fine if M is prime and (r-1) is not divisible by M. But if r-1 and M are not coprime, you can't use modular inverse. Then you need a different approach (like binary exponentiation with matrix or divide and conquer).</p>
-
-<h2>Computing without division (for large n)</h2>
-<p>You can use recursion: sum(a, r, n) = sum(a, r, n/2) + r^(n/2) * sum(a, r, n/2) etc. That's O(log n) and avoids division. Many cp libraries implement that.</p>
-
-<h2>Things to rememeber</h2>
-<ul>
-  <li>Geometric sum: a*(r^n - 1)/(r-1).</li>
-  <li>If r = 1, sum = a*n.</li>
-  <li>In modulo world, replace division with modular inverse (if coprime).</li>
-  <li>For non‑coprime or when you want to avoid inverse, use binary exponentiation style recursion.</li>
-  <li>r^n can be huge – use fast exponentiation and modulo.</li>
-</ul>
-
-<blockquote>Geometric series pop up in combinatorics, probability, and even some graph algorithms. The formula is easy to memorize, but the modular version requires extra care.</blockquote>
-`,
-},
-
 
 ]
