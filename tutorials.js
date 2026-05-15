@@ -2447,6 +2447,50 @@ while (ss >> x) {
 
 <blockquote>Loop macros are like a swiss army knife  they won't solve every problem, but they'll save you from carpal tunnel syndrome during a 5hour contest.</blockquote>
 `
+},{
+  slug: "avoiding-pitfalls-macro-parameters",
+  title: "Avoiding Pitfalls with Macro Parameters",
+  topic: "Coding Style",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-15",
+  excerpt: "Why your macro might explode when you give it something like x+1  and how to wrap parentheses to stay safe.",
+  tags: ["macros", "parameters", "parentheses", "pitfalls"],
+  html: `
+<p>Macros look like functions, but they are NOT functions. They are pure text replacement. If you write a macro that takes parameters, you must be super careful about parentheses, or you'll get weird bugs. Let me show you the classic traps.</p>
+
+<h2>The parenless disaster</h2>
+<pre><code>#define SQUARE(x) x * x
+cout << SQUARE(3+2); // becomes 3+2 * 3+2 = 3 + 6 + 2 = 11, not 25!</code></pre>
+<p>See? Because of operator precedence, multiplication happens before addition. The fix is to wrap each parameter and the whole expression in parentheses:</p>
+<pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
+<p>Now <code>SQUARE(3+2)</code> becomes <code>((3+2) * (3+2)) = 25</code>. Much better.</p>
+
+<h2>Double evaluation  the silent killer</h2>
+<p>If your macro evaluates its argument more than once, and that argument has a side effect (like <code>i++</code> or a function call), you're in trouble:</p>
+<pre><code>#define MAX(a,b) ((a) > (b) ? (a) : (b))
+int x = 1, y = 2;
+int z = MAX(x++, y++);
+// after this, x and y are incremented TWICE? Let's see:
+// ((x++) > (y++) ? (x++) : (y++))  y++ appears twice, so y increments twice!</code></pre>
+<p>Never use macros with side effects. For max/min, use <code>std::max</code> (which is a function, not a macro).</p>
+
+<h2>Multistatement macros</h2>
+<p>If your macro contains multiple statements, wrap them in <code>do { ... } while(0)</code> so it behaves like a single block:</p>
+<pre><code>#define LOG(x) do { cout << #x << " = " << x << endl; } while(0)</code></pre>
+<p>Without the <code>do-while</code>, an <code>if</code> before the macro would only execute the first statement.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always wrap macro parameters in parentheses: <code>((x))</code> not just <code>(x)</code>.</li>
+  <li>Wrap the entire macro body in parentheses if it's an expression.</li>
+  <li>Avoid macros that evaluate parameters more than once.</li>
+  <li>For multistatements, use <code>do { ... } while(0)</code>.</li>
+  <li>Prefer inline functions or lambdas for anything complex  they are typesafe and don't have these issues.</li>
+</ul>
+
+<blockquote>Macros are powerful, but they bite. Every missing parenthesis is a landmine. Follow these rules, or you'll spend hours debugging a macro that looks perfectly fine.</blockquote>
+`
 },
 
 
