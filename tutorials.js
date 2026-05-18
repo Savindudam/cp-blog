@@ -2803,5 +2803,66 @@ int bits_binary(int x) {
 <blockquote>Estimating complexity is like having a crystal ball. Before you run your code, you can predict if it'll pass or TLE. Master this, and you'll save hours of wasted submissions.</blockquote>
 `
 },
+{
+  slug: "time-complexity-simple-loops-on",
+  title: "Time Complexity of Simple Loops O(n)",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "The simplest and most common complexity: a single loop that runs n times. Learn to spot it and estimate its runtime.",
+  tags: ["time complexity", "Big O", "loops", "O(n)"],
+  html: `
+<p>A <strong>simple loop</strong> that iterates n times and does constanttime work inside is the quintessential O(n) algorithm. It's the baseline of efficiency  faster than O(n log n) and much faster than O(n<sup>2</sup>). Let's break down why it's O(n) and how to recognise it.</p>
+
+<h2>What is O(n) in plain words?</h2>
+<p>If you double the input size, the running time also roughly doubles. That's linear growth. For example, processing an array of 10,000 elements takes about twice as long as processing 5,000 elements.</p>
+
+<h2>Example: sum of array elements</h2>
+<pre><code>int sum = 0;
+for (int i = 0; i < n; i++) {
+    sum += arr[i];
+}</code></pre>
+<p>The loop runs exactly n times. Inside each iteration we do a constant amount of work (one addition). So total operations  n * constant  O(n).</p>
+
+<h2>Another example: finding the maximum</h2>
+<pre><code>int mx = arr[0];
+for (int i = 1; i < n; i++) {
+    if (arr[i] > mx) mx = arr[i];
+}</code></pre>
+<p>Again, n1 iterations, each with a comparison and maybe an assignment. Still O(n).</p>
+
+<h2>Constant factors don't matter for Big O</h2>
+<p>Whether the loop body does 2 operations or 20, we still call it O(n). The constant gets hidden. In practice, a loop that does 20 operations per iteration will be slower than one that does 2, but both scale linearly. When n is huge (10<sup>7</sup>), the constant <em>can</em> matter for passing time limits, but the asymptotic class is the same.</p>
+
+<h2>When is a loop not O(n)?</h2>
+<ul>
+  <li>If the loop runs n<sup>2</sup> times (nested loops)  O(n<sup>2</sup>).</li>
+  <li>If the loop variable doubles each time: <code>for (int i = 1; i < n; i *= 2)</code>  O(log n).</li>
+  <li>If the loop runs a constant number of times (e.g., always 100)  O(1).</li>
+</ul>
+
+<h2>Realworld cp example: counting occurrences</h2>
+<pre><code>int count = 0;
+for (int i = 0; i < n; i++) {
+    if (arr[i] == target) count++;
+}
+cout << count << "\\n";</code></pre>
+<p>No matter where target appears, the loop must check every element in the worst case. That's O(n).</p>
+
+<h2>How fast is O(n)?</h2>
+<p>On a modern judge, an O(n) solution can handle n up to about 10<sup>7</sup> in one second, assuming simple operations. For n = 10<sup>5</sup> or 10<sup>6</sup>, you're perfectly safe. For n = 10<sup>8</sup>, even linear time might be too slow  then you need O(log n) or O(1).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>A single loop from 0 to n1 is almost always O(n).</li>
+  <li>Inside the loop, only constanttime operations (no nested loops, no recursion that depends on n).</li>
+  <li>O(n) is often the target complexity for problems with n  10<sup>6</sup>  10<sup>7</sup>.</li>
+  <li>Don't confuse O(n) with O(1)  a loop is never constant time unless n is bounded by a fixed number.</li>
+</ul>
+
+<blockquote>Mastering O(n) is the first step to understanding algorithm efficiency. Once you can instantly spot a linear loop, you'll quickly rule out solutions that are too slow.</blockquote>
+`
+}}
 
 ]
