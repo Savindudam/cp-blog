@@ -2921,6 +2921,50 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Nested loops are like russian dolls  each layer multiplies the work. Always check the constraints before you write that second loop.</blockquote>
 `
+}{
+  slug: "order-of-magnitude-time-complexity",
+  title: "Order of Magnitude in Time Complexity",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-19",
+  excerpt: "Understanding that constants don't matter  only the growth rate counts. Why we say O(n) instead of O(2n).",
+  tags: ["order of magnitude", "Big O", "growth rate", "asymptotic"],
+  html: `
+<p>When we say an algorithm is O(n<sup>2</sup>), we don't mean it takes exactly n<sup>2</sup> seconds. We mean its running time grows <strong>like</strong> n<sup>2</sup> for large n. This is called the <strong>order of magnitude</strong>. It's about the shape of the growth curve, not the exact count.</p>
+
+<h2>Why we ignore constants</h2>
+<p>An algorithm that does 100n operations and another that does 2n operations are both O(n). For n = 1,000,000, one takes 100 million ops, the other 2 million  a big difference, but both are linear. When n becomes 10<sup>9</sup>, the ratio stays 50, but both are still far faster than any O(n<sup>2</sup>) algorithm. The constant matters, but the class is the same.</p>
+
+<h2>Dominant term</h2>
+<p>If an algorithm does 3n<sup>2</sup> + 5n + 100 operations, the n<sup>2</sup> term dominates for large n. The 5n and 100 become irrelevant. So we say it's O(n<sup>2</sup>).</p>
+
+<h2>Examples of orders</h2>
+<ul>
+  <li>O(1): constant  doesn't grow with input.</li>
+  <li>O(log n): grows very slowly (e.g., binary search).</li>
+  <li>O(n): linear  doubles when input doubles.</li>
+  <li>O(n log n): slightly more than linear (e.g., merge sort).</li>
+  <li>O(n<sup>2</sup>): quadratic  quadruples when input doubles.</li>
+  <li>O(2<sup>n</sup>): exponential  impossible for n > 30.</li>
+</ul>
+
+<h2>Comparing orders</h2>
+<p>For large n, any O(n) algorithm beats any O(n<sup>2</sup>) algorithm, no matter the constants. O(log n) beats O(n). O(n log n) is between O(n) and O(n<sup>2</sup>). This hierachy is what we mean by "order of magnitute".</p>
+
+<h2>Why it matters in cp</h2>
+<p>When you see constraints like n  10<sup>5</sup>, you know an O(n<sup>2</sup>) solution will time out. You need O(n log n) or O(n). If n  20, O(2<sup>n</sup>) might be okay. The order tells you what's possible.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Big O hides constants and lowerorder terms.</li>
+  <li>Focus on the highestpower term and the base of the log.</li>
+  <li>Different orders of magnitude are the first filter for feasibility.</li>
+  <li>Don't stress about exact operation counts  think in terms of growth.</li>
+</ul>
+
+<blockquote>Order of magnitude is like comparing a bicycle to a rocket. The exact speed doesn't matter when one is millions of times faster for big inputs.</blockquote>
+`
 }}
 
 ]
