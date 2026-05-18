@@ -2863,6 +2863,64 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Mastering O(n) is the first step to understanding algorithm efficiency. Once you can instantly spot a linear loop, you'll quickly rule out solutions that are too slow.</blockquote>
 `
+}{
+  slug: "time-complexity-nested-loops-onk",
+  title: "Time Complexity of Nested Loops O(n^k)",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-19",
+  excerpt: "When loops are inside loops, the runtime multiplies. Learn how two, three, or k nested loops lead to O(n^2), O(n^3), and beyond.",
+  tags: ["time complexity", "nested loops", "Big O", "polynomial"],
+  html: `
+<p>Nested loops are the most common source of quadratic or cubic time complexity. If you have a loop inside another loop, the total number of iterations is the product of the iteration counts. This can quickly blow up your runtime if you're not careful.</p>
+
+<h2>The basic rule</h2>
+<p>If you have k nested loops, each running about n times, the complexity is <strong>O(n<sup>k</sup>)</strong>. For two loops: O(n<sup>2</sup>). For three loops: O(n<sup>3</sup>).</p>
+
+<h2>Two nested loops O(n<sup>2</sup>)</h2>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        // constant work
+    }
+}</code></pre>
+<p>The inner loop runs n times for each of the n iterations of the outer loop, so total iterations = n * n = n<sup>2</sup>. That's about 10,000 iterations for n=100, but 10<sup>10</sup> for n=100,000  too many.</p>
+
+<h2>Not all nested loops are O(n<sup>2</sup>)</h2>
+<p>Sometimes the inner loop depends on the outer loop variable:</p>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+        // constant work
+    }
+}</code></pre>
+<p>Total iterations = 0 + 1 + 2 + ... + (n-1) = n(n-1)/2 = O(n<sup>2</sup>) still! The constant factor changes (about half of n<sup>2</sup>), but the growth is still quadratic.</p>
+
+<h2>Three nested loops O(n<sup>3</sup>)</h2>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        for (int k = 0; k < n; k++) {
+            // constant work
+        }
+    }
+}</code></pre>
+<p>Total iterations = n * n * n = n<sup>3</sup>. For n=1000, that's one billion operations  usualy too slow.</p>
+
+<h2>When is O(n<sup>2</sup>) acceptable?</h2>
+<p>If n  5000, n<sup>2</sup> = 25 million, which can pass in about one second in C++. If n  1000, it's very safe. For n = 10<sup>5</sup>, n<sup>2</sup> = 10<sup>10</sup>  definetly not.</p>
+
+<h2>Optimising nested loops</h2>
+<p>Sometimes you can reduce the number of loops by using better algorithms. For example, instead of checking all pairs (O(n<sup>2</sup>)), you might sort and use two pointers (O(n log n)). Always look for ways to break out early or reduce the inner loop's range.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>k nested loops each of size n  O(n<sup>k</sup>).</li>
+  <li>Even if the inner loop runs half the time, it's still O(n<sup>2</sup>).</li>
+  <li>O(n<sup>2</sup>) is feasible for n up to ~10<sup>4</sup>; O(n<sup>3</sup>) for n up to ~500.</li>
+  <li>Be suspicious of triple nested loops  they often signal a need for optimization.</li>
+</ul>
+
+<blockquote>Nested loops are like russian dolls  each layer multiplies the work. Always check the constraints before you write that second loop.</blockquote>
+`
 }}
 
 ]
