@@ -3647,6 +3647,46 @@ maxSum = -2</code></pre>
 
 <blockquote>The gap between O(n<sup>2</sup>) and O(n) is the difference between waiting a minute and waiting a millisecond. That's the power of good algorithms.</blockquote>
 `
+},{
+  slug: "introduction-to-sorting-algorithms",
+  title: "Introduction to Sorting Algorithms",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-19",
+  excerpt: "What sorting is, why it's everywhere, and a quick overview of the most important sorting algorithms.",
+  tags: ["sorting", "algorithms", "comparison", "introduction"],
+  html: `
+<p>Sorting is the art of arranging elements in a specific order (ascending, descending, or custom). It's one of the most fundamental operations in computer science. In cp, you'll sort arrays, vectors, strings, and custom objects all the time. Let's see why it's so important and what your options are.</p>
+
+<h2>What does sorting mean?</h2>
+<p>Given an array of n elements, sorting rearranges them so that they follow a total order. For numbers, ascending order means each element is  the next. For strings, lexicographic order. Sorting makes many problems easier: searching becomes binary search, duplicates become adjacent, and you can use twopointer techniques.</p>
+
+<h2>Common sorting algorithms (the ones you should know)</h2>
+<ul>
+  <li><strong>Bubble Sort</strong>  O(n<sup>2</sup>), simple but slow. Good for teaching.</li>
+  <li><strong>Merge Sort</strong>  O(n log n), stable, divide & conquer.</li>
+  <li><strong>Quick Sort</strong>  O(n log n) average, O(n<sup>2</sup>) worst, fast in practice.</li>
+  <li><strong>Counting Sort</strong>  O(n + range), noncomparison, works for small integer ranges.</li>
+  <li><strong>std::sort</strong>  hybrid (introsort), the one you'll use 99% of the time.</li>
+</ul>
+
+<h2>What is stable sorting?</h2>
+<p>A stable sort preserves the relative order of equal elements. For example, if you sort people by age, two 25yearolds keep their original order. Merge sort is stable; quick sort (typical implementation) is not.</p>
+
+<h2>In C++, you don't implement sorting yourself</h2>
+<p>Unless you're learning, just use <code>std::sort</code> from <code>&ltalgorithm&gt</code>. It's optimised, fast, and works on any randomaccess container. For arrays: <code>sort(arr, arr+n)</code>. For vectors: <code>sort(v.begin(), v.end())</code>.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sorting is the first step in many algorithms (binary search, two pointers, greedy intervals).</li>
+  <li>The best generalpurpose sorts run in O(n log n).</li>
+  <li>Comparison sorts cannot be faster than O(n log n) in the worst case (proved).</li>
+  <li>For small n, even O(n<sup>2</sup>) sorts like insertion sort can be faster due to low overhead.</li>
+</ul>
+
+<blockquote>Sorting is the Swiss Army knife of cp  you'll reach for it constantly. Master the builtin sort and understand the theory behind it.</blockquote>
+`
 },
 
 
