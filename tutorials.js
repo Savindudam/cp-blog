@@ -3387,6 +3387,44 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>This table is your cheat sheet for every contest. Memorise it, and you'll never waste time on an algorithm that's doomed from the start.</blockquote>
 `
+},{
+  slug: "maximum-subarray-sum-problem-statement",
+  title: "Maximum Subarray Sum Problem Statement",
+  topic: "Classic Problems",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-19",
+  excerpt: "The problem that teaches you to go from O(n^3) to O(n)  a must-know for every coder.",
+  tags: ["maximum subarray", "Kadane", "problem statement", "classic"],
+  html: `
+<p>The <strong>maximum subarray sum</strong> problem is one of the most famous in cp. Given an array of integers (which can be negative), find the contiguous subarray (nonempty) with the largest sum. Sounds simple, but it's a perfect playground for optimising from brute force to linear time.</p>
+
+<h2>Formal definition</h2>
+<p>Input: an array A of length n (n  1). Output: max{ A[i] + A[i+1] + ... + A[j] } over all 1  i  j  n.</p>
+
+<h2>Example</h2>
+<pre><code>A = [-2, 1, -3, 4, -1, 2, 1, -5, 4]</code></pre>
+<p>The subarray [4, -1, 2, 1] has sum 4 + (-1) + 2 + 1 = 6. That's the maximum. No other contiguous segment gives a larger sum.</p>
+
+<h2>Why it's important</h2>
+<p>This problem appears directly in many contests, and its idea (Kadane's algorithm) is used in more complex DP problems like maximum submatrix sum, best time to buy/sell stock, and even in some tree path problems.</p>
+
+<h2>Edge cases</h2>
+<ul>
+  <li>All numbers negative  the maximum subarray is the single largest element (least negative).</li>
+  <li>All numbers positive  the whole array is the answer.</li>
+  <li>Array of length 1  answer is that element.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Subarray must be contiguous (not subsequence).</li>
+  <li>Empty subarray is usualy not allowed (sum would be 0, but if all numbers are negative, 0 would be wrong).</li>
+  <li>The problem can be solved in O(n) with Kadane's algorithm.</li>
+</ul>
+
+<blockquote>Mastering maximum subarray sum is like learning to ride a bike  once you get it, you'll never forget, and it will take you places.</blockquote>
+`
 },
 
 
