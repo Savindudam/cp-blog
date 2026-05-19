@@ -3304,7 +3304,48 @@ for (int i = 0; i < n; i++) {
 <blockquote>NPHard problems are the boss fights of cp. They force you to be clever with exponential algorithms and tiny constraints. Respect them, but don't fear them  just read the limits.</blockquote>
 `
 },
+{
+  slug: "estimating-runtime-from-time-complexity",
+  title: "Estimating Runtime from Time Complexity and Input Size",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-19",
+  excerpt: "How to guess if your O(n^2) solution will pass when n = 10^5. Learn to multiply constants and compare with typical judge speed.",
+  tags: ["runtime estimation", "time complexity", "Big O", "performance"],
+  html: `
+<p>You've computed the time complexity of your algorithm. Now what? Does it actualy run in time? You need to estimate the number of operations and compare it to the judge's speed. A typical online judge can handle about <strong>10<sup>8</sup> simple operations per second</strong> in C++ (give or take). Let's learn to estimate.</p>
 
+<h2>The basic formula</h2>
+<p>If your algorithm does f(n) operations, the runtime in seconds  f(n) / (operations per second). For n = 10<sup>5</sup>, an O(n) algorithm does about 10<sup>5</sup> ops  trivial. An O(n<sup>2</sup>) algorithm does 10<sup>10</sup> ops  about 100 seconds, too slow.</p>
+
+<h2>Including constants</h2>
+<p>Big O hides constants, but they matter for estimation. For example, scanning an array and doing 10 operations per element is O(n) but 10n operations. For n = 10<sup>7</sup>, that's 10<sup>8</sup> ops  still okay. But if you do 1000 operations per element, 10<sup>10</sup> ops  too slow.</p>
+
+<h2>Common operation counts per second</h2>
+<ul>
+  <li>Simple loops with integer arithmetic: ~210<sup>8</sup> ops/sec.</li>
+  <li>Heavy operations (division, modulo, function calls): ~510<sup>7</sup> ops/sec.</li>
+  <li>STL operations (map, set) have higher constants.</li>
+</ul>
+
+<h2>Example: estimating for n = 10<sup>5</sup></h2>
+<p>O(n log n) with n=1e5: n log2 n  1e5 * 17 = 1.7e6 ops  fast. O(n<sup>2</sup>) with n=1e5: 1e10 ops  impossible. O(n sqrt(n)) with n=1e5: sqrt(1e5)  316, product  3.16e7  borderline but often passes.</p>
+
+<h2>How to test locally</h2>
+<p>Before submitting, run your code on the maximum input size (generated randomly) and see if it finishes under 2 seconds. If it's close, optimise: use faster I/O, avoid unnecessary copies, use arrays instead of vectors when possible.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Judge speed varies  some are slower (1e8 ops/sec), some faster (3e8).</li>
+  <li>Always add a safety margin  if your estimate says 0.9 seconds, it might TLE on slower hardware.</li>
+  <li>Use <code>chrono</code> to time your code locally.</li>
+  <li>When in doubt, aim for complexity that's at least 10x below the limit.</li>
+</ul>
+
+<blockquote>Estimating runtime is like weather forecasting  not exact, but good enough to decide if you need an umbrella (or a better algorithm).</blockquote>
+`
+},
 
 
 ]
