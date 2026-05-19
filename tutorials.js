@@ -3142,6 +3142,64 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Recursion is elegant but can hide explosion. Always write the recurrence and solve it before you code.</blockquote>
 `
+}{
+  slug: "exponential-time-complexity-o2n",
+  title: "Exponential Time Complexity O(2^n)",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-19",
+  excerpt: "The red line: O(2^n) algorithms become impossibly slow for n > 30. Learn to recognise them and when they are actually acceptable.",
+  tags: ["exponential", "O(2^n)", "time complexity", "subset"],
+  html: `
+<p>Exponential time is the nightmare of cp. When your algorithm runs in O(2<sup>n</sup>), even n = 50 gives a trillion operations  impossible. But for n  20, it's often the only way (e.g., bruteforcing all subsets). Let's understand where it comes from and when it's usable.</p>
+
+<h2>What does O(2<sup>n</sup>) mean?</h2>
+<p>It means the running time doubles (or multiplies by a constant factor) when you add just one more element. For n=10, about 1024 operations. For n=20, about 1 million. For n=30, about 1 billion. For n=40, 1 trillion  too many.</p>
+
+<h2>Common sources of O(2<sup>n</sup>)</h2>
+<ul>
+  <li>Enumerating all subsets of a set of n elements: exactly 2<sup>n</sup> subsets.</li>
+  <li>Enumerating all binary strings of length n: 2<sup>n</sup>.</li>
+  <li>Naive recursion for Fibonacci (T(n) = T(n-1) + T(n-2)) gives about 1.618<sup>n</sup>, which is still exponential.</li>
+  <li>Backtracking without pruning on n items.</li>
+</ul>
+
+<h2>Example: subset sum brute force</h2>
+<pre><code>for (int mask = 0; mask < (1 << n); mask++) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (mask >> i & 1) sum += a[i];
+    }
+    if (sum == target) found = true;
+}
+// Complexity: O(2^n * n) which is still exponential.
+</code></pre>
+<p>For n=20, that's about 20 million operations  fine. For n=30, 30 billion  too slow.</p>
+
+<h2>When is O(2<sup>n</sup>) acceptable?</h2>
+<p>When constraints are small: n  20 or sometimes n  25. If the problem says "n  15", exponential is expected. If n  10<sup>5</sup>, you need polynomial time.</p>
+
+<h2>Optimising exponential algorithms</h2>
+<ul>
+  <li>Meetinthemiddle reduces 2<sup>n</sup> to about 2<sup>n/2</sup> (e.g., from 2<sup>40</sup> to 2<sup>20</sup>).</li>
+  <li>Pruning (branch and bound) can cut many branches.</li>
+  <li>Bitmask DP often runs in O(2<sup>n</sup> * n) and is acceptable for n  20.</li>
+</ul>
+
+<h2>Other exponential growths</h2>
+<p>O(3<sup>n</sup>) is even worse (e.g., enumerating all assignments to ternary variables). O(n!) is factorial  even worse than exponential. For n=10, n! = 3.6 million; n=20, n! is astronomically huge.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>2<sup>20</sup>  1 million, 2<sup>30</sup>  1 billion, 2<sup>40</sup>  1 trillion.</li>
+  <li>Exponential solutions are only for tiny n (usually  20).</li>
+  <li>If you see n  30, think about meetinthemiddle.</li>
+  <li>Never write an exponential algorithm when n can be 10<sup>5</sup>  you'll TLE.</li>
+</ul>
+
+<blockquote>Exponential time is like a firework  impressive for small n, but it explodes in your face when n grows. Respect the limits.</blockquote>
+`
 }}
 
 ]
