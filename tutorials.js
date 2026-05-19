@@ -2965,6 +2965,59 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Order of magnitude is like comparing a bicycle to a rocket. The exact speed doesn't matter when one is millions of times faster for big inputs.</blockquote>
 `
+}{
+  slug: "phases-algorithms-total-complexity",
+  title: "Phases in Algorithms and Total Complexity",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "When your algorithm does multiple steps one after another, the total time is the sum of each phase. But Big O keeps only the largest.",
+  tags: ["phases", "total complexity", "Big O", "analysis"],
+  html: `
+<p>Many algorithms have distinct phases: first read input, then sort, then process. The total time is the sum of the times of each phase. But when we express it in Big O, we drop everything except the slowest (dominant) phase.</p>
+
+<h2>The sum rule</h2>
+<p>If Phase A takes O(f(n)) and Phase B takes O(g(n)), then total time is O(f(n) + g(n)) = O(max(f(n), g(n))). The slower phase dominates.</p>
+
+<h2>Example: sort then scan</h2>
+<pre><code>// Phase 1: sort the array  O(n log n)
+sort(arr.begin(), arr.end());
+// Phase 2: find maximum difference  O(n)
+int diff = 0;
+for (int i = 1; i < n; i++) {
+    diff = max(diff, arr[i] - arr[i-1]);
+}
+// Total complexity: O(n log n + n) = O(n log n)
+</code></pre>
+<p>Since O(n log n) grows faster than O(n), we ignore the linear phase.</p>
+
+<h2>Example: two independent O(n) phases</h2>
+<pre><code>// Phase 1: sum all elements  O(n)
+for (int i = 0; i < n; i++) sum += a[i];
+// Phase 2: find minimum  O(n)
+int mn = a[0];
+for (int i = 1; i < n; i++) mn = min(mn, a[i]);
+// Total: O(n + n) = O(2n) = O(n)
+</code></pre>
+<p>The constant 2 disappears; it's still O(n).</p>
+
+<h2>When phases are not independent</h2>
+<p>Sometimes the output of one phase becomes the input of the next, but the time analysis still adds them. For example, building a data structure (O(n)) then answering q queries (O(q log n)). Total = O(n + q log n). If q is also large, the O(q log n) may dominate.</p>
+
+<h2>Common mistake: forgetting the slow phase</h2>
+<p>If you have a O(n<sup>2</sup>) phase and then a O(n) phase, the total is O(n<sup>2</sup>). Don't be mislead by the fast phase  the slow one sets the limit.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Total complexity = sum of complexities of consecutive phases.</li>
+  <li>In Big O, the largest term wins.</li>
+  <li>If two phases have the same order, the constant adds up but the order stays the same.</li>
+  <li>Always analyse the slowest part of your solution first.</li>
+</ul>
+
+<blockquote>A chain is only as strong as its weakest link. An algorithm is only as fast as its slowest phase. Find that phase and optimise it.</blockquote>
+`
 }}
 
 ]
