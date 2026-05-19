@@ -2863,7 +2863,7 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Mastering O(n) is the first step to understanding algorithm efficiency. Once you can instantly spot a linear loop, you'll quickly rule out solutions that are too slow.</blockquote>
 `
-}{
+},{
   slug: "time-complexity-nested-loops-onk",
   title: "Time Complexity of Nested Loops O(n^k)",
   topic: "Algorithm Analysis",
@@ -2921,7 +2921,7 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Nested loops are like russian dolls  each layer multiplies the work. Always check the constraints before you write that second loop.</blockquote>
 `
-}{
+},{
   slug: "order-of-magnitude-time-complexity",
   title: "Order of Magnitude in Time Complexity",
   topic: "Algorithm Analysis",
@@ -2965,7 +2965,7 @@ cout << count << "\\n";</code></pre>
 
 <blockquote>Order of magnitude is like comparing a bicycle to a rocket. The exact speed doesn't matter when one is millions of times faster for big inputs.</blockquote>
 `
-}{
+},{
   slug: "phases-algorithms-total-complexity",
   title: "Phases in Algorithms and Total Complexity",
   topic: "Algorithm Analysis",
@@ -3018,7 +3018,7 @@ for (int i = 1; i < n; i++) mn = min(mn, a[i]);
 
 <blockquote>A chain is only as strong as its weakest link. An algorithm is only as fast as its slowest phase. Find that phase and optimise it.</blockquote>
 `
-}{
+},{
   slug: "time-complexity-multiple-variables-onm",
   title: "Time Complexity with Multiple Variables O(nm)",
   topic: "Algorithm Analysis",
@@ -3070,7 +3070,7 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Don't assume one variable dominates. Read the constraints carefully  the product might be the real monster.</blockquote>
 `
-}{
+},{
   slug: "recursion-time-complexity-analysis",
   title: "Recursion Time Complexity Analysis",
   topic: "Algorithm Analysis",
@@ -3142,7 +3142,7 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Recursion is elegant but can hide explosion. Always write the recurrence and solve it before you code.</blockquote>
 `
-}{
+},{
   slug: "exponential-time-complexity-o2n",
   title: "Exponential Time Complexity O(2^n)",
   topic: "Algorithm Analysis",
@@ -3200,7 +3200,7 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Exponential time is like a firework  impressive for small n, but it explodes in your face when n grows. Respect the limits.</blockquote>
 `
-}{
+},{
   slug: "common-complexity-classes",
   title: "Common Complexity Classes: O(1), O(log n), O(n), O(n log n), O(n^2), O(n^3)",
   topic: "Algorithm Analysis",
@@ -3254,7 +3254,7 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>The complexity class is your first filter. If your O(n<sup>2</sup>) algorithm meets n=10<sup>5</sup> constraints, you need a better plan.</blockquote>
 `
-}{
+},{
   slug: "polynomial-vs-np-hard-problems",
   title: "Polynomial vs NP-Hard Problems",
   topic: "Algorithm Analysis",
@@ -3303,6 +3303,8 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>NPHard problems are the boss fights of cp. They force you to be clever with exponential algorithms and tiny constraints. Respect them, but don't fear them  just read the limits.</blockquote>
 `
-}}
+},
+
+
 
 ]
