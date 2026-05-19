@@ -3200,6 +3200,60 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Exponential time is like a firework  impressive for small n, but it explodes in your face when n grows. Respect the limits.</blockquote>
 `
+}{
+  slug: "common-complexity-classes",
+  title: "Common Complexity Classes: O(1), O(log n), O(n), O(n log n), O(n^2), O(n^3)",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-19",
+  excerpt: "The six most important time complexities you'll encounter, with examples and typical constraints for each.",
+  tags: ["complexity classes", "Big O", "O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n^2)", "O(n^3)"],
+  html: `
+<p>You'll see these six complexity classes everywhere. Memorise them, understand their growth, and know roughly how large n can be for each to pass in 1 second on a modern judge.</p>
+
+<h2>O(1)  constant time</h2>
+<p>No matter the input size, the algorithm takes the same time. Examples: array access by index, arithmetic operations, hash table lookup. Constraints: any n (up to 10<sup>18</sup>).</p>
+
+<h2>O(log n)  logarithmic</h2>
+<p>Incredibly fast. Doubling n adds only one extra step. Examples: binary search, balanced tree operations, bit length functions. Typical max n: 10<sup>18</sup> (log2  60).</p>
+
+<h2>O(n)  linear</h2>
+<p>Time scales directly with n. Examples: scanning an array, finding min/max, simple loops. Typical max n: 10<sup>7</sup> to 10<sup>8</sup> in C++ with simple operations.</p>
+
+<h2>O(n log n)  linearithmic</h2>
+<p>Most efficient sorting algorithms (merge sort, heap sort, std::sort). Also many divide & conquer algorithms. Typical max n: 10<sup>6</sup> (1e6 * log2(1e6)  20e6 operations). Safe for n up to 210<sup>5</sup>.</p>
+
+<h2>O(n<sup>2</sup>)  quadratic</h2>
+<p>Two nested loops. Often the limit for brute force. Typical max n: 5000 to 10,000 (25 million to 100 million ops). For n=10<sup>5</sup>, quadratic is impossible.</p>
+
+<h2>O(n<sup>3</sup>)  cubic</h2>
+<p>Three nested loops. Examples: FloydWarshall, naive matrix multiplication. Typical max n: 500 (125 million ops). For n=1000, it's borderline.</p>
+
+<h2>Comparison table (approximate max n for 1 second in C++)</h2>
+<ul>
+  <li>O(log n): n = 10<sup>18</sup> (unlimited)</li>
+  <li>O(n): n = 10<sup>8</sup> (with simple ops)</li>
+  <li>O(n log n): n = 210<sup>6</sup></li>
+  <li>O(n<sup>2</sup>): n = 10<sup>4</sup></li>
+  <li>O(n<sup>3</sup>): n = 500</li>
+  <li>O(2<sup>n</sup>): n = 20</li>
+  <li>O(n!): n = 10</li>
+</ul>
+
+<h2>How to decide which class you need</h2>
+<p>Look at constraints. If n  10<sup>5</sup>, aim for O(n log n). If n  10<sup>4</sup>, O(n<sup>2</sup>) might pass. If n  500, O(n<sup>3</sup>) is okay. If n  20, think about exponential or bitmask.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>O(1) < O(log n) < O(n) < O(n log n) < O(n<sup>2</sup>) < O(n<sup>3</sup>) < O(2<sup>n</sup>).</li>
+  <li>Constants matter but not for the class.</li>
+  <li>Always match your algorithm's complexity to the constraints.</li>
+  <li>When in doubt, aim for O(n log n)  it's almost always safe for cp.</li>
+</ul>
+
+<blockquote>The complexity class is your first filter. If your O(n<sup>2</sup>) algorithm meets n=10<sup>5</sup> constraints, you need a better plan.</blockquote>
+`
 }}
 
 ]
