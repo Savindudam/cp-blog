@@ -3687,6 +3687,49 @@ maxSum = -2</code></pre>
 
 <blockquote>Sorting is the Swiss Army knife of cp  you'll reach for it constantly. Master the builtin sort and understand the theory behind it.</blockquote>
 `
+},{
+  slug: "why-sorting-important-problem-solving",
+  title: "Why Sorting Is Important in Problem Solving",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-19",
+  excerpt: "From binary search to greedy algorithms, sorting unlocks solutions that would otherwise be impossible.",
+  tags: ["sorting", "importance", "problem solving", "applications"],
+  html: `
+<p>You may wonder: why spend so much time on sorting? Because sorted data has magical properties. It allows you to use fast search, simplifies counting, and enables greedy strategies. Let me show you the most common ways sorting helps in cp.</p>
+
+<h2>1. Binary search</h2>
+<p>You can only binary search on a sorted array. Once sorted, you can find an element in O(log n) instead of O(n). Many problems are solved by sorting then binary searching the answer.</p>
+
+<h2>2. Two pointers</h2>
+<p>Problems like "find two numbers that sum to target" become O(n) after sorting (instead of O(n<sup>2</sup>)). You use one pointer at the start and one at the end.</p>
+
+<h2>3. Greedy interval scheduling</h2>
+<p>To maximise the number of nonoverlapping intervals, sort by end time. That's the classic greedy algorithm. Without sorting, you can't make the optimal choice.</p>
+
+<h2>4. Finding duplicates or unique elements</h2>
+<p>After sorting, equal elements are adjacent. You can scan once to count frequencies, find duplicates, or compress coordinates.</p>
+
+<h2>5. Median and quantiles</h2>
+<p>The median of an array is the middle element after sorting. Many problems ask for the minimum sum of absolute deviations  the answer is the median.</p>
+
+<h2>6. Merge intervals</h2>
+<p>To merge overlapping intervals, sort by start time, then scan. This is a classic coding interview problem.</p>
+
+<h2>7. Custom sorting</h2>
+<p>You can sort by multiple keys (e.g., first by length, then alphabetically). This allows you to order data exactly as needed for your algorithm.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sorting is a preprocessing step that makes many problems tractable.</li>
+  <li>It costs O(n log n), which is usually acceptable for n up to 10<sup>6</sup>.</li>
+  <li>When stuck, think: "Can I sort the input to simplify the problem?"</li>
+  <li>Never underestimate the power of sororder.</li>
+</ul>
+
+<blockquote>Sorting turns chaos into order. And from order, solutions emerge almost by themselves. That's why it's the first tool you should reach for.</blockquote>
+`
 },
 
 
