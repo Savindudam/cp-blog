@@ -3514,6 +3514,49 @@ for (int i = 0; i < n; i++)
 
 <blockquote>Each optimisation step teaches you something new. Going from O(n<sup>3</sup>) to O(n<sup>2</sup>) shows the power of incremental updates.</blockquote>
 `
+},{
+  slug: "kadanes-algorithm-on-maximum-subarray",
+  title: "Kadane's Algorithm: O(n) Maximum Subarray Sum",
+  topic: "Classic Problems",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-19",
+  excerpt: "The famous linear time solution  keep track of the best subarray ending at each position. Simple and elegant.",
+  tags: ["Kadane", "maximum subarray", "O(n)", "dynamic programming"],
+  html: `
+<p>Kadane's algorithm is a beautiful example of dynamic programming on the fly. The key insight: the maximum subarray ending at position i is either the element itself (starting a new subarray) or the previous best plus the current element. That gives us a simple recurrence and an O(n) solution.</p>
+
+<h2>The recurrence</h2>
+<p>Let dp[i] = maximum sum of a subarray that ends at index i. Then:</p>
+<pre><code>dp[i] = max(arr[i], dp[i-1] + arr[i])</code></pre>
+<p>Why? Because you either start fresh at i, or you extend the best subarray ending at i-1. Then the overall answer is max(dp[i]) over all i.</p>
+
+<h2>The code (space optimised)</h2>
+<pre><code>int currentSum = arr[0];
+int maxSum = arr[0];
+for (int i = 1; i < n; i++) {
+    currentSum = max(arr[i], currentSum + arr[i]);
+    maxSum = max(maxSum, currentSum);
+}
+cout << maxSum << "\\n";</code></pre>
+<p>We don't need an array  just keep the previous value in a variable.</p>
+
+<h2>Handling all negative numbers</h2>
+<p>If all numbers are negative, the algorithm correctly picks the largest (least negative) single element. Because <code>max(arr[i], currentSum + arr[i])</code> will always choose arr[i] if currentSum is negative, so the maximum will be the maximum element.</p>
+
+<h2>Why it's O(n)</h2>
+<p>We pass through the array once, doing constant work per element. That's optimal because you have to look at every element at least once.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Kadane's algorithm is a form of DP with O(1) space.</li>
+  <li>It works for both positive and negative numbers.</li>
+  <li>If empty subarrays were allowed (sum 0), you'd initialise maxSum = 0 and currentSum = 0, and use max(0, currentSum + arr[i]).</li>
+  <li>It's one of the most frequently asked interview questions.</li>
+</ul>
+
+<blockquote>Kadane's algorithm is like a magic trick  it looks too simple to work, but it's flawless. Once you see it, you'll never compute max subarray any other way.</blockquote>
+`
 },
 
 
