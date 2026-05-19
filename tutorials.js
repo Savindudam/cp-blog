@@ -3426,6 +3426,50 @@ for (int i = 0; i < n; i++) {
 <blockquote>Mastering maximum subarray sum is like learning to ride a bike  once you get it, you'll never forget, and it will take you places.</blockquote>
 `
 },
+{
+  slug: "brute-force-maximum-subarray-on3",
+  title: "Brute Force O(n^3) Solution for Maximum Subarray Sum",
+  topic: "Classic Problems",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "The most obvious solution: check every possible subarray. It's simple but unusable for large n.",
+  tags: ["maximum subarray", "brute force", "O(n^3)", "nested loops"],
+  html: `
+<p>When you first see the maximum subarray sum problem, the natural idea is: try every possible starting index i, every possible ending index j, and sum the elements from i to j. That's three nested loops  O(n<sup>3</sup>). It works for n  200, but fails for n = 10<sup>5</sup>. Let's see the code and analize its inefficiency.</p>
+
+<h2>The O(n<sup>3</sup>) implementation</h2>
+<pre><code>int maxSum = INT_MIN;
+for (int i = 0; i < n; i++) {
+    for (int j = i; j < n; j++) {
+        int sum = 0;
+        for (int k = i; k <= j; k++) {
+            sum += arr[k];
+        }
+        maxSum = max(maxSum, sum);
+    }
+}
+cout << maxSum << "\\n";</code></pre>
+
+<h2>Why it's O(n<sup>3</sup>)</h2>
+<p>Outer loop i: n iterations. Middle loop j: about n/2 on average. Inner loop k: about n/2 on average. Total  n * (n/2) * (n/2) = n<sup>3</sup>/4 = O(n<sup>3</sup>). For n=1000, that's 250 million operations  borderline but maybe okay in C++. For n=10<sup>4</sup>, it's 250 billion  impossible.</p>
+
+<h2>When would you use this?</h2>
+<p>Almost never. Only if n  200 and you're too lazy to optimise. But it's a good starting point to understand the problem and see how we can improve.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This approach recomputes sums from scratch each time.</li>
+  <li>It's very simple to code and hard to get wrong.</li>
+  <li>But it's practicly useless for real cp problems.</li>
+  <li>Always check constraints before writing triple loops.</li>
+</ul>
+
+<blockquote>O(n<sup>3</sup>) is the sledgehammer  it works when the nail is tiny, but for anything bigger you need precision tools.</blockquote>
+`
+},
+
+
 
 
 ]
