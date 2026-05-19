@@ -3345,6 +3345,48 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Estimating runtime is like weather forecasting  not exact, but good enough to decide if you need an umbrella (or a better algorithm).</blockquote>
 `
+},{
+  slug: "input-size-vs-required-time-complexity-table",
+  title: "Input Size vs Required Time Complexity Table",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "A quick lookup table: given n, what complexity is needed to pass? From n=10 to n=10^8.",
+  tags: ["time complexity", "input size", "table", "estimation"],
+  html: `
+<p>You see n  10<sup>5</sup> in the problem statement. You think of an O(n<sup>2</sup>) solution. Will it pass? Probably not. Here's a handy table that tells you what complexity you should aim for given the maximum input size. This is based on a judge doing about 10<sup>8</sup> operations per second.</p>
+
+<h2>The master table</h2>
+<table border="1" cellpadding="5">
+  <tr><th>Input size n</th><th>Acceptable complexity</th><th>Example algorithms</th></tr>
+  <tr><td>n  10</td><td>O(n!), O(2<sup>n</sup> * n)</td><td>brute force permutations, TSP</td></tr>
+  <tr><td>n  20</td><td>O(2<sup>n</sup> * n), O(n<sup>3</sup>)</td><td>bitmask DP, DP over subsets</td></tr>
+  <tr><td>n  30</td><td>O(2<sup>n/2</sup>)</td><td>meetinthemiddle</td></tr>
+  <tr><td>n  500</td><td>O(n<sup>3</sup>)</td><td>FloydWarshall, DP on intervals</td></tr>
+  <tr><td>n  5000</td><td>O(n<sup>2</sup>)</td><td>double loops, basic DP</td></tr>
+  <tr><td>n  10<sup>5</sup></td><td>O(n log n), O(n sqrt(n))</td><td>sorting, divide & conquer, Fenwick tree</td></tr>
+  <tr><td>n  10<sup>6</sup></td><td>O(n), O(n log n) borderline</td><td>linear scan, prefix sums</td></tr>
+  <tr><td>n  10<sup>7</sup></td><td>O(n)</td><td>simple loop, reading input</td></tr>
+  <tr><td>n > 10<sup>8</sup></td><td>O(log n), O(1)</td><td>binary search, math formula</td></tr>
+</table>
+
+<h2>How to use the table</h2>
+<p>Look at the constraints. If n  2000, you can write O(n<sup>2</sup>) without worry. If n  200,000, you need O(n log n) or better. If n  10<sup>7</sup>, you can't even afford O(n log n)  keep it linear.</p>
+
+<h2>What about multiple test cases?</h2>
+<p>If there are T test cases each of size n, total work = T * f(n). If T is large (e.g., 10<sup>5</sup>), even O(n) per test case might be too slow. Then you need O(log n) or O(1) per test case.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Constants matter  a heavy O(n) with 1000 ops per element may be slower than a light O(n log n).</li>
+  <li>Memory access patterns also affect runtime.</li>
+  <li>When in doubt, write a quick local test with maximum input.</li>
+  <li>For n  20, exponential is fine; for n  10<sup>5</sup>, exponential is suicide.</li>
+</ul>
+
+<blockquote>This table is your cheat sheet for every contest. Memorise it, and you'll never waste time on an algorithm that's doomed from the start.</blockquote>
+`
 },
 
 
