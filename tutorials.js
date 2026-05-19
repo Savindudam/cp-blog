@@ -3254,6 +3254,55 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>The complexity class is your first filter. If your O(n<sup>2</sup>) algorithm meets n=10<sup>5</sup> constraints, you need a better plan.</blockquote>
 `
+}{
+  slug: "polynomial-vs-np-hard-problems",
+  title: "Polynomial vs NP-Hard Problems",
+  topic: "Algorithm Analysis",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-19",
+  excerpt: "Why some problems seem impossible to solve efficiently  a gentle introduction to P, NP, and NPHard without heavy theory.",
+  tags: ["P", "NP", "NP-hard", "complexity theory", "polynomial"],
+  html: `
+<p>You may have heard of "NPHard" problems like the travelling salesman problem (TSP). No one knows a fast (polynomial time) solution for them. In cp, if a problem is NPHard, you either solve it with exponential algorithms for small n or use approximation/heuristics. Let's break down what these terms mean.</p>
+
+<h2>Polynomial time (P)</h2>
+<p>An algorithm runs in <strong>polynomial time</strong> if its complexity is O(n<sup>k</sup>) for some constant k. Examples: O(n), O(n<sup>2</sup>), O(n<sup>3</sup>), O(n log n) (which is even smaller than n<sup>2</sup>). Polynomial time is considered "efficient". Most cp problems expect polynomial solutions.</p>
+
+<h2>What is NP?</h2>
+<p>NP stands for "nondeterministic polynomial time". A problem is in NP if a proposed solution can be <strong>verified</strong> in polynomial time. For example, given a Hamiltonian cycle in a graph, you can check it's valid quickly. But finding that cycle might be hard.</p>
+
+<h2>NPHard and NPComplete</h2>
+<p>A problem is <strong>NPHard</strong> if every problem in NP can be reduced to it in polynomial time. In simple words: it's at least as hard as the hardest problems in NP. If you could solve one NPHard problem in polynomial time, you could solve <em>all</em> NP problems in polynomial time. That's not known to be possible.</p>
+<p><strong>NPComplete</strong> problems are those that are both in NP and NPHard. Examples: SAT, TSP, Hamiltonian path, subset sum.</p>
+
+<h2>What does this mean for cp?</h2>
+<p>If a problem is NPHard (like "find the shortest route visiting all cities"), you cannot expect a polynomial time solution for large n. The problem setter will give small constraints (n  20) so that exponential solutions like O(2<sup>n</sup> * n<sup>2</sup>) can pass. Or they might ask for an approximation or special case.</p>
+
+<h2>Examples of NPHard problems you might see</h2>
+<ul>
+  <li>Travelling Salesman Problem (TSP)  find shortest Hamiltonian cycle.</li>
+  <li>Subset Sum  does any subset sum to target? (but with small numbers it's pseudopolynomial).</li>
+  <li>Graph coloring  assign colors to vertices with no adjacent same color.</li>
+  <li>Clique  find the largest complete subgraph.</li>
+</ul>
+
+<h2>When you see small constraints (n  20)</h2>
+<p>That's a strong hint that the problem might be NPHard and you should use bitmask DP, meetinthemiddle, or backtracking. For n  40, meetinthemiddle on subsets (2<sup>20</sup>) works.</p>
+
+<h2>P vs NP  the million dollar question</h2>
+<p>No one knows if P = NP. If it turned out that P = NP, many hard problems would have fast solutions. Most experts believe P  NP. In cp, we assume NPHard problems require exponential time for the worst case.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Polynomial time = efficient (O(n<sup>k</sup>)).</li>
+  <li>NPHard = no known polynomial solution; expect small constraints.</li>
+  <li>If a problem has n  20, think exponential (2<sup>n</sup>).</li>
+  <li>Don't try to solve an NPHard problem with n=1000 using brute force  it's impossible.</li>
+</ul>
+
+<blockquote>NPHard problems are the boss fights of cp. They force you to be clever with exponential algorithms and tiny constraints. Respect them, but don't fear them  just read the limits.</blockquote>
+`
 }}
 
 ]
