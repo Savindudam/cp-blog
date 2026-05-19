@@ -3070,6 +3070,78 @@ for (int i = 0; i < n; i++) {
 
 <blockquote>Don't assume one variable dominates. Read the constraints carefully  the product might be the real monster.</blockquote>
 `
+}{
+  slug: "recursion-time-complexity-analysis",
+  title: "Recursion Time Complexity Analysis",
+  topic: "Algorithm Analysis",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-19",
+  excerpt: "Analyzing recursive functions requires recurrence relations. Learn the master theorem and common patterns like binary search and divide & conquer.",
+  tags: ["recursion", "time complexity", "recurrence", "master theorem"],
+  html: `
+<p>Recursion can be tricky to analyse because the function calls itself. The time complexity depends on how many recursive calls are made and how the input size shrinks each time. We use <strong>recurrence relations</strong> to model this.</p>
+
+<h2>The basic idea</h2>
+<p>Let T(n) be the time for input size n. If the function makes a recursive calls on subproblems of size n/b and does O(n<sup>k</sup>) work outside the calls, we write:</p>
+<pre><code>T(n) = a * T(n/b) + O(n^k)</code></pre>
+
+<h2>Example 1: linear recursion (factorial)</h2>
+<pre><code>int fact(int n) {
+    if (n == 0) return 1;
+    return n * fact(n-1);
+}</code></pre>
+<p>Here, a=1, b=1? Actually n reduces by 1, not divided. Recurrence: T(n) = T(n-1) + O(1). This solves to O(n).</p>
+
+<h2>Example 2: binary search</h2>
+<pre><code>int binarySearch(int arr[], int l, int r, int x) {
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        if (arr[mid] == x) return mid;
+        if (arr[mid] > x) return binarySearch(arr, l, mid-1, x);
+        return binarySearch(arr, mid+1, r, x);
+    }
+    return -1;
+}</code></pre>
+<p>Recurrence: T(n) = T(n/2) + O(1). Solving: T(n) = O(log n).</p>
+
+<h2>Example 3: merge sort</h2>
+<pre><code>void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r); // O(n) time
+    }
+}</code></pre>
+<p>Recurrence: T(n) = 2T(n/2) + O(n). Solves to O(n log n).</p>
+
+<h2>The master theorem (quick reference)</h2>
+<p>For T(n) = a T(n/b) + O(n<sup>k</sup>), where a  1, b > 1, k  0:</p>
+<ul>
+  <li>If a < b<sup>k</sup>  T(n) = O(n<sup>k</sup>)</li>
+  <li>If a = b<sup>k</sup>  T(n) = O(n<sup>k</sup> log n)</li>
+  <li>If a > b<sup>k</sup>  T(n) = O(n<sup>log<sub>b</sub> a</sup>)</li>
+</ul>
+<p>For merge sort: a=2, b=2, k=1. b<sup>k</sup> = 2, so a = b<sup>k</sup>  O(n log n).</p>
+
+<h2>Exponential recursion: naive Fibonacci</h2>
+<pre><code>int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}</code></pre>
+<p>Recurrence: T(n) = T(n-1) + T(n-2) + O(1). This solves to O(2<sup>n</sup>)  very bad.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Write the recurrence: T(n) = a T(n/b) + f(n).</li>
+  <li>Identify the number of calls (a) and the reduction factor (b).</li>
+  <li>Memorise the master theorem for common cases.</li>
+  <li>If the recursion splits into many calls with small reduction, expect exponential time.</li>
+</ul>
+
+<blockquote>Recursion is elegant but can hide explosion. Always write the recurrence and solve it before you code.</blockquote>
+`
 }}
 
 ]
