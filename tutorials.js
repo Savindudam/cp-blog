@@ -3557,6 +3557,52 @@ cout << maxSum << "\\n";</code></pre>
 
 <blockquote>Kadane's algorithm is like a magic trick  it looks too simple to work, but it's flawless. Once you see it, you'll never compute max subarray any other way.</blockquote>
 `
+},{
+  slug: "step-by-step-kadane-cpp",
+  title: "Step-by-Step Kadane's Algorithm in C++",
+  topic: "Classic Problems",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-19",
+  excerpt: "A detailed walkthrough of Kadane's algorithm with a concrete example and dry run.",
+  tags: ["Kadane", "step by step", "C++", "walkthrough"],
+  html: `
+<p>Let's take the array <code>[-2, 1, -3, 4, -1, 2, 1, -5, 4]</code> and run Kadane's algorithm by hand. I'll show you how currentSum and maxSum change at each step. This will make the recurrence crystal clear.</p>
+
+<h2>Initial state</h2>
+<pre><code>arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+currentSum = arr[0] = -2
+maxSum = -2</code></pre>
+
+<h2>Step-by-step table</h2>
+<table border="1" cellpadding="4">
+  <tr><th>i</th><th>arr[i]</th><th>currentSum = max(arr[i], currentSum + arr[i])</th><th>maxSum = max(maxSum, currentSum)</th></tr>
+  <tr><td>0</td><td>-2</td><td>initial -2</td><td>-2</td></tr>
+  <tr><td>1</td><td>1</td><td>max(1, -2+1=-1) = 1</td><td>max(-2,1)=1</td></tr>
+  <tr><td>2</td><td>-3</td><td>max(-3, 1-3=-2) = -2</td><td>max(1,-2)=1</td></tr>
+  <tr><td>3</td><td>4</td><td>max(4, -2+4=2) = 4</td><td>max(1,4)=4</td></tr>
+  <tr><td>4</td><td>-1</td><td>max(-1, 4-1=3) = 3</td><td>max(4,3)=4</td></tr>
+  <tr><td>5</td><td>2</td><td>max(2, 3+2=5) = 5</td><td>max(4,5)=5</td></tr>
+  <tr><td>6</td><td>1</td><td>max(1, 5+1=6) = 6</td><td>max(5,6)=6</td></tr>
+  <tr><td>7</td><td>-5</td><td>max(-5, 6-5=1) = 1</td><td>max(6,1)=6</td></tr>
+  <tr><td>8</td><td>4</td><td>max(4, 1+4=5) = 5</td><td>max(6,5)=6</td></tr>
+</table>
+
+<p>The final maxSum is 6, which comes from the subarray [4, -1, 2, 1] (indices 3 to 6).</p>
+
+<h2>Reconstructing the subarray</h2>
+<p>If you need the actual subarray (not just the sum), keep track of start and end indices. When currentSum becomes arr[i] (starting fresh), update a temporary start. When maxSum updates, record the current start and i as the best range.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Dry run with a small example to build intuition.</li>
+  <li>The algorithm works in a single pass.</li>
+  <li>It's easy to memorise once you understand the recurrence.</li>
+  <li>Practice on random arrays to internalise it.</li>
+</ul>
+
+<blockquote>Walking through the algorithm step by step is like watching a master at work  you see the elegance unfold. Do it once, and you'll never forget.</blockquote>
+`
 },
 
 
