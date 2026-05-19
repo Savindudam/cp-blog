@@ -3468,6 +3468,54 @@ cout << maxSum << "\\n";</code></pre>
 <blockquote>O(n<sup>3</sup>) is the sledgehammer  it works when the nail is tiny, but for anything bigger you need precision tools.</blockquote>
 `
 },
+{
+  slug: "improving-maximum-subarray-to-on2",
+  title: "Improving Maximum Subarray Sum to O(n^2)",
+  topic: "Classic Problems",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "Remove the innermost loop by reusing prefix sums or cumulative totals. Now n=5000 becomes feasible.",
+  tags: ["maximum subarray", "O(n^2)", "prefix sum", "optimization"],
+  html: `
+<p>The O(n<sup>3</sup>) solution recomputes the sum of each subarray from scratch. But we can be smarter: when we extend the ending index j by one, we just add the new element to the previous sum. That eliminates the innermost loop and brings complexity down to O(n<sup>2</sup>).</p>
+
+<h2>The O(n<sup>2</sup>) implementation</h2>
+<pre><code>int maxSum = INT_MIN;
+for (int i = 0; i < n; i++) {
+    int currentSum = 0;
+    for (int j = i; j < n; j++) {
+        currentSum += arr[j];
+        maxSum = max(maxSum, currentSum);
+    }
+}
+cout << maxSum << "\\n";</code></pre>
+<p>We maintain <code>currentSum</code> for subarrays starting at i and ending at j, updating it in O(1) per j. Total operations  n * (n/2) = O(n<sup>2</sup>).</p>
+
+<h2>How much better is it?</h2>
+<p>For n=1000: O(n<sup>3</sup>) = 1e9 ops (too slow), O(n<sup>2</sup>) = 1e6 ops (fast). For n=5000: O(n<sup>2</sup>) = 25e6 ops  acceptable in C++. For n=10<sup>5</sup>, O(n<sup>2</sup>) = 1e10 ops  still too slow. So we need even better.</p>
+
+<h2>Alternative: prefix sum array</h2>
+<pre><code>vector&ltint&gt prefix(n+1, 0);
+for (int i = 0; i < n; i++) prefix[i+1] = prefix[i] + arr[i];
+int maxSum = INT_MIN;
+for (int i = 0; i < n; i++)
+    for (int j = i; j < n; j++)
+        maxSum = max(maxSum, prefix[j+1] - prefix[i]);</code></pre>
+<p>This also O(n<sup>2</sup>), but uses extra space. The incremental method is simpler.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Eliminating redundant recomputation is a common optimisation.</li>
+  <li>O(n<sup>2</sup>) is good for n  5000, not for n  10<sup>5</sup>.</li>
+  <li>This approach is still brute force over all start positions.</li>
+  <li>Next step: Kadane's algorithm (O(n)).</li>
+</ul>
+
+<blockquote>Each optimisation step teaches you something new. Going from O(n<sup>3</sup>) to O(n<sup>2</sup>) shows the power of incremental updates.</blockquote>
+`
+},
+
 
 
 
