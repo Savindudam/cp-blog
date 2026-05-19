@@ -3018,6 +3018,58 @@ for (int i = 1; i < n; i++) mn = min(mn, a[i]);
 
 <blockquote>A chain is only as strong as its weakest link. An algorithm is only as fast as its slowest phase. Find that phase and optimise it.</blockquote>
 `
+}{
+  slug: "time-complexity-multiple-variables-onm",
+  title: "Time Complexity with Multiple Variables O(nm)",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-19",
+  excerpt: "Not all problems have a single input size. When you have two independent dimensions, the complexity can be O(nm)  product, not sum.",
+  tags: ["time complexity", "multiple variables", "O(nm)", "analysis"],
+  html: `
+<p>Many problems give you two or more independent parameters: the length of a string and the number of queries, or the number of rows and columns in a grid. In such cases, the complexity often depends on the product, not just one variable.</p>
+
+<h2>The product rule</h2>
+<p>If you have nested loops where the outer loop runs n times and the inner loop runs m times (independent), the complexity is O(n * m). This is different from O(n<sup>2</sup>) because n and m can be different sizes.</p>
+
+<h2>Example: grid traversal</h2>
+<pre><code>// n rows, m columns
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+        // constant work
+    }
+}
+// Complexity = O(n * m)
+</code></pre>
+<p>If n = 1000 and m = 1000, it's 1e6 operations (fine). If n = 1000, m = 100000, it's 1e8 operations (maybe borderline).</p>
+
+<h2>Another example: comparing two arrays</h2>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+        if (a[i] == b[j]) count++;
+    }
+}
+// O(n * m)
+</code></pre>
+<p>If n and m are both large (e.g., 10<sup>5</sup>), product is 10<sup>10</sup>  too slow. You need a better approach like hashing.</p>
+
+<h2>When the loops are not nested</h2>
+<p>If you have two separate loops, one over n and one over m, the complexity is O(n + m), not O(nm). For example: read n numbers, then read m numbers  that's linear in the sum.</p>
+
+<h2>Multiple variables in Big O notation</h2>
+<p>We write O(n + m) or O(n log n + m log m) or O(nm) explicitly. It's important to keep both variables when they are independent.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Nested loops over different sizes  O(n * m).</li>
+  <li>Separate loops  O(n + m).</li>
+  <li>Always check if n and m are both up to 10<sup>5</sup>, then O(nm) is impossible.</li>
+  <li>Sometimes you can reduce O(nm) to O(n log n + m log n) using data structures.</li>
+</ul>
+
+<blockquote>Don't assume one variable dominates. Read the constraints carefully  the product might be the real monster.</blockquote>
+`
 }}
 
 ]
