@@ -4158,6 +4158,60 @@ Total work = cn * log2 n = O(n log n).</p>
 
 <blockquote>Counting sort is the cheat code for small ranges  it turns sorting into counting. Linear time is beautiful, but only when the range is kind.</blockquote>
 `
+},{
+  slug: "using-cpp-sort-function-on-vectors",
+  title: "Using C++ sort Function on Vectors",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "The one sort to rule them all: std::sort on vectors, arrays, and custom objects. Simple, fast, and flexible.",
+  tags: ["std::sort", "vectors", "C++", "sorting"],
+  html: `
+<p>In 99% of cp problems, you don't need to implement your own sort. <code>std::sort</code> from <code>&ltalgorithm&gt</code> is extremely fast (introsort  hybrid of quick sort, heap sort, insertion sort). It works on any randomaccess container like vector and array.</p>
+
+<h2>Basic usage on vector</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    vector&ltint&gt v = {5, 2, 8, 1, 9};
+    sort(v.begin(), v.end());
+    // v becomes {1, 2, 5, 8, 9}
+    for (int x : v) cout << x << " ";
+    return 0;
+}</code></pre>
+
+<h2>Sorting in descending order</h2>
+<pre><code>sort(v.begin(), v.end(), greater&ltint&gt());</code></pre>
+
+<h2>Sorting a plain array</h2>
+<pre><code>int arr[] = {5, 2, 8, 1, 9};
+int n = sizeof(arr)/sizeof(arr[0]);
+sort(arr, arr + n);</code></pre>
+
+<h2>Sorting with custom comparator (lambda)</h2>
+<pre><code>vector&ltpair&ltint,int&gt&gt v = {{1,5}, {2,3}, {1,2}};
+sort(v.begin(), v.end(), [](auto &a, auto &b) {
+    if (a.first != b.first) return a.first < b.first;
+    return a.second > b.second; // second descending
+});</code></pre>
+
+<h2>Sorting strings</h2>
+<pre><code>vector&ltstring&gt words = {"apple", "banana", "kiwi"};
+sort(words.begin(), words.end()); // lexicographic order</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>std::sort</code> requires randomaccess iterators (vector, array, deque, string).</li>
+  <li>It's not stable (equal elements may change order). Use <code>stable_sort</code> if needed.</li>
+  <li>Time complexity: O(n log n) on average, but with a very low constant.</li>
+  <li>Default is ascending (<). Use <code>greater&lt;T&gt;()</code> or custom lambda for other orders.</li>
+  <li>It's the most used function in cp after cin/cout.</li>
+</ul>
+
+<blockquote>std::sort is your loyal steed  it will carry you through any sorting task. Learn its quirks, and you'll never look back.</blockquote>
+`
 },
 
 
