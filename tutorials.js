@@ -3906,6 +3906,73 @@ Split further until single elements, then merge back.</p>
 
 <blockquote>Merge sort is the reliable workhorse  never too fast, never too slow, always predictable. It's the sort you trust when you need guarantees.</blockquote>
 `
+},{
+  slug: "implementing-merge-sort-in-cpp",
+  title: "Implementing Merge Sort in C++",
+  topic: "Sorting",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-20",
+  excerpt: "A complete, working C++ implementation of merge sort with a separate merge function and recursion.",
+  tags: ["merge sort", "C++", "implementation", "recursion"],
+  html: `
+<p>Let's write a clean merge sort in C++. We'll use vector for simplicity, but the same logic works for arrays. We'll implement a <code>merge</code> function that combines two sorted halves into a temporary buffer.</p>
+
+<h2>Full code</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+void merge(vector&ltint&gt &arr, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    vector&ltint&gt L(n1), R(n2);
+    for (int i = 0; i < n1; i++) L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(vector&ltint&gt &arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+int main() {
+    vector&ltint&gt arr = {12, 11, 13, 5, 6, 7};
+    mergeSort(arr, 0, arr.size() - 1);
+    for (int x : arr) cout << x << " ";
+    return 0;
+}</code></pre>
+
+<h2>Explanation of merge</h2>
+<p>We create left and right copies, then compare their front elements, writing the smaller back into the original array. This is stable because when equal, we take from left first.</p>
+
+<h2>Optimisation tips</h2>
+<ul>
+  <li>Use global temporary vector to avoid reallocation each call.</li>
+  <li>For small subarrays (e.g., size < 16), switch to insertion sort for better cache performance.</li>
+  <li>Iterative (bottomup) merge sort avoids recursion depth issues.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Merge sort is not inplace  it uses O(n) extra memory.</li>
+  <li>Recursive depth is O(log n), safe for n up to 10<sup>6</sup>.</li>
+  <li>For cp, use <code>std::sort</code> unless you need stability or custom merging.</li>
+  <li>Implementing it yourself is excellent practice.</li>
+</ul>
+
+<blockquote>Writing merge sort from scratch is like building a clock  you understand every gear. Once you've done it, you'll never fear divide and conquer again.</blockquote>
+`
 },
 
 
