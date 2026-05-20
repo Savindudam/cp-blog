@@ -3774,6 +3774,61 @@ maxSum = -2</code></pre>
 
 <blockquote>Bubble sort is like watching paint dry  educational but painfully slow. Still, it teaches you the relationship between swaps and inversions.</blockquote>
 `
+},{
+  slug: "bubble-sort-step-by-step-implementation",
+  title: "Bubble Sort Step-by-Step Implementation",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "A detailed walkthrough of bubble sort with optimisation: early termination and pass-by-pass example.",
+  tags: ["bubble sort", "implementation", "step by step", "optimisation"],
+  html: `
+<p>Let's implement bubble sort properly, including an optimisation: if no swaps occur in a pass, the array is already sorted and we can stop early. This makes bubble sort nearly O(n) for nearly sorted arrays.</p>
+
+<h2>Basic bubble sort with early exit</h2>
+<pre><code>void bubbleSort(int arr[], int n) {
+    bool swapped;
+    for (int i = 0; i < n-1; i++) {
+        swapped = false;
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+    }
+}</code></pre>
+
+<h2>Step-by-step example on [5, 1, 4, 2, 8]</h2>
+<p>Pass 1 (i=0):<br>
+Compare 5>1? swap  [1,5,4,2,8]<br>
+Compare 5>4? swap  [1,4,5,2,8]<br>
+Compare 5>2? swap  [1,4,2,5,8]<br>
+Compare 5>8? no swap.<br>
+End pass 1, largest 8 at end.</p>
+<p>Pass 2 (i=1):<br>
+Compare 1>4? no.<br>
+Compare 4>2? swap  [1,2,4,5,8]<br>
+Compare 4>5? no.<br>
+Swapped occured.</p>
+<p>Pass 3 (i=2):<br>
+Compare 1>2? no. 2>4? no. 4>5? no. No swaps  break.</p>
+
+<h2>Complexity</h2>
+<p>Worst case (reversed): O(n<sup>2</sup>). Best case (already sorted): O(n) because one pass detects no swaps. Average: O(n<sup>2</sup>).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always add the early termination flag  it's free and helps.</li>
+  <li>Bubble sort is stable (equal elements keep relative order).</li>
+  <li>It's useful only for very small n or educational purposes.</li>
+  <li>In cp, you'll never use it for sorting  but the inversion concept matters.</li>
+</ul>
+
+<blockquote>Bubble sort optimisation is like putting a bandaid on a broken leg  it helps a little, but you still need real surgery (like merge sort).</blockquote>
+`
 },
 
 
