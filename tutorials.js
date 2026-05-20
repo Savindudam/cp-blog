@@ -3863,6 +3863,49 @@ Compare 1>2? no. 2>4? no. 4>5? no. No swaps  break.</p>
 
 <blockquote>The n log n barrier is not a wall  it's a speed limit. You can't drive faster than it with comparisonbased algorithms. Accept it and move on.</blockquote>
 `
+},{
+  slug: "merge-sort-algorithm-explained",
+  title: "Merge Sort Algorithm Explained",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-20",
+  excerpt: "Divide and conquer at its finest: split, sort recursively, then merge. Stable and always O(n log n).",
+  tags: ["merge sort", "divide and conquer", "stable sort", "recursion"],
+  html: `
+<p>Merge sort is the classic example of divide and conquer. It's predictable: always O(n log n), stable, but uses extra memory. It's the algorithm behind many stable sorts in libraries. Let's understand how it works.</p>
+
+<h2>The three steps</h2>
+<ol>
+  <li><strong>Divide:</strong> Split the array into two halves.</li>
+  <li><strong>Conquer:</strong> Recursively sort each half.</li>
+  <li><strong>Combine:</strong> Merge the two sorted halves into one sorted array.</li>
+</ol>
+
+<h2>Merging two sorted arrays</h2>
+<p>You have two sorted subarrays. You compare the front elements, take the smaller one, and advance that pointer. This takes O(m) time for m total elements.</p>
+
+<h2>Why it's always O(n log n)</h2>
+<p>The recurrence: T(n) = 2T(n/2) + O(n). By master theorem, T(n) = O(n log n). This holds for all inputs  no worstcase slowdown.</p>
+
+<h2>Space complexity</h2>
+<p>Merge sort requires O(n) extra space for the temporary array during merging. There are inplace merge sorts, but they're complex and slower. In cp, extra memory is usually fine.</p>
+
+<h2>Example dry run</h2>
+<p>Array [38, 27, 43, 3, 9, 82, 10]<br>
+Split: [38,27,43,3] and [9,82,10]<br>
+Split further until single elements, then merge back.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Merge sort is stable (order of equal elements preserved).</li>
+  <li>It's great for linked lists because merging doesn't need random access.</li>
+  <li>It's the basis for counting inversions and external sorting.</li>
+  <li>In cp, you'll rarely implement it  <code>std::stable_sort</code> often uses merge sort.</li>
+</ul>
+
+<blockquote>Merge sort is the reliable workhorse  never too fast, never too slow, always predictable. It's the sort you trust when you need guarantees.</blockquote>
+`
 },
 
 
