@@ -4103,6 +4103,61 @@ Total work = cn * log2 n = O(n log n).</p>
 
 <blockquote>The (n log n) barrier is like the speed of light  you can approach it, but you cannot break it with comparisonbased tools.</blockquote>
 `
+},{
+  slug: "counting-sort-on-non-comparison-sort",
+  title: "Counting Sort: O(n) Non-Comparison Sort",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-20",
+  excerpt: "When integer ranges are small, counting sort gives linear time. Perfect for sorting grades, ages, or any smalldomain data.",
+  tags: ["counting sort", "linear time", "stable sort", "integer sort"],
+  html: `
+<p>Counting sort breaks the O(n log n) barrier by not comparing elements. Instead, it counts occurrences of each value. It runs in O(n + k) where k is the range of possible values. If k is O(n), then it's linear. But it only works for integers (or things that map to integers).</p>
+
+<h2>How it works</h2>
+<ol>
+  <li>Find the range (min to max) of the array.</li>
+  <li>Create a count array of size range+1, initialised to 0.</li>
+  <li>Count each element: count[arr[i]]++.</li>
+  <li>Compute prefix sums of count to get positions.</li>
+  <li>Place elements into output array in stable order.</li>
+</ol>
+
+<h2>C++ implementation (stable version)</h2>
+<pre><code>void countingSort(vector&ltint&gt &arr) {
+    int maxVal = *max_element(arr.begin(), arr.end());
+    vector&ltint&gt count(maxVal + 1, 0);
+    for (int x : arr) count[x]++;
+    for (int i = 1; i <= maxVal; i++) count[i] += count[i-1];
+    vector&ltint&gt output(arr.size());
+    for (int i = arr.size() - 1; i >= 0; i--) {
+        output[count[arr[i]] - 1] = arr[i];
+        count[arr[i]]--;
+    }
+    arr = output;
+}</code></pre>
+
+<h2>When to use it</h2>
+<ul>
+  <li>When the range k is not much larger than n (e.g., grades 0100, n=10,000).</li>
+  <li>As a subroutine in radix sort.</li>
+  <li>When you need a stable sort for integers.</li>
+</ul>
+
+<h2>Limitations</h2>
+<p>It's not inplace; uses O(k) extra memory. If k is huge (e.g., up to 10<sup>9</sup>), counting sort is impossible. It also only works for discrete values with a known range.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Counting sort is linear when k = O(n).</li>
+  <li>It's stable  good for multikey sorting (radix sort).</li>
+  <li>Use it for problems with small value ranges (like ages, scores).</li>
+  <li>Don't use it for 32bit integers unless you have a huge memory budget.</li>
+</ul>
+
+<blockquote>Counting sort is the cheat code for small ranges  it turns sorting into counting. Linear time is beautiful, but only when the range is kind.</blockquote>
+`
 },
 
 
