@@ -3731,7 +3731,50 @@ maxSum = -2</code></pre>
 <blockquote>Sorting turns chaos into order. And from order, solutions emerge almost by themselves. That's why it's the first tool you should reach for.</blockquote>
 `
 },
+{
+  slug: "sorting-theory-inversions-bubble-sort",
+  title: "Sorting Theory: Inversions and Bubble Sort",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-20",
+  excerpt: "What is an inversion? How bubble sort works and why its number of swaps equals the inversion count.",
+  tags: ["inversions", "bubble sort", "sorting theory", "swap count"],
+  html: `
+<p>Before we dive into fast sorting algorithms, let's understand a core concept: <strong>inversions</strong>. An inversion is a pair of elements that are out of order. Counting inversions tells you how far an array is from being sorted. Bubble sort, the simplest sort, directly relates to inversion count.</p>
 
+<h2>What is an inversion?</h2>
+<p>For an array A, a pair (i, j) with i < j and A[i] > A[j] is called an inversion. Example: [3, 1, 2] has inversions: (3,1) and (3,2)  2 inversions. A sorted array has 0 inversions. A reversed array has n(n-1)/2 inversions.</p>
+
+<h2>Bubble sort algorithm</h2>
+<p>Bubble sort repeatedly steps through the array, compares adjacent elements, and swaps them if they're in the wrong order. Each pass moves the largest unsorted element to its correct position at the end. After n-1 passes, the array is sorted.</p>
+<pre><code>void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+            }
+        }
+    }
+}</code></pre>
+
+<h2>Why bubble sort is O(n<sup>2</sup>)</h2>
+<p>Outer loop runs n times, inner loop runs about n/2 times on average  O(n<sup>2</sup>) comparisons. Swaps = number of inversions. In the worst case (reversed array), swaps = n(n-1)/2.</p>
+
+<h2>Inversions and sorting lower bound</h2>
+<p>Every swap reduces the inversion count by exactly 1. So any sorting algorithm that only swaps adjacent elements (like bubble sort) must perform at least as many swaps as there are inversions. That's why bubble sort is slow when inversions are many.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Inversion count measures disorder.</li>
+  <li>Bubble sort is stable and inplace but too slow for large n.</li>
+  <li>Number of swaps in bubble sort = number of inversions.</li>
+  <li>You'll rarely use bubble sort in cp, but its concept is foundational.</li>
+</ul>
+
+<blockquote>Bubble sort is like watching paint dry  educational but painfully slow. Still, it teaches you the relationship between swaps and inversions.</blockquote>
+`
+},
 
 
 
