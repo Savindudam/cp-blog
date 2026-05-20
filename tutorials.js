@@ -3973,6 +3973,50 @@ int main() {
 
 <blockquote>Writing merge sort from scratch is like building a clock  you understand every gear. Once you've done it, you'll never fear divide and conquer again.</blockquote>
 `
+},{
+  slug: "merge-sort-time-complexity-onlogn",
+  title: "Merge Sort Time Complexity O(n log n)",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "Deriving the recurrence T(n) = 2T(n/2) + O(n) and solving it using the master theorem or recursion tree.",
+  tags: ["merge sort", "time complexity", "recurrence", "O(n log n)"],
+  html: `
+<p>Merge sort's time complexity is O(n log n) for all cases (best, average, worst). Let's derive it step by step using a recurrence relation.</p>
+
+<h2>The recurrence</h2>
+<p>Let T(n) be the time to sort n elements. Merge sort:</p>
+<ul>
+  <li>Divides into two halves: each of size n/2  T(n/2) each.</li>
+  <li>Merges the two halves: O(n) time.</li>
+</ul>
+<p>So T(n) = 2T(n/2) + cn, where c is a constant.</p>
+
+<h2>Solving by recursion tree</h2>
+<p>Level 0: work = cn<br>
+Level 1: 2 * (c n/2) = cn<br>
+Level 2: 4 * (c n/4) = cn<br>
+...<br>
+Number of levels = log2 n.<br>
+Total work = cn * log2 n = O(n log n).</p>
+
+<h2>Master theorem verification</h2>
+<p>For T(n) = aT(n/b) + O(n<sup>k</sup>), with a=2, b=2, k=1. Since a = b<sup>k</sup> (2 = 2<sup>1</sup>), case 2 applies: T(n) = O(n<sup>k</sup> log n) = O(n log n).</p>
+
+<h2>Why it's not O(n<sup>2</sup>) ever</h2>
+<p>Unlike quicksort, merge sort always splits exactly in half. There's no bad pivot case. That's why it's used in realtime systems where worstcase guarantees matter.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Merge sort is (n log n) for all inputs.</li>
+  <li>Space complexity O(n) is the tradeoff.</li>
+  <li>For large n, O(n log n) is much faster than O(n<sup>2</sup>).</li>
+  <li>In cp, O(n log n) is the standard for sorting 10<sup>5</sup>10<sup>6</sup> elements.</li>
+</ul>
+
+<blockquote>O(n log n) is the goldilocks complexity  not too slow, not too fast, just right for most sorting tasks.</blockquote>
+`
 },
 
 
