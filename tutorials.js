@@ -4213,7 +4213,52 @@ sort(words.begin(), words.end()); // lexicographic order</code></pre>
 <blockquote>std::sort is your loyal steed  it will carry you through any sorting task. Learn its quirks, and you'll never look back.</blockquote>
 `
 },
+{
+  slug: "sorting-arrays-with-sort-in-cpp",
+  title: "Sorting Arrays with sort in C++",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-20",
+  excerpt: "Using std::sort on raw arrays  pointer arithmatic and the simple syntax you need.",
+  tags: ["std::sort", "arrays", "C++", "sorting"],
+  html: `
+<p>Sorting a plain old Cstyle array is just as easy as sorting a vector. You pass two pointers: one to the first element and one to the position just after the last element. Let's see how it works.</p>
 
+<h2>Basic syntax</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    int arr[] = {5, 2, 8, 1, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    sort(arr, arr + n);
+    // arr becomes {1, 2, 5, 8, 9}
+    for (int i = 0; i < n; i++) cout << arr[i] << " ";
+    return 0;
+}</code></pre>
+
+<h2>Explanation of the pointers</h2>
+<p><code>arr</code> is a pointer to the first element. <code>arr + n</code> points one past the last element (the "end" iterator). This is the same convention as <code>vector::begin()</code> and <code>vector::end()</code>. The sort function works on any randomaccess range.</p>
+
+<h2>Sorting in descending order</h2>
+<pre><code>sort(arr, arr + n, greater&ltint&gt());</code></pre>
+
+<h2>Partial sorting (only first k elements)</h2>
+<p>You can sort only a segment of the array:</p>
+<pre><code>sort(arr + 2, arr + 7); // sorts indices 2..6</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>You need to know the size n to compute <code>arr + n</code>.</li>
+  <li>Array decay to pointer, so <code>sort(arr, arr+n)</code> works fine.</li>
+  <li>Don't pass <code>arr + n</code> if n is the number of elements  it's correct.</li>
+  <li>For multidimensional arrays, use <code>sort(&arr[0][0], &arr[0][0] + rows*cols)</code> to flatten.</li>
+</ul>
+
+<blockquote>Sorting raw arrays with std::sort is just as fast as vectors. The only extra step is calculating the end pointer. Easy peasy.</blockquote>
+`
+},
 
 
 
