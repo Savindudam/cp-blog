@@ -4017,6 +4017,55 @@ Total work = cn * log2 n = O(n log n).</p>
 
 <blockquote>O(n log n) is the goldilocks complexity  not too slow, not too fast, just right for most sorting tasks.</blockquote>
 `
+},{
+  slug: "quick-sort-overview",
+  title: "Quick Sort Overview",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-20",
+  excerpt: "The fastest practical sorting algorithm on average, but with a dangerous worst case. How it works and when to use it.",
+  tags: ["quick sort", "pivot", "partition", "in-place"],
+  html: `
+<p>Quick sort is the default sorting algorithm in many libraries because it's very fast in practice. It's inplace, cachefriendly, and averages O(n log n). But it has a worstcase O(n<sup>2</sup>) if you choose pivots poorly. Let's see how it works.</p>
+
+<h2>The algorithm</h2>
+<ol>
+  <li>Pick a <strong>pivot</strong> element from the array.</li>
+  <li><strong>Partition</strong> the array so that elements less than pivot come before, and greater after.</li>
+  <li>Recursively sort the left and right subarrays.</li>
+</ol>
+
+<h2>Partition step (Lomuto scheme)</h2>
+<pre><code>int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[high]);
+    return i+1;
+}</code></pre>
+
+<h2>Why it's fast</h2>
+<p>Inplace sorting means no extra memory allocation. The partition step has good locality of reference (cache friendly). On random data, pivot choices split evenly enough to give O(n log n).</p>
+
+<h2>The worst case</h2>
+<p>If the pivot is always the smallest or largest element (e.g., already sorted array with bad pivot choice), recursion becomes T(n) = T(n-1) + O(n) = O(n<sup>2</sup>). That's why randomising the pivot is essential.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Quick sort is not stable (equal elements may change order).</li>
+  <li>Use random pivot or medianofthree to avoid worst case.</li>
+  <li>In cp, <code>std::sort</code> is usually introsort (quick sort + heap sort fallback).</li>
+  <li>For small arrays, quick sort switches to insertion sort.</li>
+</ul>
+
+<blockquote>Quick sort is the hare  blazing fast on average, but it can fall asleep (O(n<sup>2</sup>)) if you pick the wrong pivot. Always randomise.</blockquote>
+`
 },
 
 
