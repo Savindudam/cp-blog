@@ -4066,6 +4066,43 @@ Total work = cn * log2 n = O(n log n).</p>
 
 <blockquote>Quick sort is the hare  blazing fast on average, but it can fall asleep (O(n<sup>2</sup>)) if you pick the wrong pivot. Always randomise.</blockquote>
 `
+},{
+  slug: "lower-bound-comparison-sorting-nlogn",
+  title: "Lower Bound for Comparison-Based Sorting n log n",
+  topic: "Sorting",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-20",
+  excerpt: "A rigorous but intuitive proof that no comparison sort can do better than (n log n) comparisons.",
+  tags: ["lower bound", "decision tree", "(n log n)", "information theory"],
+  html: `
+<p>You can't sort faster than O(n log n) using only comparisons. This is not a conjecture  it's a proven lower bound. Here's the intuition using decision trees.</p>
+
+<h2>Decision tree model</h2>
+<p>Any comparisonbased sorting algorithm can be represented as a binary tree. Each internal node is a comparison (a[i]  a[j]?). Each leaf is a permutation (the sorted order). There are n! possible permutations (leaves).</p>
+
+<h2>Height of the tree</h2>
+<p>A binary tree with L leaves has height at least ceil(log2 L). Here L  n!. So the minimum number of comparisons in the worst case is at least log2(n!).</p>
+
+<h2>Stirling's approximation</h2>
+<p>log2(n!) = n log2 n - n log2 e + O(log n). So lower bound = (n log n).</p>
+
+<h2>What about average case?</h2>
+<p>The average number of comparisons is also (n log n) for any comparisonbased sort. Some sorts (like quick sort) have better constants but same asymptotic.</p>
+
+<h2>Noncomparison sorts bypass this</h2>
+<p>Counting sort, radix sort, bucket sort don't use comparisons  they exploit the structure of keys (e.g., integers in a small range). They can achieve O(n + k) time, but at the cost of extra assumptions.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This lower bound only applies to comparisonbased sorts.</li>
+  <li>It's a worstcase bound, but average case is also (n log n).</li>
+  <li>It's why we celebrate O(n log n) as optimal.</li>
+  <li>Knowing it stops you from searching for a mythical O(n) comparison sort.</li>
+</ul>
+
+<blockquote>The (n log n) barrier is like the speed of light  you can approach it, but you cannot break it with comparisonbased tools.</blockquote>
+`
 },
 
 
