@@ -3829,6 +3829,40 @@ Compare 1>2? no. 2>4? no. 4>5? no. No swaps  break.</p>
 
 <blockquote>Bubble sort optimisation is like putting a bandaid on a broken leg  it helps a little, but you still need real surgery (like merge sort).</blockquote>
 `
+},{
+  slug: "number-of-inversions-sorting-lower-bound",
+  title: "Number of Inversions and Sorting Lower Bound",
+  topic: "Sorting",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-20",
+  excerpt: "Why comparison-based sorts cannot beat O(n log n). The inversion argument and decision tree model.",
+  tags: ["inversions", "lower bound", "comparison sort", "O(n log n)"],
+  html: `
+<p>You may have heard: no comparison-based sorting algorithm can be faster than O(n log n) in the worst case. Why? The answer lies in inversions and information theory. Let's understand the proof intuitively.</p>
+
+<h2>The inversion argument</h2>
+<p>A sorted array has 0 inversions. Each comparison between two elements can reduce the number of possible permutations by at most half. There are n! possible permutations of n distinct elements. To identify which one we have, we need at least log2(n!) comparisons.</p>
+
+<h2>Stirling's approximation</h2>
+<p>log2(n!)  n log2 n - n log2 e + O(log n). So the minimum number of comparisons in the worst case is (n log n). This is a fundamental limit for any algorithm that only uses comparisons (no assumptions about data).</p>
+
+<h2>Inversion count as a measure</h2>
+<p>If an array has I inversions, the best comparison sort still needs at least log2(n!) comparisons, regardless of I. But algorithms like insertion sort run in O(n + I)  good for nearly sorted data. Merge sort always O(n log n).</p>
+
+<h2>What about counting inversions efficiently?</h2>
+<p>You can count inversions using merge sort in O(n log n). That's a classic problem. Just modify merge sort to count when an element from the right half is taken before the left half.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Comparison sorts have a lower bound of (n log n).</li>
+  <li>Noncomparison sorts (counting sort, radix sort) can be O(n) but have restrictions.</li>
+  <li>Inversion count can be computed with merge sort or Fenwick tree.</li>
+  <li>Knowing the lower bound helps you appreciate why O(n log n) is optimal.</li>
+</ul>
+
+<blockquote>The n log n barrier is not a wall  it's a speed limit. You can't drive faster than it with comparisonbased algorithms. Accept it and move on.</blockquote>
+`
 },
 
 
