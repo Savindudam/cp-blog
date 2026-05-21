@@ -5112,6 +5112,60 @@ points.emplace_back(3, 4); // constructs pair(3,4) in place</code></pre>
 
 <blockquote>push_back and [] are the dynamic duo  they let you build arrays of unknown size and access them instantly. Just don't go out of bounds.</blockquote>
 `
+},{
+  slug: "iterating-through-vector-for-and-range-for",
+  title: "Iterating Through a Vector with for Loop and Range-Based For",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "Three ways to loop over a vector: index loop, iterator loop, and the modern range-based for loop.",
+  tags: ["iteration", "range-based for", "vector", "loops"],
+  html: `
+<p>After you fill a vector, you need to process its elements. C++ gives you several options, each with its own advantages. The rangebased for loop (C++11) is the most concise and often the best choice.</p>
+
+<h2>1. Indexbased for loop (classic)</h2>
+<pre><code>vector&ltint&gt v = {1,2,3,4,5};
+for (size_t i = 0; i < v.size(); i++) {
+    cout << v[i] << " ";
+}</code></pre>
+<p>Use this when you need the index itself (e.g., to modify neighbouring elements).</p>
+
+<h2>2. Iteratorbased loop</h2>
+<pre><code>for (auto it = v.begin(); it != v.end(); ++it) {
+    cout << *it << " ";
+}</code></pre>
+<p>Useful when you need to erase elements while iterating (but careful with invalidation).</p>
+
+<h2>3. Rangebased for loop (best for most cases)</h2>
+<pre><code>for (int x : v) {
+    cout << x << " ";
+}</code></pre>
+<p>If you need to modify elements, use reference:</p>
+<pre><code>for (int &x : v) {
+    x *= 2; // doubles each element
+}</code></pre>
+
+<h2>Const iteration (readonly)</h2>
+<pre><code>for (const auto &x : v) {
+    // x cannot be modified, no copy made
+}</code></pre>
+
+<h2>Reverse iteration</h2>
+<pre><code>for (auto it = v.rbegin(); it != v.rend(); ++it) {
+    cout << *it << " ";
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Rangebased for loops are safe and readable  use them by default.</li>
+  <li>If you need the index, fall back to index loop.</li>
+  <li>Modifying the vector while iterating (insert/erase) can invalidate iterators  be very careful.</li>
+  <li>For large vectors, use <code>const auto &</code> to avoid copying elements.</li>
+</ul>
+
+<blockquote>The rangebased for loop is the most elegant way to traverse a vector. It's short, fast, and hard to get wrong. Use it everywhere.</blockquote>
+`
 },
 
 
