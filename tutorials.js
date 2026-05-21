@@ -5704,5 +5704,62 @@ if (it != ms.end()) ms.erase(it); // erases one instance</code></pre>
 <blockquote>A set without duplicates is like a team without clones  each member is unique and irreplaceable.</blockquote>
 `
 },
+{
+  slug: "unordered-set-o1-average-operations",
+  title: "Unordered Set: O(1) Average Operations",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-21",
+  excerpt: "std::unordered_set is a hashbased set with average O(1) insert, erase, and find. But no ordering.",
+  tags: ["unordered_set", "hash table", "O(1)", "set"],
+  html: `
+<p>If you don't need elements to be sorted, <code>std::unordered_set</code> is often faster than <code>std::set</code>. It uses a hash table, giving average O(1) for insert, erase, and find. However, worst case can be O(n) if hash collisions are many.</p>
+
+<h2>Basic usage</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+unordered_set&ltint&gt us;
+us.insert(10);
+us.insert(5);
+us.insert(10); // ignored
+cout << us.size() << "\\n"; // 2
+if (us.count(5)) cout << "5 found\\n";
+us.erase(5);</code></pre>
+
+<h2>Iteration order is unspecified</h2>
+<p>Unlike <code>set</code>, unordered_set does not maintain any order. The elements may appear in any sequence.</p>
+<pre><code>for (int x : us) cout << x << " "; // order not guaranteed</code></pre>
+
+<h2>Custom hash for userdefined types</h2>
+<p>You need to provide a hash function for custom types:</p>
+<pre><code>struct Point { int x, y; };
+struct PointHash {
+    size_t operator()(const Point& p) const {
+        return hash&ltint&gt()(p.x) ^ (hash&ltint&gt()(p.y) << 1);
+    }
+};
+unordered_set&ltPoint, PointHash&gt points;</code></pre>
+
+<h2>When to use unordered_set vs set</h2>
+<ul>
+  <li>Use unordered_set when you only need membership tests and don't care about order.</li>
+  <li>Use set when you need sorted order, lower_bound/upper_bound, or range queries.</li>
+  <li>In cp, unordered_set is often faster, but beware of hash collision attacks (some judges use fixed hashes).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Average O(1), worst O(n).</li>
+  <li>No ordering  cannot use lower_bound.</li>
+  <li>Uses more memory than set (hash table overhead).</li>
+  <li>May be slower than set for small sizes due to hash computation.</li>
+</ul>
+
+<blockquote>unordered_set is the hare  blazing fast on average, but can stumble when collisions happen. Use it when speed is king and order doesn't matter.</blockquote>
+`
+},>
+
 
 ]
