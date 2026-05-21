@@ -4878,6 +4878,69 @@ cout << cnt << "\\n"; // 3</code></pre>
 
 <blockquote>Counting elements with binary search is a small trick with big impact. It's the reason sorting before processing queries is so powerfull.</blockquote>
 `
+},{
+  slug: "binary-search-to-find-smallest-valid-solution",
+  title: "Binary Search to Find the Smallest Valid Solution",
+  topic: "Searching",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-21",
+  excerpt: "Also known as 'binary search on answer' or 'parametric search'. Find the minimal x that satisfies a condition.",
+  tags: ["binary search", "parametric search", "monotonic predicate", "minimal valid"],
+  html: `
+<p>Many cp problems ask: find the smallest value X such that a certain condition holds. For example, minimal speed to reach destination in time, or minimal capacity to ship packages within D days. If the condition is monotonic (false for small X, true for large X), binary search gives the answer in O(log range) evaluations.</p>
+
+<h2>The pattern</h2>
+<p>We need a predicate <code>bool check(x)</code> that returns true if x is valid (satisfies condition), false otherwise. And we know there exists some threshold T such that for all x < T, check(x) = false, and for all x >= T, check(x) = true. Then we binary search for T.</p>
+
+<h2>Template using invariant method</h2>
+<pre><code>int binarySearchMinValid(int lo, int hi, function&ltbool(int)&gt check) {
+    // lo: always false (not valid)
+    // hi: always true (valid)
+    // initially, lo is a value where check(lo)=false, hi where check(hi)=true
+    while (hi - lo > 1) {
+        int mid = lo + (hi - lo) / 2;
+        if (check(mid)) hi = mid;
+        else lo = mid;
+    }
+    return hi;
+}</code></pre>
+
+<h2>Example: find smallest capacity such that you can ship packages in D days</h2>
+<pre><code>bool canShip(int capacity, vector&ltint&gt weights, int D) {
+    int days = 1, current = 0;
+    for (int w : weights) {
+        if (current + w > capacity) {
+            days++;
+            current = w;
+        } else current += w;
+    }
+    return days <= D;
+}
+int shipWithinDays(vector&ltint&gt weights, int D) {
+    int lo = *max_element(weights.begin(), weights.end()) - 1; // not valid
+    int hi = accumulate(weights.begin(), weights.end(), 0);    // valid
+    while (hi - lo > 1) {
+        int mid = lo + (hi - lo) / 2;
+        if (canShip(mid, weights, D)) hi = mid;
+        else lo = mid;
+    }
+    return hi;
+}</code></pre>
+
+<h2>Choosing initial lo and hi</h2>
+<p>lo must be <strong>invalid</strong>  often lo = 0 or lo = min possible - 1. hi must be <strong>valid</strong>  often hi = some upper bound like sum of array or 1e18. You can also use <code>lo = 0, hi = 1</code> and double hi until check(hi) becomes true.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The predicate must be monotonic (nondecreasing from false to true).</li>
+  <li>Time complexity: O(log(hi - lo) * time of check).</li>
+  <li>This is one of the most powerfull cp techniques  learn it well.</li>
+  <li>Be careful with integer overflow in mid calculation and in the check function.</li>
+</ul>
+
+<blockquote>Binary search on answer turns a hard "minimize X" problem into a series of easy "can we do with X?" checks. It's magic, and it's legal.</blockquote>
+`
 },
 
 
