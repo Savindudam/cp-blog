@@ -5461,6 +5461,57 @@ string name = s.substr(eq + 1, sem - eq - 1); // "John"</code></pre>
 
 <blockquote>substr is your scalpel for slicing strings  precise and sharp, but every slice creates a new piece.</blockquote>
 `
+},{
+  slug: "finding-substrings-with-find",
+  title: "Finding Substrings with find",
+  topic: "Strings",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "Search for a substring or character within a string. Returns index or string::npos if not found.",
+  tags: ["find", "substring search", "string", "npos"],
+  html: `
+<p>The <code>find</code> family of functions lets you locate substrings, characters, or character sets. It's the bread and butter of string processing.</p>
+
+<h2>Basic find  search for substring</h2>
+<pre><code>string s = "Hello World, Hello C++";
+size_t pos = s.find("World");
+if (pos != string::npos) {
+    cout << "Found at index " << pos << "\\n"; // 6
+}</code></pre>
+
+<h2>Find a single character</h2>
+<pre><code>pos = s.find('o'); // returns 4 (first 'o')
+pos = s.find('z'); // returns string::npos</code></pre>
+
+<h2>Find from a starting position</h2>
+<pre><code>pos = s.find("Hello", 1); // search starting at index 1, finds second "Hello" at 12</code></pre>
+
+<h2>Other find variants</h2>
+<ul>
+  <li><code>rfind()</code>  search from the end (reverse find).</li>
+  <li><code>find_first_of()</code>  find first character that matches any in a set.</li>
+  <li><code>find_last_of()</code>  last character matching set.</li>
+  <li><code>find_first_not_of()</code>  first character not in set.</li>
+</ul>
+
+<h2>Example: find_first_of</h2>
+<pre><code>string s = "abc123xyz";
+size_t pos = s.find_first_of("0123456789"); // 3 (first digit)</code></pre>
+
+<h2>string::npos constant</h2>
+<p><code>npos</code> is a static constant equal to the maximum possible <code>size_t</code> value (usually -1 cast to size_t). Compare with <code>!= string::npos</code> to check if found.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>find</code> returns the index of the first occurrence.</li>
+  <li>If not found, returns <code>string::npos</code>.</li>
+  <li>Time complexity: O(n * m) in worst case, but optimized in practice.</li>
+  <li>Use <code>rfind</code> for last occurrence.</li>
+</ul>
+
+<blockquote>find is the detective of the string world  give it a clue, and it'll tell you exactly where the evidence hides.</blockquote>
+`
 },
 
 ]
