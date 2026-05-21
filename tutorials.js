@@ -5216,6 +5216,58 @@ stack.pop_back();       // removes 10</code></pre>
 
 <blockquote>back and pop_back turn vector into a lightweight stack. Perfect for DFS, bracket matching, and many other algorithms.</blockquote>
 `
+},{
+  slug: "creating-vectors-with-initial-size-and-value",
+  title: "Creating Vectors with Initial Size and Value",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "Construct vectors of a given size, with or without a default value. Also learn resize() and assign().",
+  tags: ["vector", "initialization", "constructor", "resize"],
+  html: `
+<p>Often you know how many elements you need upfront. You can create a vector with a specific size and optionally a fill value. This avoids repeated <code>push_back</code> and is more efficient.</p>
+
+<h2>Constructors for size and value</h2>
+<pre><code>vector&ltint&gt v1(10);      // 10 elements, each 0 (value-initialized)
+vector&ltint&gt v2(10, 5);    // 10 elements, each 5
+vector&ltstring&gt v3(5, "hi"); // 5 strings "hi"</code></pre>
+
+<h2>Using assignment and fill after construction</h2>
+<pre><code>vector&ltint&gt v;
+v.assign(10, 7);         // now 10 elements all 7
+v.resize(20, 1);         // grows to 20, new elements = 1
+v.resize(5);             // shrinks to 5 (last 15 removed)</code></pre>
+
+<h2>Initializer list (C++11)</h2>
+<pre><code>vector&ltint&gt v = {1, 2, 3, 4, 5};
+vector&ltint&gt v2{1, 2, 3}; // same</code></pre>
+
+<h2>reserve vs resize</h2>
+<ul>
+  <li><code>reserve(n)</code> allocates memory for n elements but does not change size. Use when you plan to push_back n times.</li>
+  <li><code>resize(n)</code> changes the size to n, constructing/destroying elements.</li>
+</ul>
+
+<h2>Performance tips</h2>
+<pre><code>// Good: construct with size, then assign
+vector&ltint&gt v(1000000);
+for (int i = 0; i < 1000000; i++) v[i] = i;
+
+// Avoid: repeated push_back without reserve (causes many reallocations)
+vector&ltint&gt v;
+for (int i = 0; i < 1000000; i++) v.push_back(i); // slower</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Constructing with size valueinitialises elements (0 for ints, empty for strings).</li>
+  <li>Using <code>reserve</code> before many <code>push_back</code> calls can significantly speed up your code.</li>
+  <li><code>resize</code> can shrink the vector  elements beyond new size are destroyed.</li>
+  <li>Use <code>shrink_to_fit()</code> to reduce capacity to size (rarely needed).</li>
+</ul>
+
+<blockquote>Preallocating vector size is like buying a big suitcase before a trip  it saves you from repacking over and over.</blockquote>
+`
 },
 
 
