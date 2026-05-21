@@ -4359,6 +4359,53 @@ sort(v.begin(), v.end(), customLess);</code></pre>
 
 <blockquote>Custom comparators turn sorting into a superpower. You can sort by any rule you can imagine  length, parity, absolute value, even by distance to a point.</blockquote>
 `
+},{
+  slug: "sorting-pairs-by-first-and-second-element",
+  title: "Sorting Pairs by First and Second Element",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "How to sort vector of pairs  primary key first, secondary key second, and custom orders.",
+  tags: ["pairs", "sorting pairs", "std::pair", "custom sort"],
+  html: `
+<p>Pairs are everywhere in cp. Sorting a vector of pairs by default uses lexicographic order: compare first, then second if firsts are equal. That's often exactly what you want. But sometimes you need different orders  descending first, ascending second, etc.</p>
+
+<h2>Default sorting (ascending first, then ascending second)</h2>
+<pre><code>vector&ltpair&ltint,int&gt&gt v = {{1,5}, {2,3}, {1,2}};
+sort(v.begin(), v.end());
+// Result: (1,2), (1,5), (2,3)</code></pre>
+
+<h2>Sort by first descending, then second ascending</h2>
+<pre><code>sort(v.begin(), v.end(), [](auto &a, auto &b) {
+    if (a.first != b.first) return a.first > b.first;
+    return a.second < b.second;
+});</code></pre>
+
+<h2>Sort by second only (ignoring first)</h2>
+<pre><code>sort(v.begin(), v.end(), [](auto &a, auto &b) {
+    return a.second < b.second;
+});</code></pre>
+
+<h2>Using <code>std::pair</code>'s comparison operators</h2>
+<p>You can also write custom comparator that uses <code>std::tie</code> for clarity:</p>
+<pre><code>sort(v.begin(), v.end(), [](auto &a, auto &b) {
+    return tie(a.first, a.second) < tie(b.first, b.second);
+});</code></pre>
+
+<h2>Sorting pairs with different types</h2>
+<p><code>pair&ltint, string&gt</code> works the same  compare int, then string lexicographically.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Default pair sort is already very useful for many problems (e.g., sorting events by start time then end time).</li>
+  <li>When you need a different order, write a lambda.</li>
+  <li>To sort by second then first, just swap the comparison order in the lambda.</li>
+  <li>Remember to use <code>auto &</code> to avoid copying pairs.</li>
+</ul>
+
+<blockquote>Pairs are the bread and butter of cp sorting. Mastering their custom ordering will save you from many nested comparators.</blockquote>
+`
 },
 
 
