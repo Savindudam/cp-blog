@@ -4406,6 +4406,63 @@ sort(v.begin(), v.end());
 
 <blockquote>Pairs are the bread and butter of cp sorting. Mastering their custom ordering will save you from many nested comparators.</blockquote>
 `
+},{
+  slug: "sorting-tuples-in-cpp",
+  title: "Sorting Tuples in C++",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "Sorting vector of tuples  lexicographic by default, and how to customise for more than two fields.",
+  tags: ["tuples", "std::tuple", "sorting", "lexicographic"],
+  html: `
+<p>When you need to store more than two values together, <code>std::tuple</code> is your friend. Like pairs, tuples can be sorted lexicographically by default (first element, then second, etc.).</p>
+
+<h2>Default sorting of tuples</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    vector&lttuple&ltint, int, int&gt&gt v = {
+        {1, 5, 10},
+        {2, 3, 0},
+        {1, 2, 20},
+        {1, 5, 5}
+    };
+    sort(v.begin(), v.end());
+    // Order: (1,2,20), (1,5,5), (1,5,10), (2,3,0)
+    for (auto [a,b,c] : v) {
+        cout << a << " " << b << " " << c << "\n";
+    }
+    return 0;
+}</code></pre>
+
+<h2>Custom comparator for tuples</h2>
+<p>You can write a lambda that compares specific fields in any order:</p>
+<pre><code>sort(v.begin(), v.end(), [](auto &t1, auto &t2) {
+    if (get<0>(t1) != get<0>(t2))
+        return get<0>(t1) > get<0>(t2); // first descending
+    if (get<1>(t1) != get<1>(t2))
+        return get<1>(t1) < get<1>(t2); // second ascending
+    return get<2>(t1) < get<2>(t2);     // third ascending
+});</code></pre>
+
+<h2>Using <code>std::tie</code> for cleaner code</h2>
+<pre><code>sort(v.begin(), v.end(), [](auto &t1, auto &t2) {
+    return tie(get<0>(t1), get<1>(t1), get<2>(t1)) >
+           tie(get<0>(t2), get<1>(t2), get<2>(t2));
+}); // descending lexicographic</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>std::tuple</code> compares lexicographically  same as pair but for any number of elements.</li>
+  <li>Use <code>std::get&lt;i&gt;(tuple)</code> to access elements (zerobased).</li>
+  <li>C++17 structured bindings <code>auto [a,b,c] = tuple</code> make iteration nice.</li>
+  <li>If you often use the same custom ordering, consider a struct with <code>operator&lt;</code>.</li>
+</ul>
+
+<blockquote>Tuples are like pairs on steroids. Sorting them is just as easy  default works, and custom comparators give you full control.</blockquote>
+`
 },
 
 
