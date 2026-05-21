@@ -4305,6 +4305,60 @@ sort(arr, arr + n);
 
 <blockquote>Sorting strings alphabetically is so common that std::sort does it out of the box. No extra work needed  just sort and smile.</blockquote>
 `
+},{
+  slug: "sorting-with-custom-comparison-operators",
+  title: "Sorting with Custom Comparison Operators",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-20",
+  excerpt: "When default ascending isn't enough  write your own comparator function or lambda to control sort order.",
+  tags: ["custom comparator", "lambda", "sort", "comparator"],
+  html: `
+<p>The power of <code>std::sort</code> comes from its third argument: a comparison function that tells sort which element should come first. You can use a function pointer, a functor, or a lambda. Let's explore all ways.</p>
+
+<h2>Using a lambda (most common in cp)</h2>
+<pre><code>vector&ltint&gt v = {5, 2, 8, 1, 9};
+sort(v.begin(), v.end(), [](int a, int b) {
+    return a > b; // descending
+});</code></pre>
+
+<h2>Using a function</h2>
+<pre><code>bool cmp(int a, int b) {
+    return a % 2 < b % 2; // evens first, then odds
+}
+sort(v.begin(), v.end(), cmp);</code></pre>
+
+<h2>Using a functor (struct with operator())</h2>
+<pre><code>struct {
+    bool operator()(int a, int b) const { return a < b; }
+} customLess;
+sort(v.begin(), v.end(), customLess);</code></pre>
+
+<h2>Sorting by absolute value</h2>
+<pre><code>sort(v.begin(), v.end(), [](int a, int b) {
+    return abs(a) < abs(b);
+});</code></pre>
+
+<h2>Important rule</h2>
+<p>The comparator must define a <strong>strict weak ordering</strong>. That means:</p>
+<ul>
+  <li>irreflexive: cmp(x, x) is false.</li>
+  <li>transitive: if cmp(a,b) and cmp(b,c) then cmp(a,c).</li>
+  <li>antisymmetric: if cmp(a,b) then not cmp(b,a).</li>
+</ul>
+<p>Never return true for equal elements  use <code>&lt;</code> not <code>&lt;=</code>.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Lambda is the most convenient for oneoff custom sorts.</li>
+  <li>Pass comparator by value (it's small).</li>
+  <li>For complex logic, write a separate function for reusability.</li>
+  <li>Always test your comparator on edge cases (equal elements, empty range).</li>
+</ul>
+
+<blockquote>Custom comparators turn sorting into a superpower. You can sort by any rule you can imagine  length, parity, absolute value, even by distance to a point.</blockquote>
+`
 },
 
 
