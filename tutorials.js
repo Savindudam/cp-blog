@@ -4463,6 +4463,55 @@ int main() {
 
 <blockquote>Tuples are like pairs on steroids. Sorting them is just as easy  default works, and custom comparators give you full control.</blockquote>
 `
+},{
+  slug: "defining-operator-for-user-defined-structs",
+  title: "Defining operator< for User-Defined Structs",
+  topic: "Sorting",
+  difficulty: "Medium",
+  readMinutes: 7,
+  date: "2026-05-20",
+  excerpt: "How to make your own struct sortable by overloading the less-than operator inside the struct.",
+  tags: ["operator<", "struct", "sorting", "overloading"],
+  html: `
+<p>When you have a struct with multiple fields, you can define <code>operator&lt;</code> inside it. Then <code>std::sort</code> will automatically use that ordering. This makes your code cleaner and reusable.</p>
+
+<h2>Basic struct with operator<</h2>
+<pre><code>struct Student {
+    string name;
+    int age;
+    double score;
+    
+    bool operator<(const Student &other) const {
+        if (score != other.score) return score > other.score; // higher score first
+        if (age != other.age) return age < other.age;         // younger first
+        return name < other.name;                             // alphabetical
+    }
+};
+
+vector&ltStudent&gt students = {{"Alice", 20, 85.5}, {"Bob", 19, 92.0}, {"Alice", 19, 85.5}};
+sort(students.begin(), students.end());</code></pre>
+
+<h2>Why const and const reference?</h2>
+<p>The <code>const</code> after the function means the operator does not modify the current object. Taking <code>const &</code> avoids copying. This is required for sorting because the comparator must not change the compared objects.</p>
+
+<h2>Using <code>std::tie</code> inside operator<</h2>
+<pre><code>bool operator<(const Student &other) const {
+    return tie(score, age, name) > tie(other.score, other.age, other.name);
+}</code></pre>
+
+<h2>What if you need multiple different orderings?</h2>
+<p>Don't define <code>operator&lt;</code> at all. Instead, write separate comparator functions or lambdas for each use case. Use <code>operator&lt;</code> only for the natural or most common ordering.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>operator&lt;</code> must be <code>const</code> member function.</li>
+  <li>It must define a strict weak ordering (same rules as comparator).</li>
+  <li>You can also define <code>operator></code> etc., but sort only needs <code>&lt;</code>.</li>
+  <li>For symmetric access, you may need to declare it as a friend if comparing private members.</li>
+</ul>
+
+<blockquote>Defining <code>operator&lt;</code> makes your structs "natively sortable". It's a beautiful abstraction that hides complexity inside the type.</blockquote>
+`
 },
 
 
