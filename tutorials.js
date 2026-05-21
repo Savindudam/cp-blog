@@ -4512,6 +4512,54 @@ sort(students.begin(), students.end());</code></pre>
 
 <blockquote>Defining <code>operator&lt;</code> makes your structs "natively sortable". It's a beautiful abstraction that hides complexity inside the type.</blockquote>
 `
+},{
+  slug: "external-comparison-functions-for-sort",
+  title: "External Comparison Functions for sort",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-20",
+  excerpt: "Writing comparator as a standalone function  great for reusability and when you don't want lambdas.",
+  tags: ["comparator", "function", "sort", "reusability"],
+  html: `
+<p>Lambdas are convenient, but sometimes you want to reuse the same comparator in multiple places. Or you may be working in an environment without C++11 (rare). In those cases, define a regular function and pass its name to sort.</p>
+
+<h2>Example: sorting by string length</h2>
+<pre><code>bool lengthCompare(const string &a, const string &b) {
+    if (a.length() != b.length()) return a.length() < b.length();
+    return a < b; // if equal length, alphabetical
+}
+
+vector&ltstring&gt words = {"apple", "kiwi", "banana", "pear"};
+sort(words.begin(), words.end(), lengthCompare);
+// Result: pear, kiwi, apple, banana  (by length, then alphabetically)</code></pre>
+
+<h2>Comparing points by distance from origin</h2>
+<pre><code>struct Point { int x, y; };
+bool distCompare(const Point &a, const Point &b) {
+    return a.x*a.x + a.y*a.y < b.x*b.x + b.y*b.y;
+}
+sort(points.begin(), points.end(), distCompare);</code></pre>
+
+<h2>Function vs lambda performance</h2>
+<p>There is no runtime performance difference. The compiler can inline both. Use whichever makes your code clearer.</p>
+
+<h2>When to use external functions</h2>
+<ul>
+  <li>When the same comparator is needed in several places.</li>
+  <li>When the comparator is long and complex (lambdas can become hard to read).</li>
+  <li>When you need to pass the comparator to other algorithms (like <code>lower_bound</code> with custom order).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The comparator function must return <code>bool</code> and take two arguments by const reference (to avoid copying).</li>
+  <li>It must be a strict weak ordering (same rules).</li>
+  <li>You can also use function objects (structs with <code>operator()</code>)  they are more flexible and can hold state.</li>
+</ul>
+
+<blockquote>External comparator functions are the oldschool, reliable way to sort. They may be less trendy than lambdas, but they work perfectly and are easy to test.</blockquote>
+`
 },
 
 
