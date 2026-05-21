@@ -5002,6 +5002,64 @@ int shipWithinDays(vector&ltint&gt weights, int D) {
 
 <blockquote>Finding a peak in a unimodal array is like climbing a mountain  always go uphill until you reach the top. Binary search gives you the direction.</blockquote>
 `
+},{
+  slug: "dynamic-arrays-introduction-to-std-vector",
+  title: "Dynamic Arrays: Introduction to std::vector",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-21",
+  excerpt: "The most used container in cp: vector. It's a dynamic array that grows automatically. Learn why it's better than plain arrays.",
+  tags: ["vector", "dynamic array", "STL", "container"],
+  html: `
+<p>In cp, you almost never know the exact size of an array beforehand. You could allocate a huge static array, but that's wasteful and risky. <code>std::vector</code> solves this: it's a dynamic array that can grow and shrink as needed. It's the workhorse of C++ cp.</p>
+
+<h2>What is a vector?</h2>
+<p>A vector is a sequence container that encapsulates dynamic arrays. It stores elements contiguously (like a plain array) but can change size automatically. You can access elements in O(1), add to the end in amortized O(1), and insert/delete in the middle in O(n).</p>
+
+<h2>Including and creating vectors</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int main() {
+    vector&ltint&gt v1;                    // empty vector
+    vector&ltint&gt v2(10);                // vector of 10 ints (value-initialised to 0)
+    vector&ltint&gt v3(10, 5);             // 10 ints each 5
+    vector&ltint&gt v4 = {1,2,3,4};        // initializer list (C++11)
+    vector&ltint&gt v5(v4);                // copy constructor
+    return 0;
+}</code></pre>
+
+<h2>Why vector over plain array?</h2>
+<ul>
+  <li>Automatic memory management  no need to <code>delete[]</code>.</li>
+  <li>You can easily append (<code>push_back</code>) without knowing final size.</li>
+  <li>Bounds checking with <code>.at()</code> (though slower, use <code>[]</code> for speed).</li>
+  <li>Knows its size (<code>.size()</code>)  no need to pass extra n variable.</li>
+  <li>Can be passed to functions easily (by reference to avoid copy).</li>
+</ul>
+
+<h2>Under the hood</h2>
+<p>Vector maintains three pointers: start, finish (one past last element), and end_of_storage. When you <code>push_back</code> and the capacity is full, it allocates a new larger block (usually doubling capacity), copies the elements, and deallocates the old block. That's why amortized push_back is O(1).</p>
+
+<h2>Common operations time complexity</h2>
+<ul>
+  <li>Random access ([]): O(1)</li>
+  <li><code>push_back</code>: amortized O(1)</li>
+  <li><code>pop_back</code>: O(1)</li>
+  <li>Insert/erase at middle: O(n)</li>
+  <li><code>size()</code>, <code>empty()</code>: O(1)</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use <code>vector</code> as your default container  only switch to others if you have specific needs.</li>
+  <li>Avoid <code>vector&ltbool&gt</code>  it's a specialized template that packs bits, leading to weird behavior. Use <code>vector&ltchar&gt</code> or <code>deque&ltbool&gt</code>.</li>
+  <li>When you know the final size in advance, use <code>reserve()</code> to avoid reallocations.</li>
+</ul>
+
+<blockquote>Vector is the Swiss Army knife of cp containers. It's simple, fast, and flexible  master it, and you'll write cleaner code.</blockquote>
+`
 },
 
 
