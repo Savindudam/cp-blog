@@ -5269,6 +5269,56 @@ for (int i = 0; i < 1000000; i++) v.push_back(i); // slower</code></pre>
 <blockquote>Preallocating vector size is like buying a big suitcase before a trip  it saves you from repacking over and over.</blockquote>
 `
 },
+{
+  slug: "understanding-vector-memory-reallocation",
+  title: "Understanding Vector Memory Reallocation",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-21",
+  excerpt: "When a vector runs out of capacity, it reallocates. Learn about capacity, size, and how to avoid expensive reallocations.",
+  tags: ["vector", "capacity", "reallocation", "reserve"],
+  html: `
+<p>Vectors grow automatically, but they don't allocate new memory for every single <code>push_back</code>. Insted, they allocate extra space (capacity) to accomodate future growth. When capacity is exausted, the vector allocates a new larger block (usually twice the size), copies all elements, and deletes the old block. This is called reallocation.</p>
 
+<h2>size vs capacity</h2>
+<p><code>size()</code> is the number of elements actualy in the vector. <code>capacity()</code> is the number of elements the vector can hold without reallocating. Alway capacity >= size.</p>
+<pre><code>vector&ltint&gt v;
+cout << v.size() << " " << v.capacity() << "\\n"; // 0 0
+v.push_back(1);
+cout << v.size() << " " << v.capacity() << "\\n"; // 1 1 (or more, compiler dependent)
+v.push_back(2);
+cout << v.size() << " " << v.capacity() << "\\n"; // 2 2 (or 4)</code></pre>
+
+<h2>Reallocation is expensive</h2>
+<p>When reallocation happns, all existing elements are copied/moved to the new memory. That's O(n) time. If you do many push_backs without reserve, you may cause multiple reallocations, each copying the entire array. The amortized cost is still O(1) per push_back, but the constant factor is high.</p>
+
+<h2>Using reserve to prevent reallocations</h2>
+<pre><code>vector&ltint&gt v;
+v.reserve(1000); // allocate memory for 1000 elements upfront
+for (int i = 0; i < 1000; i++) v.push_back(i); // no reallocation</code></pre>
+
+<h2>Shrinking capacity (rarely needed)</h2>
+<pre><code>v.shrink_to_fit(); // requests to reduce capacity to size (non-binding)</code></pre>
+
+<h2>Example showing reallocation growth factor</h2>
+<pre><code>vector&ltint&gt v;
+for (int i = 0; i < 100; i++) {
+    v.push_back(i);
+    cout << "Size: " << v.size() << " Cap: " << v.capacity() << "\\n";
+}</code></pre>
+<p>Typical growth factor is 2 (doubling) but some implementations use 1.5. This ensures amortized O(1).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>reserve()</code> does not change size, only capacity.</li>
+  <li>Reallocation invalidates all iterators, pointers, and references to elements.</li>
+  <li>If you know the final size in advance, allways reserve to avoid reallocations.</li>
+  <li>Shrink_to_fit is a request  the implementation may ignore it.</li>
+</ul>
+
+<blockquote>Reallocation is like moving to a bigger house  you can't avoid it forever, but with reserve you can plan the move in advance.</blockquote>
+`
+},
 
 ]
