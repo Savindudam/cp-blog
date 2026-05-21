@@ -5060,6 +5060,58 @@ int main() {
 
 <blockquote>Vector is the Swiss Army knife of cp containers. It's simple, fast, and flexible  master it, and you'll write cleaner code.</blockquote>
 `
+},{
+  slug: "adding-elements-push-back-and-access",
+  title: "Adding Elements with push_back and Accessing Elements",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "How to grow a vector dynamically using push_back, and how to read and write elements using [] or at().",
+  tags: ["push_back", "access", "vector", "operator[]"],
+  html: `
+<p>The two most common operations on a vector are adding elements to the end and accessing existing elements. <code>push_back</code> appends a new element, growing the vector if needed. Access is done with the <code>[]</code> operator (no bounds check) or <code>.at()</code> (with bounds check).</p>
+
+<h2>push_back  add at the end</h2>
+<pre><code>vector&ltint&gt v;
+v.push_back(10);
+v.push_back(20);
+v.push_back(30);
+// v now contains [10, 20, 30]</code></pre>
+
+<h2>Accessing elements with []</h2>
+<pre><code>cout << v[0] << "\\n"; // 10
+cout << v[2] << "\\n"; // 30
+v[1] = 25;
+// v becomes [10, 25, 30]</code></pre>
+
+<h2>Accessing with .at() (safer but slower)</h2>
+<pre><code>try {
+    cout << v.at(5) << "\\n";
+} catch (out_of_range& e) {
+    cout << "Index out of range\\n";
+}</code></pre>
+
+<h2>push_back with move semantics (efficient for large types)</h2>
+<pre><code>vector&ltstring&gt words;
+string s = "hello";
+words.push_back(move(s)); // s is now empty</code></pre>
+
+<h2>emplace_back  construct in place</h2>
+<p><code>emplace_back</code> constructs the element directly in the vector, avoiding a copy. For complex types, it's more efficient.</p>
+<pre><code>vector&ltpair&ltint,int&gt&gt points;
+points.emplace_back(3, 4); // constructs pair(3,4) in place</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>push_back</code> amortized O(1). If you know the final size, call <code>reserve(n)</code> before to avoid reallocations.</li>
+  <li>Using <code>[]</code> with an index out of bounds is undefined behaviour  your program may crash or corrupt data.</li>
+  <li>Always ensure the index is < size() before accessing.</li>
+  <li><code>back()</code> gives the last element, <code>front()</code> the first.</li>
+</ul>
+
+<blockquote>push_back and [] are the dynamic duo  they let you build arrays of unknown size and access them instantly. Just don't go out of bounds.</blockquote>
+`
 },
 
 
