@@ -4717,7 +4717,68 @@ sort(words.begin(), words.end(), [](const string &a, const string &b) {
 <blockquote>The intervalhalving method is the classic binary search  simple, robust, and easy to memorise. Master it, and you'll have a tool for a lifetime.</blockquote>
 `
 },
+{
+  slug: "binary-search-method-2-jump-search",
+  title: "Binary Search Method 2 (Jump Search)",
+  topic: "Searching",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-21",
+  excerpt: "An alternative binary search implementation that uses two pointers and a different invariant. Also known as the 'binary search on answer' style.",
+  tags: ["binary search", "jump search", "binary search on answer", "invariant"],
+  html: `
+<p>The interval halving method (while lo <= hi) is great, but sometimes you need a different appraoch  one that maintains an invariant like <code>lo</code> always points to a position that is <em>not</em> valid and <code>hi</code> to a position that <em>is</em> valid. This is the "binary search on answer" style, also called jump search or binary search for first true.</p>
 
+<h2>The invariant method</h2>
+<p>We maintain two pointers: <code>lo</code> (always false/too small) and <code>hi</code> (always true/too big). The search space is (lo, hi]. We stop when <code>hi - lo == 1</code>, then hi is the answer. This is extremely usefull when searching for the smallest x such that a condition becomes true.</p>
+
+<h2>Template for finding first index where predicate becomes true</h2>
+<pre><code>int binarySearchFirstTrue(int lo, int hi, function&ltbool(int)&gt pred) {
+    // pred(x) is false for x <= lo, true for x >= hi
+    while (hi - lo > 1) {
+        int mid = lo + (hi - lo) / 2;
+        if (pred(mid)) hi = mid;
+        else lo = mid;
+    }
+    return hi;
+}</code></pre>
+
+<h2>Example: find smallest index where arr[i] >= target</h2>
+<pre><code>vector&ltint&gt arr = {1,3,5,7,9};
+int target = 6;
+// pred(mid) = arr[mid] >= target
+int lo = -1, hi = arr.size(); // lo is out of bounds (invalid), hi is out of bounds (but we treat as valid)
+while (hi - lo > 1) {
+    int mid = lo + (hi - lo) / 2;
+    if (arr[mid] >= target) hi = mid;
+    else lo = mid;
+}
+// hi is the first index with arr[hi] >= target (3, since arr[3]=7)
+cout << hi << "\\n";</code></pre>
+
+<h2>Why use this method?</h2>
+<p>It's ideal for <strong>binary search on answer</strong> problems: you have a monotonic predicate (false for small values, true for large ones) and you want the threshold. For example, finding the minimum speed to reach destination, or the smallest capacity to ship packages. The invariant is clean and avoids offbyone errors.</p>
+
+<h2>Difference from interval halving</h2>
+<ul>
+  <li>Interval halving (lo <= hi) returns exact index of target.</li>
+  <li>Invariant method (hi - lo > 1) returns first index where predicate becomes true, even if no exact match.</li>
+  <li>The invariant method never checks equality; it only shrinks the range.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Initialise lo to a value where pred(lo) is false (like -1).</li>
+  <li>Initialise hi to a value where pred(hi) is true (like n).</li>
+  <li>Loop condition: while (hi - lo > 1).</li>
+  <li>Mid = lo + (hi - lo) / 2.</li>
+  <li>If pred(mid) true, set hi = mid; else lo = mid.</li>
+  <li>After loop, hi is the answer.</li>
+</ul>
+
+<blockquote>The invariant method is the secret weapon for binary search on answer. It's less errorprone and works beautifully for monotonic predicates.</blockquote>
+`
+},
 
 
 ]
