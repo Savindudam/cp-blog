@@ -4778,6 +4778,64 @@ cout << hi << "\\n";</code></pre>
 
 <blockquote>The invariant method is the secret weapon for binary search on answer. It's less errorprone and works beautifully for monotonic predicates.</blockquote>
 `
+},{
+  slug: "cpp-lower-bound-upper-bound-equal-range",
+  title: "C++ lower_bound, upper_bound, and equal_range",
+  topic: "Searching",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-21",
+  excerpt: "The STL's binary search toolkit: find first not less, first greater, and the entire range of equal elements.",
+  tags: ["lower_bound", "upper_bound", "equal_range", "STL", "binary search"],
+  html: `
+<p>Why write your own binary search when the STL gives you battletested functions? <code>lower_bound</code>, <code>upper_bound</code>, and <code>equal_range</code> are your best friends for sorted arrays. They return iterators, making them perfect for vectors and arrays.</p>
+
+<h2>lower_bound  first position where element is not less than value</h2>
+<p>Returns iterator to the first element that is <strong>>= value</strong>. If all elements are less, returns end().</p>
+<pre><code>vector&ltint&gt v = {1,3,5,5,7,9};
+auto it = lower_bound(v.begin(), v.end(), 5);
+int idx = it - v.begin(); // 2 (first 5)
+it = lower_bound(v.begin(), v.end(), 6);
+idx = it - v.begin(); // 4 (first element >=6 is 7 at index 4)</code></pre>
+
+<h2>upper_bound  first position where element is greater than value</h2>
+<p>Returns iterator to the first element that is <strong>> value</strong>. Equivalent to first index where element > value.</p>
+<pre><code>auto it = upper_bound(v.begin(), v.end(), 5);
+int idx = it - v.begin(); // 4 (first element >5 is 7)
+it = upper_bound(v.begin(), v.end(), 9);
+idx = it - v.begin(); // 6 (end())</code></pre>
+
+<h2>equal_range  both lower and upper bound in one call</h2>
+<p>Returns a <code>pair</code> of iterators: first = lower_bound, second = upper_bound. This gives you the entire range of elements equal to value.</p>
+<pre><code>auto range = equal_range(v.begin(), v.end(), 5);
+for (auto it = range.first; it != range.second; ++it) {
+    cout << *it << " "; // prints 5 5
+}
+int count = range.second - range.first; // 2</code></pre>
+
+<h2>Using with arrays (raw pointers)</h2>
+<pre><code>int arr[] = {1,3,5,5,7,9};
+int n = 6;
+int* lower = lower_bound(arr, arr + n, 5);
+int pos = lower - arr; // 2</code></pre>
+
+<h2>Custom comparator</h2>
+<p>All three functions accept a custom comparator as fourth argument. For example, to search in descending order:</p>
+<pre><code>sort(v.begin(), v.end(), greater&ltint&gt()); // descending
+// lower_bound for descending means first not greater (i.e., <=)
+auto it = lower_bound(v.begin(), v.end(), 5, greater&ltint&gt());</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>All functions require the range to be sorted according to the same comparator.</li>
+  <li>Complexity: O(log n) for randomaccess iterators (vector, array).</li>
+  <li>For sets and maps, use their member functions <code>.lower_bound()</code> (faster).</li>
+  <li>Use <code>binary_search</code> if you only need a boolean answer.</li>
+  <li>These functions are the workhorses of cp  memorise them.</li>
+</ul>
+
+<blockquote>lower_bound and upper_bound turn binary search into a oneliner. Learn them, and you'll never write a binary search loop again  unless it's for the 'binary search on answer' pattern.</blockquote>
+`
 },
 
 
