@@ -4560,6 +4560,48 @@ sort(points.begin(), points.end(), distCompare);</code></pre>
 
 <blockquote>External comparator functions are the oldschool, reliable way to sort. They may be less trendy than lambdas, but they work perfectly and are easy to test.</blockquote>
 `
+},{
+  slug: "sorting-by-string-length-then-alphabetically",
+  title: "Sorting by String Length Then Alphabetically",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "A classic multikey sort: primary key = length, secondary key = lexicographic order.",
+  tags: ["string length", "multi-key sort", "custom comparator", "lambda"],
+  html: `
+<p>Many problems require sorting strings first by their length, and then (if lengths are equal) by alphabetical order. This is a perfect example of a custom comparator with two keys.</p>
+
+<h2>The comparator logic</h2>
+<pre><code>bool compareLengthThenLex(const string &a, const string &b) {
+    if (a.size() != b.size()) return a.size() < b.size();
+    return a < b;
+}</code></pre>
+
+<h2>Using a lambda</h2>
+<pre><code>vector&ltstring&gt words = {"cat", "dog", "banana", "apple", "bat"};
+sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    if (a.length() != b.length()) return a.length() < b.length();
+    return a < b;
+});
+// Result: bat, cat, dog, apple, banana</code></pre>
+
+<h2>Why this order?</h2>
+<p>First, shorter strings come first. Among strings of the same length, they are sorted alphabetically. So "bat" (3 letters) comes before "apple" (5 letters). Among "cat", "bat", "dog" (all length 3), alphabetical order gives "bat", "cat", "dog".</p>
+
+<h2>Reverse order (longest first)</h2>
+<pre><code>if (a.length() != b.length()) return a.length() > b.length();</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always check primary key first. Only if equal, compare secondary key.</li>
+  <li>Use <code>size()</code> or <code>length()</code> for strings  same thing.</li>
+  <li>You can extend to third, fourth keys similarly.</li>
+  <li>This pattern works for any two (or more) properties.</li>
+</ul>
+
+<blockquote>Sorting by length then alphabetically is the "hello world" of multikey sorting. Master it, and you'll be ready for any custom ordering.</blockquote>
+`
 },
 
 
