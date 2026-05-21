@@ -4602,6 +4602,65 @@ sort(words.begin(), words.end(), [](const string &a, const string &b) {
 
 <blockquote>Sorting by length then alphabetically is the "hello world" of multikey sorting. Master it, and you'll be ready for any custom ordering.</blockquote>
 `
+},{
+  slug: "binary-search-in-sorted-arrays",
+  title: "Binary Search in Sorted Arrays",
+  topic: "Searching",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-20",
+  excerpt: "The most important search algorithm: O(log n) by cutting the search space in half each time.",
+  tags: ["binary search", "sorted array", "O(log n)", "searching"],
+  html: `
+<p>Binary search is the algorithm that exploits sortedness. Given a sorted array, you can find an element in O(log n) time by repeatedly checking the middle and discarding half of the remaining elements. It's the foundation of many cp techniques.</p>
+
+<h2>The idea</h2>
+<ol>
+  <li>Start with <code>low = 0</code>, <code>high = n-1</code>.</li>
+  <li>While <code>low <= high</code>:
+    <ul><li><code>mid = (low + high) / 2</code></li>
+    <li>If <code>arr[mid] == target</code>, return mid.</li>
+    <li>Else if <code>arr[mid] < target</code>, search right half: <code>low = mid + 1</code>.</li>
+    <li>Else search left half: <code>high = mid - 1</code>.</li></ul>
+  </li>
+  <li>If not found, return -1 (or insertion point).</li>
+</ol>
+
+<h2>Standard iterative implementation</h2>
+<pre><code>int binarySearch(int arr[], int n, int target) {
+    int lo = 0, hi = n - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2; // prevents overflow
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] < target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}</code></pre>
+
+<h2>Why <code>lo + (hi - lo) / 2</code> instead of <code>(lo + hi) / 2</code>?</h2>
+<p>For large arrays, <code>lo + hi</code> could overflow the integer range. The subtraction version is safe.</p>
+
+<h2>Recursive version</h2>
+<pre><code>int binarySearchRec(int arr[], int lo, int hi, int target) {
+    if (lo > hi) return -1;
+    int mid = lo + (hi - lo) / 2;
+    if (arr[mid] == target) return mid;
+    if (arr[mid] < target) return binarySearchRec(arr, mid+1, hi, target);
+    return binarySearchRec(arr, lo, mid-1, target);
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Binary search only works on <strong>sorted</strong> arrays.</li>
+  <li>Time complexity: O(log n)  extremely fast.</li>
+  <li>Space complexity: O(1) iterative, O(log n) recursive (due to call stack).</li>
+  <li>Use <code>lower_bound</code> and <code>upper_bound</code> from STL for common binary search tasks.</li>
+  <li>Watch out for infinite loops  ensure <code>lo</code> and <code>hi</code> update correctly.</li>
+</ul>
+
+<blockquote>Binary search is the algorithm that makes sorted data magical. Learn it inside out  you'll use it more often than any other search method.</blockquote>
+`
 },
 
 
