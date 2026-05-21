@@ -4836,6 +4836,48 @@ auto it = lower_bound(v.begin(), v.end(), 5, greater&ltint&gt());</code></pre>
 
 <blockquote>lower_bound and upper_bound turn binary search into a oneliner. Learn them, and you'll never write a binary search loop again  unless it's for the 'binary search on answer' pattern.</blockquote>
 `
+},{
+  slug: "binary-search-for-counting-elements",
+  title: "Binary Search for Counting Elements with a Given Value",
+  topic: "Searching",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "How many times does x appear in a sorted array? Use upper_bound - lower_bound to get the count in O(log n).",
+  tags: ["count", "frequency", "lower_bound", "upper_bound", "binary search"],
+  html: `
+<p>In an unsorted array, counting occurences of a value takes O(n). But if the array is sorted, you can do it in O(log n) using binary search. The trick: find the first occurrence (lower_bound) and the last occurrence (upper_bound - 1). Then count = upper_bound - lower_bound.</p>
+
+<h2>The formula</h2>
+<pre><code>int count = upper_bound(v.begin(), v.end(), x) - lower_bound(v.begin(), v.end(), x);</code></pre>
+
+<h2>Example</h2>
+<pre><code>vector&ltint&gt v = {1, 2, 2, 2, 3, 4, 5};
+int x = 2;
+int cnt = upper_bound(v.begin(), v.end(), x) - lower_bound(v.begin(), v.end(), x);
+cout << cnt << "\\n"; // 3</code></pre>
+
+<h2>Why this works</h2>
+<p><code>lower_bound</code> gives first index where value >= x. <code>upper_bound</code> gives first index where value > x. So the range [lower, upper) contains exactly the elements equal to x. Their difference is the count.</p>
+
+<h2>If the element is not present</h2>
+<p>Both bounds point to the same index (the insertion point). Then count = 0.</p>
+
+<h2>Counting in a subarray (sorted range)</h2>
+<p>You can also count only within a subarray by passing subrange iterators:</p>
+<pre><code>int cnt = upper_bound(v.begin() + l, v.begin() + r + 1, x) 
+          - lower_bound(v.begin() + l, v.begin() + r + 1, x);</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This method is O(log n)  extremely fast.</li>
+  <li>Works for any sorted randomaccess container.</li>
+  <li>For unsorted arrays, you'd need a hash map for O(1) average, but sorting first might be worth it if many queries.</li>
+  <li>You can also use <code>equal_range</code> to get the pair directly.</li>
+</ul>
+
+<blockquote>Counting elements with binary search is a small trick with big impact. It's the reason sorting before processing queries is so powerfull.</blockquote>
+`
 },
 
 
