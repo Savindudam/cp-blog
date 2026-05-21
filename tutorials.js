@@ -5608,6 +5608,50 @@ s.erase(first, last); // removes range [first, last)</code></pre>
 
 <blockquote>Insert, count, erase  the set trinity. Master these, and you'll handle unique collections like a pro.</blockquote>
 `
+},{
+  slug: "iterating-through-set-with-auto",
+  title: "Iterating Through a Set with auto",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-21",
+  excerpt: "Traverse a set in sorted order using rangebased for loops or iterators. Elements come out in ascending order.",
+  tags: ["iteration", "set", "range-based for", "auto"],
+  html: `
+<p>Iterating over a set is straightforward. Because the set is sorted, you'll get elements in order (ascending by default). The rangebased for loop is the cleanest.</p>
+
+<h2>Rangebased for loop</h2>
+<pre><code>set&ltint&gt s = {5, 2, 8, 1, 9};
+for (int x : s) {
+    cout << x << " "; // prints: 1 2 5 8 9
+}</code></pre>
+
+<h2>Using iterators</h2>
+<pre><code>for (auto it = s.begin(); it != s.end(); ++it) {
+    cout << *it << " ";
+}</code></pre>
+
+<h2>Reverse iteration</h2>
+<pre><code>for (auto it = s.rbegin(); it != s.rend(); ++it) {
+    cout << *it << " "; // prints descending: 9 8 5 2 1
+}</code></pre>
+
+<h2>Modifying elements during iteration</h2>
+<p>You cannot modify the elements of a set via iterator because they are const. If you need to change a value, you must erase and insert a new one.</p>
+
+<h2>Iterating over const set</h2>
+<pre><code>const set&ltint&gt cs = {1,2,3};
+for (int x : cs) { ... } // works fine, x is copy</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Iteration order is always sorted according to the comparator.</li>
+  <li>Using rangebased for with <code>auto&</code> gives const reference (cannot modify).</li>
+  <li>Do not erase elements while iterating without careful handling  iterators may invalidate.</li>
+</ul>
+
+<blockquote>Iterating a set is like walking through a sorted list  you know exactly what order to expect. No suprises.</blockquote>
+`
 },
 
 ]
