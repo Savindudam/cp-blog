@@ -5512,6 +5512,54 @@ size_t pos = s.find_first_of("0123456789"); // 3 (first digit)</code></pre>
 
 <blockquote>find is the detective of the string world  give it a clue, and it'll tell you exactly where the evidence hides.</blockquote>
 `
+},{
+  slug: "set-data-structures-std-set",
+  title: "Set Data Structures: std::set",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-21",
+  excerpt: "std::set stores unique elements in sorted order. Insert, erase, and search in O(log n).",
+  tags: ["set", "std::set", "ordered set", "BST"],
+  html: `
+<p><code>std::set</code> is a container that stores unique keys in sorted order. It's implemented as a balanced binary search tree (usually redblack tree). Operations like insertion, deletion, and lookup are O(log n).</p>
+
+<h2>Including and creating sets</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+set&ltint&gt s;                 // empty set of ints
+set&ltint&gt s2 = {3, 1, 4, 1, 5}; // 1,3,4,5 (duplicate 1 ignored)
+set&ltint, greater&ltint&gt&gt s3;  // descending order</code></pre>
+
+<h2>Set properties</h2>
+<ul>
+  <li>Elements are unique  no duplicates.</li>
+  <li>Elements are sorted automatically (ascending by default).</li>
+  <li>Modifying an element in place is not allowed  you must erase and insert.</li>
+</ul>
+
+<h2>When to use set</h2>
+<p>Use set when you need to maintain a sorted collection of unique elements and you need fast membership tests, insertions, and deletions. If you don't need ordering, <code>unordered_set</code> is faster (average O(1)).</p>
+
+<h2>Time complexites</h2>
+<ul>
+  <li>Insert: O(log n)</li>
+  <li>Erase: O(log n)</li>
+  <li>Find: O(log n)</li>
+  <li>Size/empty: O(1)</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Set iterators are bidirectional, not randomaccess.</li>
+  <li>Changing the value of an element via iterator is prohibited (const).</li>
+  <li>For custom types, you must define <code>operator<</code> or provide a comparison functor.</li>
+  <li>Set is ideal for problems like "maintain a sorted list of active IDs".</li>
+</ul>
+
+<blockquote>std::set is the bouncer of the STL  it keeps everyone in line, sorted, and no duplicates allowed.</blockquote>
+`
 },
 
 ]
