@@ -5418,6 +5418,49 @@ string msg = "The answer is " + to_string(x);</code></pre>
 
 <blockquote>Concatenating strings with + is like building a sandcastle  fine for small projects, but for big ones you need a better shovel (reserve and +=).</blockquote>
 `
+},{
+  slug: "extracting-substrings-with-substr",
+  title: "Extracting Substrings with substr",
+  topic: "Strings",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-21",
+  excerpt: "Get a portion of a string using substr(pos, count). Returns a new string  O(count) time.",
+  tags: ["substr", "substring", "string", "extract"],
+  html: `
+<p>The <code>substr</code> method returns a new string that is a copy of a portion of the original. It's usefull for parsing, tokenizing, and extracting data.</p>
+
+<h2>Basic syntax</h2>
+<pre><code>string s = "Hello World";
+string sub1 = s.substr(0, 5);   // "Hello" (start at 0, length 5)
+string sub2 = s.substr(6);       // "World" (start at 6 to end)
+string sub3 = s.substr(6, 3);    // "Wor"</code></pre>
+
+<h2>Outofrange behavior</h2>
+<p>If <code>pos</code> is greater than <code>size()</code>, <code>out_of_range</code> exception is thrown. If <code>pos + count</code> exceeds size, the substring goes to the end (no exception).</p>
+
+<h2>Using substr with find</h2>
+<pre><code>string s = "name=John;age=25";
+int eq = s.find('=');
+int sem = s.find(';');
+string name = s.substr(eq + 1, sem - eq - 1); // "John"</code></pre>
+
+<h2>substr does not modify original</h2>
+<p>It returns a copy. Modifying the substring does not affect the original string.</p>
+
+<h2>Efficiency note</h2>
+<p><code>substr</code> allocates a new string. If you need only to read a portion, consider using <code>string_view</code> (C++17) to avoid copying.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>First argument = starting index (0based).</li>
+  <li>Second argument = length (optional, defaults to rest of string).</li>
+  <li>Throws exception if pos > size.</li>
+  <li>Returns a new string  O(length) time and memory.</li>
+</ul>
+
+<blockquote>substr is your scalpel for slicing strings  precise and sharp, but every slice creates a new piece.</blockquote>
+`
 },
 
 ]
