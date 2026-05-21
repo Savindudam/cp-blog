@@ -5365,6 +5365,59 @@ string s2(cstr); // from C string</code></pre>
 
 <blockquote>std::string is a vector of chars with a better wardrobe. It's your goto for text processing.</blockquote>
 `
+},{
+  slug: "concatenating-strings-with-plus-operator",
+  title: "Concatenating Strings with + Operator",
+  topic: "Strings",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-21",
+  excerpt: "Combine strings using + or +=. Understand when copies happen and how to concatenate efficiently.",
+  tags: ["string concatenation", "operator+", "operator+=", "efficiency"],
+  html: `
+<p>Concatenating strings is extremly common. C++ lets you use <code>+</code> and <code>+=</code> operators, which are convenient but can be inefficient if used carelessly in loops.</p>
+
+<h2>Using + to concatenate</h2>
+<pre><code>string a = "Hello";
+string b = "World";
+string c = a + " " + b; // "Hello World"</code></pre>
+<p>The <code>+</code> operator creates a new temporary string. Chaining multiple <code>+</code> creates several temporaries.</p>
+
+<h2>Using += to append (more efficient)</h2>
+<pre><code>string result;
+result += "Hello";
+result += " ";
+result += "World";</code></pre>
+<p><code>+=</code> appends directly to the left operand, avoiding unnecessary copies.</p>
+
+<h2>Inefficient concatenation in loops  bad example</h2>
+<pre><code>string s;
+for (int i = 0; i < 100000; i++) {
+    s = s + "a"; // creates new string each iteration  O(n^2) time!
+}</code></pre>
+
+<h2>Efficient concatenation  use += or reserve</h2>
+<pre><code>string s;
+s.reserve(100000);
+for (int i = 0; i < 100000; i++) {
+    s += 'a'; // amortized O(1) per character
+}</code></pre>
+
+<h2>Concatenating string and number</h2>
+<p>Use <code>to_string</code> to convert numbers before concat:</p>
+<pre><code>int x = 42;
+string msg = "The answer is " + to_string(x);</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>+</code> creates temporaries  avoid in loops.</li>
+  <li><code>+=</code> is more efficient for appending.</li>
+  <li>For many concatenations, preallocate with <code>reserve()</code>.</li>
+  <li>You can also use <code>stringstream</code> for mixed types, but it's slower.</li>
+</ul>
+
+<blockquote>Concatenating strings with + is like building a sandcastle  fine for small projects, but for big ones you need a better shovel (reserve and +=).</blockquote>
+`
 },
 
 ]
