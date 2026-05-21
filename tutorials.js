@@ -4941,6 +4941,67 @@ int shipWithinDays(vector&ltint&gt weights, int D) {
 
 <blockquote>Binary search on answer turns a hard "minimize X" problem into a series of easy "can we do with X?" checks. It's magic, and it's legal.</blockquote>
 `
+},{
+  slug: "binary-search-finding-maximum-unimodal-function",
+  title: "Binary Search for Finding Maximum of a Unimodal Function",
+  topic: "Searching",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-21",
+  excerpt: "When a function increases then decreases (or vice versa), ternary search works, but binary search on derivative is also possible.",
+  tags: ["unimodal", "ternary search", "binary search", "convex function"],
+  html: `
+<p>A unimodal function has a single peak (maximum) or valley (minimum). For discrete functions, you can find the maximum using ternary search, but binary search also works if you compare f(mid) and f(mid+1). Let's explore both.</p>
+
+<h2>Unimodal definition</h2>
+<p>f(x) is strictly increasing for x < peak, strictly decreasing for x > peak. We want to find the peak index (maximum point).</p>
+
+<h2>Binary search approach (compare neighbours)</h2>
+<p>At any mid, compare f(mid) and f(mid+1):</p>
+<ul>
+  <li>If f(mid) < f(mid+1), we are on the increasing slope  peak is to the right, so lo = mid + 1.</li>
+  <li>If f(mid) > f(mid+1), we are on the decreasing slope  peak is to the left, so hi = mid.</li>
+  <li>If equal, either direction works (but plateau handling needed).</li>
+</ul>
+
+<pre><code>int findPeak(vector&ltint&gt arr) { // arr is unimodal (increasing then decreasing)
+    int lo = 0, hi = arr.size() - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (arr[mid] < arr[mid+1]) lo = mid + 1;
+        else hi = mid;
+    }
+    return lo; // peak index
+}</code></pre>
+
+<h2>Ternary search (more common)</h2>
+<p>Ternary search splits the range into three parts. For a convex function (one minimum), you compare f(mid1) and f(mid2) and discard one third. But binary search on derivative is often simpler.</p>
+
+<pre><code>int ternarySearchMax(vector&ltint&gt f, int lo, int hi) {
+    while (hi - lo > 3) {
+        int m1 = lo + (hi - lo) / 3;
+        int m2 = hi - (hi - lo) / 3;
+        if (f(m1) < f(m2)) lo = m1;
+        else hi = m2;
+    }
+    int best = lo;
+    for (int i = lo; i <= hi; i++) if (f(i) > f(best)) best = i;
+    return best;
+}</code></pre>
+
+<h2>When to use which?</h2>
+<p>Use binary search on neighbours when the function is discrete and you can guarantee unimodality. Use ternary search when the function is continuous or you want a simpler implementation. However, binary search on derivative is more efficient (log2 n vs 2*log3 n).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Unimodal means one peak  not multimodal.</li>
+  <li>For integer domains, the neighbour comparison method works perfectly.</li>
+  <li>Be careful with flat plateaus  the algorithm may get stuck. Add a random tiebreaker or use ternary search.</li>
+  <li>In cp, you'll see this in problems like "find the maximum sum of a subarray of fixed length" or "mountain array peak".</li>
+</ul>
+
+<blockquote>Finding a peak in a unimodal array is like climbing a mountain  always go uphill until you reach the top. Binary search gives you the direction.</blockquote>
+`
 },
 
 
