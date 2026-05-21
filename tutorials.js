@@ -5166,6 +5166,56 @@ for (size_t i = 0; i < v.size(); i++) {
 
 <blockquote>The rangebased for loop is the most elegant way to traverse a vector. It's short, fast, and hard to get wrong. Use it everywhere.</blockquote>
 `
+},{
+  slug: "vector-back-and-pop-back-operations",
+  title: "Vector back() and pop_back Operations",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-21",
+  excerpt: "Access the last element with back() and remove it with pop_back()  O(1) operations perfect for stack-like usage.",
+  tags: ["back", "pop_back", "vector", "stack"],
+  html: `
+<p>Vectors can be used as dynamic stacks because adding and removing from the end is O(1). <code>back()</code> gives you the last element, and <code>pop_back()</code> removes it. Always check that the vector is not empty before calling these.</p>
+
+<h2>back()  access last element</h2>
+<pre><code>vector&ltint&gt v = {10, 20, 30};
+cout << v.back() << "\\n"; // 30
+v.back() = 99;
+// v becomes [10, 20, 99]</code></pre>
+
+<h2>pop_back()  remove last element</h2>
+<pre><code>v.pop_back(); // removes 99
+// v becomes [10, 20]
+v.pop_back(); // removes 20
+// v becomes [10]</code></pre>
+
+<h2>Using vector as a stack (LIFO)</h2>
+<pre><code>vector&ltint&gt stack;
+stack.push_back(5);
+stack.push_back(10);
+int top = stack.back(); // 10
+stack.pop_back();       // removes 10</code></pre>
+
+<h2>Safety check  never call back() or pop_back() on empty vector</h2>
+<pre><code>if (!v.empty()) {
+    cout << v.back() << "\\n";
+    v.pop_back();
+}</code></pre>
+
+<h2>pop_back does not return the element</h2>
+<p>Unlike some languages, <code>pop_back</code> returns void. You need to call <code>back()</code> first if you want the value.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>back()</code> and <code>pop_back()</code> are O(1).</li>
+  <li><code>pop_back()</code> invalidates iterators to the last element only.</li>
+  <li>After <code>pop_back()</code>, the size decreases by 1, capacity unchanged.</li>
+  <li>Use <code>empty()</code> to check before accessing or popping.</li>
+</ul>
+
+<blockquote>back and pop_back turn vector into a lightweight stack. Perfect for DFS, bracket matching, and many other algorithms.</blockquote>
+`
 },
 
 
