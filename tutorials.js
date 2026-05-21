@@ -5560,6 +5560,54 @@ set&ltint, greater&ltint&gt&gt s3;  // descending order</code></pre>
 
 <blockquote>std::set is the bouncer of the STL  it keeps everyone in line, sorted, and no duplicates allowed.</blockquote>
 `
+},{
+  slug: "insert-count-erase-in-set",
+  title: "Insert, Count, and Erase in a Set",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "The three fundamental operations on a set: add elements, check membership, and remove elements.",
+  tags: ["insert", "count", "erase", "set"],
+  html: `
+<p>Once you have a set, you'll be doing three main operations: inserting new elements, checking if an element exists, and deleting elements. Here's how they work.</p>
+
+<h2>Insert  add an element</h2>
+<pre><code>set&ltint&gt s;
+s.insert(10);
+s.insert(5);
+s.insert(10); // duplicate, ignored
+auto result = s.insert(7);
+if (result.second) cout << "Inserted\\n";
+else cout << "Already exists\\n";</code></pre>
+<p><code>insert</code> returns a pair: iterator to the element, and a bool indicating whether insertion happened.</p>
+
+<h2>Count  check if element exists</h2>
+<pre><code>if (s.count(10)) cout << "10 is in set\\n";
+else cout << "10 not found\\n";</code></pre>
+<p><code>count</code> returns 1 if present, 0 otherwise (because sets don't have duplicates). For multiset, count can be >1.</p>
+
+<h2>Erase  remove an element</h2>
+<pre><code>s.erase(10); // remove by value
+auto it = s.find(5);
+if (it != s.end()) s.erase(it); // remove by iterator</code></pre>
+<p>Erasing by value returns the number of elements removed (0 or 1). Erasing by iterator returns iterator to next element.</p>
+
+<h2>Erase with iterator range</h2>
+<pre><code>auto first = s.find(5);
+auto last = s.find(10);
+s.erase(first, last); // removes range [first, last)</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>count</code> is O(log n)  not O(1) like unordered_set.</li>
+  <li>Erasing by value is safe even if element not present.</li>
+  <li>Erasing by invalid iterator causes undefined behaviour.</li>
+  <li>After erasing, iterators to the erased element are invalidated.</li>
+</ul>
+
+<blockquote>Insert, count, erase  the set trinity. Master these, and you'll handle unique collections like a pro.</blockquote>
+`
 },
 
 ]
