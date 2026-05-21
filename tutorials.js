@@ -5319,6 +5319,52 @@ for (int i = 0; i < 100; i++) {
 
 <blockquote>Reallocation is like moving to a bigger house  you can't avoid it forever, but with reserve you can plan the move in advance.</blockquote>
 `
+},{
+  slug: "std-string-as-dynamic-array",
+  title: "The std::string as a Dynamic Array",
+  topic: "Strings",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-21",
+  excerpt: "std::string is a dynamic array of characters. It grows automatically and supports array-like access.",
+  tags: ["string", "dynamic array", "characters", "std::string"],
+  html: `
+<p>In C++, <code>std::string</code> is not just a sequence of characters  it's a dynamic array that behaves much like <code>vector&ltchar&gt</code> but with stringspecific functions. It manages memory automatically, grows as needed, and provides convenient operations.</p>
+
+<h2>String as a dynamic array</h2>
+<pre><code>string s = "Hello";
+cout << s[0] << "\\n";   // 'H'
+cout << s.size() << "\\n"; // 5
+s.push_back('!');
+cout << s << "\\n";      // "Hello!"</code></pre>
+
+<h2>Modifying characters by index</h2>
+<pre><code>s[4] = 'a';
+cout << s << "\\n"; // "Hella!"</code></pre>
+
+<h2>Dynamic growth</h2>
+<p>Like vector, string reallocates when capacity is reached. You can reserve space:</p>
+<pre><code>string s;
+s.reserve(1000);
+for (char c = 'a'; c <= 'z'; c++) s.push_back(c);</code></pre>
+
+<h2>Null termination  not needed for safety</h2>
+<p>std::string stores the length seperately, so it can contain null characters ('\0') without issues. But for compatibility, <code>c_str()</code> returns a nullterminated C string.</p>
+
+<h2>Converting to and from C strings</h2>
+<pre><code>const char* cstr = s.c_str();
+string s2(cstr); // from C string</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use <code>[]</code> for read/write access  no bounds check (faster).</li>
+  <li>Use <code>.at()</code> for boundschecked access.</li>
+  <li>String can be empty  <code>empty()</code> is O(1).</li>
+  <li>Never use <code>string</code> for binary data with many nulls? Actually it's fine.</li>
+</ul>
+
+<blockquote>std::string is a vector of chars with a better wardrobe. It's your goto for text processing.</blockquote>
+`
 },
 
 ]
