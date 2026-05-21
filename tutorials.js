@@ -4661,6 +4661,61 @@ sort(words.begin(), words.end(), [](const string &a, const string &b) {
 
 <blockquote>Binary search is the algorithm that makes sorted data magical. Learn it inside out  you'll use it more often than any other search method.</blockquote>
 `
+},{
+  slug: "implementing-binary-search-method-1-interval-halving",
+  title: "Implementing Binary Search Method 1 (Interval Halving)",
+  topic: "Searching",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-20",
+  excerpt: "The classic while(lo <= hi) loop  simplest and most common binary search implementation.",
+  tags: ["binary search", "interval halving", "implementation", "C++"],
+  html: `
+<p>The most straightfoward binary search keeps a closed interval <code>[lo, hi]</code> that always contains the target if it exists. At each step, you shrink the interval by half until it's empty. This method is easy to reason about and debug.</p>
+
+<h2>The template</h2>
+<pre><code>int binarySearch(const vector&ltint&gt &arr, int target) {
+    int lo = 0, hi = arr.size() - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] < target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1; // not found
+}</code></pre>
+
+<h2>Step-by-step example on [1,3,5,7,9], target=5</h2>
+<ul>
+  <li>lo=0, hi=4, mid=2  arr[2]=5  found, return 2.</li>
+</ul>
+
+<h2>Example target not found (target=4)</h2>
+<ul>
+  <li>lo=0, hi=4, mid=2  arr[2]=5 > 4, so hi=1.</li>
+  <li>lo=0, hi=1, mid=0  arr[0]=1 < 4, so lo=1.</li>
+  <li>lo=1, hi=1, mid=1  arr[1]=3 < 4, so lo=2.</li>
+  <li>lo=2, hi=1  loop ends, return -1.</li>
+</ul>
+
+<h2>Edge cases</h2>
+<ul>
+  <li>Empty array: hi = -1, loop condition false  return -1.</li>
+  <li>Single element: works correctly.</li>
+  <li>Target smaller than all: lo stays 0, hi shrinks to -1  -1.</li>
+  <li>Target larger than all: lo becomes n, hi stays n-1  -1.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This method returns the index of the target, or -1 if not present.</li>
+  <li>If you need the insertion point, use <code>lower_bound</code> or adjust the return.</li>
+  <li>Always use <code>lo + (hi - lo)/2</code> to avoid overflow.</li>
+  <li>In cp, you'll often use STL versions, but writing your own is good practice.</li>
+</ul>
+
+<blockquote>The intervalhalving method is the classic binary search  simple, robust, and easy to memorise. Master it, and you'll have a tool for a lifetime.</blockquote>
+`
 },
 
 
