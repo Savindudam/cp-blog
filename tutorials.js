@@ -4259,6 +4259,53 @@ int main() {
 <blockquote>Sorting raw arrays with std::sort is just as fast as vectors. The only extra step is calculating the end pointer. Easy peasy.</blockquote>
 `
 },
+{
+  slug: "sorting-strings-alphabetically-in-cpp",
+  title: "Sorting Strings Alphabetically in C++",
+  topic: "Sorting",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-20",
+  excerpt: "How to sort an array or vector of strings in lexicographic order using std::sort.",
+  tags: ["strings", "alphabetical sort", "std::sort", "lexicographic"],
+  html: `
+<p>Strings in C++ can be compared using the usual relational operators (<, >, ==). That means sorting a collection of strings is straightforward  <code>std::sort</code> uses <code>operator&lt;</code> by default, which gives you alphabetical (lexicographic) order.</p>
+
+<h2>Sorting a vector of strings</h2>
+<pre><code>vector&ltstring&gt words = {"banana", "apple", "cherry", "date"};
+sort(words.begin(), words.end());
+// Result: apple, banana, cherry, date</code></pre>
+
+<h2>Sorting an array of Cstyle strings</h2>
+<pre><code>string arr[] = {"zebra", "alpha", "beta"};
+int n = 3;
+sort(arr, arr + n);
+// arr becomes {"alpha", "beta", "zebra"}</code></pre>
+
+<h2>Case sensitivity</h2>
+<p>By default, uppercase letters come before lowercase because their ASCII values are smaller. <code>'A' (65) &lt; 'a' (97)</code>. So "Apple" comes before "apple". To do caseinsensitive sorting, use a custom comparator.</p>
+
+<pre><code>sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    string lower_a = a, lower_b = b;
+    transform(lower_a.begin(), lower_a.end(), lower_a.begin(), ::tolower);
+    transform(lower_b.begin(), lower_b.end(), lower_b.begin(), ::tolower);
+    return lower_a < lower_b;
+});</code></pre>
+
+<h2>Descending alphabetical order</h2>
+<pre><code>sort(words.begin(), words.end(), greater&ltstring&gt());</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Lexicographic order is like dictionary order: compare first character, then second, etc.</li>
+  <li>Shorter strings that are prefixes come first: "cat" < "catalog".</li>
+  <li>If you need caseinsensitive, convert to lower case before compare.</li>
+  <li>Sorting strings by length requires a custom comparator (covered later).</li>
+</ul>
+
+<blockquote>Sorting strings alphabetically is so common that std::sort does it out of the box. No extra work needed  just sort and smile.</blockquote>
+`
+},
 
 
 
