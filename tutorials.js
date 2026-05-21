@@ -5652,6 +5652,57 @@ for (int x : cs) { ... } // works fine, x is copy</code></pre>
 
 <blockquote>Iterating a set is like walking through a sorted list  you know exactly what order to expect. No suprises.</blockquote>
 `
+},{
+  slug: "sets-do-not-allow-duplicate-elements",
+  title: "Sets Do Not Allow Duplicate Elements",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-21",
+  excerpt: "std::set stores each value only once. Trying to insert a duplicate has no effect. Use multiset if you need duplicates.",
+  tags: ["set", "duplicates", "unique", "multiset"],
+  html: `
+<p>One of the defining features of <code>std::set</code> is that it stores only unique keys. If you insert a value that already exists, the insertion is ignored. This is perfect for problems where you need to track distinct elements.</p>
+
+<h2>Duplicate insertion is ignored</h2>
+<pre><code>set&ltint&gt s;
+s.insert(10);
+s.insert(10); // ignored
+cout << s.size() << "\\n"; // 1</code></pre>
+
+<h2>Checking return value of insert</h2>
+<pre><code>auto [it, inserted] = s.insert(10);
+if (inserted) cout << "New element\\n";
+else cout << "Already existed\\n";</code></pre>
+
+<h2>Multiset for duplicates</h2>
+<p>If you need to store multiple copies of the same value, use <code>std::multiset</code>.</p>
+<pre><code>multiset&ltint&gt ms;
+ms.insert(10);
+ms.insert(10);
+cout << ms.size() << "\\n"; // 2
+cout << ms.count(10) << "\\n"; // 2</code></pre>
+
+<h2>Erasing duplicates in multiset</h2>
+<p><code>ms.erase(10)</code> erases all elements with value 10. To erase just one, use iterator.</p>
+<pre><code>auto it = ms.find(10);
+if (it != ms.end()) ms.erase(it); // erases one instance</code></pre>
+
+<h2>When to use set vs multiset</h2>
+<ul>
+  <li>Set: keep track of visited nodes, unique IDs, distinct elements.</li>
+  <li>Multiset: maintain a bag of items, count frequencies, sliding window medians.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Set does not allow duplicates  it's a mathematical set.</li>
+  <li>Use multiset when you need counting or multiple copies.</li>
+  <li>Unordered_set also disallows duplicates.</li>
+</ul>
+
+<blockquote>A set without duplicates is like a team without clones  each member is unique and irreplaceable.</blockquote>
+`
 },
 
 ]
