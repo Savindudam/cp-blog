@@ -6880,6 +6880,54 @@ cout << kth << "\\n";
 
 <blockquote>indexed_set is the secret weapon of CP  it gives you array indexing on a sorted set. Use it wisely, but remember it's not standard.</blockquote>
 `
+},{
+  slug: "finding-by-order-and-order-of-key-in-indexed-set",
+  title: "Finding by Order and Order of Key in indexed_set",
+  topic: "Advanced Data Structures",
+  difficulty: "Medium",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "order_of_key returns the number of elements less than x. find_by_order returns the k-th smallest element.",
+  tags: ["pbds", "order_of_key", "find_by_order", "order statistics"],
+  html: `
+<p>The two most usefull functions of <code>indexed_set</code> are <code>order_of_key(x)</code> and <code>find_by_order(k)</code>. Together, they let you treat the set like a sorted array with O(log n) access to ranks and values.</p>
+
+<h2>order_of_key(x)  rank of x</h2>
+<pre><code>ordered_set&ltint&gt os = {10, 20, 30, 40};
+cout << os.order_of_key(25) << "\\n"; // 2 (elements <25: 10,20)
+cout << os.order_of_key(10) << "\\n"; // 0 (no element <10)
+cout << os.order_of_key(50) << "\\n"; // 4 (all elements)</code></pre>
+
+<h2>find_by_order(k)  kth smallest (0indexed)</h2>
+<pre><code>auto it = os.find_by_order(2); // third smallest (0,1,2) => 30
+if (it != os.end()) cout << *it << "\\n";
+// k out of range returns end()</code></pre>
+
+<h2>Finding the median of current elements</h2>
+<pre><code>int n = os.size();
+int median = *os.find_by_order(n/2); // lower median for even size</code></pre>
+
+<h2>Count of elements in range [l, r]</h2>
+<pre><code>int count = os.order_of_key(r+1) - os.order_of_key(l);</code></pre>
+
+<h2>Handling duplicates</h2>
+<p>Since indexed_set does not allow duplicates, use <code>pair&ltint,int&gt</code> with a unique ID as second field.</p>
+<pre><code>ordered_set&ltpair&ltint,int&gt&gt os;
+os.insert({10, 0});
+os.insert({10, 1});
+cout << os.order_of_key({10, -1}) << "\\n"; // 0
+cout << os.order_of_key({10, 2}) << "\\n";  // 2</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>order_of_key</code> returns <strong>number of elements strictly less</strong> than x.</li>
+  <li><code>find_by_order</code> returns iterator to element at position k (0based).</li>
+  <li>Both run in O(log n).</li>
+  <li>These operations are not available in standard <code>set</code> or <code>unordered_set</code>.</li>
+</ul>
+
+<blockquote>order_of_key and find_by_order turn your set into a dynamic array. Ask "how many before?" or "who is the kth?" and get answers instantly.</blockquote>
+`
 },
 
 
