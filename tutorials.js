@@ -7143,6 +7143,56 @@ for (auto& sub : subsets) {
 
 <blockquote>Recursive subset generation is like a decision tree  at each branch, you choose to take or leave. At the leaves, you have a subset.</blockquote>
 `
+},{
+  slug: "generating-subsets-via-bit-representation",
+  title: "Generating Subsets via Bit Representation",
+  topic: "Brute Force",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Each subset corresponds to an integer mask from 0 to 2^n-1. Bit i set means element i is included.",
+  tags: ["subsets", "bitmask", "iteration", "binary"],
+  html: `
+<p>The most common way to generate all subsets in CP is to use bitmasks. If you have n elements, you assign each element a bit position (0 to n-1). Then every integer from 0 to (1<<n)-1 represents a subset: bit i = 1 means include element i. This is concise and fast.</p>
+
+<h2>Iterating over all subsets</h2>
+<pre><code>int n = 3;
+vector&ltint&gt arr = {1, 2, 3};
+for (int mask = 0; mask < (1 << n); mask++) {
+    cout << "Subset { ";
+    for (int i = 0; i < n; i++) {
+        if (mask >> i & 1) {
+            cout << arr[i] << " ";
+        }
+    }
+    cout << "}\\n";
+}</code></pre>
+
+<h2>Output</h2>
+<p>mask=0: {}; mask=1 (001): {1}; mask=2 (010): {2}; mask=3 (011): {1,2}; mask=4 (100): {3}; etc.</p>
+
+<h2>Collecting subsets into vector</h2>
+<pre><code>vector&ltvector&ltint&gt&gt subsets;
+for (int mask = 0; mask < (1 << n); mask++) {
+    vector&ltint&gt sub;
+    for (int i = 0; i < n; i++) {
+        if (mask >> i & 1) sub.push_back(arr[i]);
+    }
+    subsets.push_back(sub);
+}</code></pre>
+
+<h2>Time complexity</h2>
+<p>O(2^n * n). For n=20, about 20 million ops  acceptable. For n=30, 30 billion  too much.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>1 << n</code> is 2^n. For n=30, 1<<30 is about 1e9, still fits in 32-bit int? Actually 1<<30 is 1073741824, okay, but 1<<31 overflows signed int. Use <code>1LL << n</code> for n up to 60.</li>
+  <li>Bitmask iteration is faster than recursion (no function calls).</li>
+  <li>This is the goto method for subset enumeration in CP.</li>
+</ul>
+
+<blockquote>Bitmask subsets turn math into code  every integer from 0 to 2^n-1 is a unique combination. Simple and elegant.</blockquote>
+`
 },
 
 
