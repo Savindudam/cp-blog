@@ -6212,6 +6212,59 @@ shuffle(arr, arr + n, rng);</code></pre>
 
 <blockquote>sort, reverse, shuffle  the three musketeers of range manipulation. Give them begin and end, and they transform your data.</blockquote>
 `
+},{
+  slug: "set-iterators-begin-end-auto",
+  title: "Set Iterators: begin, end, and auto",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Set iterators are bidirectional, not randomaccess. Use begin()/end() and auto for clean iteration.",
+  tags: ["set", "iterators", "begin", "end", "auto"],
+  html: `
+<p>Iterating over a set is similar to other containers, but set iterators are <strong>bidirectional</strong>. You can increment (++) and decrement (--), but you cannot add an integer (it + 5) like with vectors.</p>
+
+<h2>Basic iteration</h2>
+<pre><code>set&ltint&gt s = {10, 20, 30, 40};
+for (auto it = s.begin(); it != s.end(); ++it) {
+    cout << *it << " ";
+}
+// Output: 10 20 30 40</code></pre>
+
+<h2>Rangebased for loop with auto</h2>
+<pre><code>for (const auto& val : s) {
+    cout << val << " ";
+}</code></pre>
+
+<h2>Reverse iteration</h2>
+<pre><code>for (auto it = s.rbegin(); it != s.rend(); ++it) {
+    cout << *it << " "; // 40 30 20 10
+}</code></pre>
+
+<h2>Finding and using iterator</h2>
+<pre><code>auto it = s.find(20);
+if (it != s.end()) {
+    cout << "Found: " << *it << "\\n";
+    // Move to next element
+    ++it;
+    if (it != s.end()) cout << "Next: " << *it << "\\n";
+}</code></pre>
+
+<h2>Distance between iterators  O(n) for set!</h2>
+<pre><code>auto first = s.find(10);
+auto last = s.find(40);
+int dist = distance(first, last); // O(n)  not O(1) like vector</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Set iterators cannot do <code>it + 5</code>  only ++ and --.</li>
+  <li>Elements are const  you cannot modify via iterator.</li>
+  <li><code>std::advance(it, k)</code> works but is O(k).</li>
+  <li>Use <code>auto</code> to avoid typing long iterator types.</li>
+</ul>
+
+<blockquote>Set iterators are like walking through a garden path  you can go forward and backward, but you can't teleport. Enjoy the stroll.</blockquote>
+`
 },
 
 ]
