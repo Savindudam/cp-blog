@@ -5853,6 +5853,60 @@ ms.erase(first, last); // removes all 2's</code></pre
 <blockquote>Erasing from multiset is like surgery  you need to be precise. The value scalpel cuts deep, the iterator scalpel is gentle.</blockquote>
 `
 },
+{
+  slug: "map-structures-std-map-key-value",
+  title: "Map Structures: std::map Key-Value Pairs",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-22",
+  excerpt: "std::map stores key-value pairs sorted by key. Like a dictionary or associative array.",
+  tags: ["map", "std::map", "key-value", "associative array"],
+  html: `
+<p><code>std::map</code> is an associative container that stores pairs (key, value). Keys are unique and sorted. Insertion, lookup, and deletion are O(log n). It's implemented as a balanced binary search tree (usually redblack).</p>
 
+<h2>Including and creating maps</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+map&ltstring, int&gt ages; // key: name, value: age
+map&ltint, string&gt idToName;
+map&ltint, int, greater&ltint&gt&gt rev; // descending keys</code></pre>
+
+<h2>Inserting elements</h2>
+<pre><code>ages["Alice"] = 25; // using [] operator
+ages.insert({"Bob", 30}); // using insert
+ages.insert(make_pair("Charlie", 35));
+ages.emplace("David", 28); // C++11, constructs in place</code></pre>
+
+<h2>Accessing values</h2>
+<pre><code>cout << ages["Alice"] << "\\n"; // 25
+// Warning: [] creates default value if key missing!</code></pre>
+
+<h2>Checking if key exists</h2>
+<pre><code>if (ages.find("Eve") != ages.end()) {
+    cout << "Found\\n";
+} else {
+    cout << "Not found\\n";
+}</code></pre>
+
+<h2>Time complexities</h2>
+<ul>
+  <li>Insert/find/erase: O(log n)</li>
+  <li>[] operator: O(log n) (plus possible insertion)</li>
+  <li>size/empty: O(1)</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Keys are const  you cannot modify a key in place.</li>
+  <li>Use <code>at()</code> for boundschecked access (throws exception).</li>
+  <li>For faster lookups without ordering, use <code>unordered_map</code>.</li>
+  <li>Map iterators point to <code>pair&ltconst Key, Value&gt</code>.</li>
+</ul>
+
+<blockquote>std::map is your personal phonebook  you give it a name, it gives you the number, and everything stays alphabetized.</blockquote>
+`
+},
 
 ]
