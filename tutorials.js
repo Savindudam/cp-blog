@@ -6356,5 +6356,70 @@ for (auto it = low; it != high; ++it) cout << *it << " "; // 30 40</code></pre>
 <blockquote>lower_bound and upper_bound turn your set into a makeshift database  ask for a threshold, and it gives you the first element thatmeets it.</blockquote>
 `
 },
+{
+  slug: "finding-nearest-element-to-x-in-set",
+  title: "Finding the Nearest Element to x in a Set",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Use lower_bound to find the closest element in a sorted set. Check both lower and upper candidates.",
+  tags: ["set", "nearest element", "closest value", "lower_bound"],
+  html: `
+<p>A common problem: given a set of numbers, find the element closest to a query value x. Because the set is sorted, you can use <code>lower_bound</code> to get the first element >= x, then check the previous element as well. The answer is the closer of the two.</p>
+
+<h2>Finding nearest element (floor and ceiling)</h2>
+<pre><code>set&ltint&gt s = {10, 20, 30, 40, 50};
+int x = 35;
+auto it = s.lower_bound(x); // points to 40 (ceiling)
+int candidate = *it;
+int best = candidate;
+// check previous element (floor)
+if (it != s.begin()) {
+    --it;
+    if (abs(*it - x) < abs(best - x)) best = *it;
+}
+cout << "Nearest to " << x << " is " << best << "\\n"; // 30 (since |30-35|=5, |40-35|=5? tie, first found)</code></pre>
+
+<h2>Handling edge cases</h2>
+<pre><code>// x smaller than all elements
+x = 5;
+it = s.lower_bound(x); // points to 10
+// no previous element, answer is 10
+
+// x larger than all elements
+x = 100;
+it = s.lower_bound(x); // returns s.end()
+// then take the last element
+--it;
+best = *it; // 50</code></pre>
+
+<h2>Function version</h2>
+<pre><code>int nearest(const set&ltint&gt& s, int x) {
+    auto it = s.lower_bound(x);
+    if (it == s.end()) return *prev(it);
+    int cand = *it;
+    if (it != s.begin()) {
+        auto prevIt = prev(it);
+        if (abs(*prevIt - x) < abs(cand - x)) cand = *prevIt;
+    }
+    return cand;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>lower_bound</code> gives the ceiling (first element >= x).</li>
+  <li><code>prev(it)</code> gives the floor (if it != begin).</li>
+  <li>Be careful with <code>end()</code> and <code>begin()</code> iterators.</li>
+  <li>Complexity: O(log n).</li>
+</ul>
+
+<blockquote>Finding the nearest element in a set is like looking for the closest bus stop  check the one just ahead and the one just behind, pick the closer.</blockquote>
+`
+},
+
+
+
+
 
 ]
