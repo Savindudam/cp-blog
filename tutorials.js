@@ -6465,6 +6465,51 @@ unsigned long ul = b.to_ulong(); // 170</code></pre>
 
 <blockquote>Bitset is the minimalist's dream  it stores only what matters: 0 or 1, no waste. Perfect for flags and small sets.</blockquote>
 `
+},{
+  slug: "bitset-construction-from-string",
+  title: "Bitset Construction from String",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Create a bitset from a string of '0' and '1' characters. The string may be longer or shorter than the bitset size.",
+  tags: ["bitset", "string", "construction", "binary"],
+  html: `
+<p>You can construct a <code>bitset</code> from a <code>string</code> containing only '0' and '1'. The string is read from left to right, with the leftmost character representing the most significant bit. If the string is shorter than the bitset size, leading bits are set to 0. If longer, excess characters are ignored.</p>
+
+<h2>Basic construction</h2>
+<pre><code>string s = "1101";
+bitset&lt8&gt b(s); // bits: 00001101
+cout << b << "\\n"; // 00001101</code></pre>
+
+<h2>String longer than bitset size</h2>
+<pre><code>string s = "1010101010"; // 10 chars
+bitset&lt6&gt b(s); // only first 6 characters used? Actually, last 6? Let's check.
+// Standard: the substring of the first (size) characters is used.
+// So for bitset<6> and s="1010101010", it takes "101010" -> 101010
+cout << b << "\\n"; // 101010</code></pre>
+
+<h2>String with characters other than '0'/'1'</h2>
+<p>Throws <code>std::invalid_argument</code>. Always ensure the string contains only digits 0 and 1.</p>
+
+<h2>Construction from Cstyle string</h2>
+<pre><code>bitset&lt8&gt b("01010101"); // works with string literal</code></pre>
+
+<h2>Converting back to string</h2>
+<pre><code>bitset&lt8&gt b(0b10101010);
+string s = b.to_string(); // "10101010"
+cout << s << "\\n";</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>String positions: leftmost = highest bit.</li>
+  <li>If string length < size, leftpadded with zeros.</li>
+  <li>If string length > size, only the first <code>size</code> characters are used.</li>
+  <li>Use <code>to_string()</code> to get binary representation.</li>
+</ul>
+
+<blockquote>Building a bitset from a string is like reading a binary number  the leftmost digit is the big boss (most significant).</blockquote>
+`
 },
 
 
