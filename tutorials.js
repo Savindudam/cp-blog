@@ -6827,6 +6827,59 @@ priority_queue&ltint, vector&ltint&gt, Compare&gt minHeap2;</code></pre>
 
 <blockquote>Turning a max-heap into a min-heap is like flipping the world upside down  the smallest becomes king. Use greater and ascend.</blockquote>
 `
+},{
+  slug: "policy-based-data-structures-indexed-set",
+  title: "Policy-Based Data Structures: indexed_set",
+  topic: "Advanced Data Structures",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-22",
+  excerpt: "GNU extension: indexed_set supports order statistics  find by rank and rank of key. Like a set with array indexing.",
+  tags: ["pbds", "indexed_set", "order statistics", "GNU"],
+  html: `
+<p>GCC's policybased data structures (pbds) provide extensions beyond the standard library. <code>indexed_set</code> (also called <code>tree</code>) is a balanced BST that supports finding the kth smallest element and the index (order) of a key. These operations are O(log n). To use it, you need special includes and namespaces.</p>
+
+<h2>Required headers and declarations</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+#include &ltext/pb_ds/assoc_container.hpp&gt
+#include &ltext/pb_ds/tree_policy.hpp&gt
+using namespace __gnu_pbds;
+
+template&lttypename T&gt
+using ordered_set = tree&ltT, null_type, less&ltT&gt, rb_tree_tag, tree_order_statistics_node_update&gt;</code></pre>
+
+<h2>Basic usage</h2>
+<pre><code>ordered_set&ltint&gt os;
+os.insert(10);
+os.insert(5);
+os.insert(15);
+os.insert(5); // duplicate ignored
+cout << os.size() << "\\n"; // 3</code></pre>
+
+<h2>Order of key  how many elements less than x</h2>
+<pre><code>int pos = os.order_of_key(10); // number of elements < 10 => 1 (only 5)
+cout << pos << "\\n";
+pos = os.order_of_key(12); // 2 (5 and 10)
+cout << pos << "\\n";</code></pre>
+
+<h2>Find by order  kth smallest (0based)</h2>
+<pre><code>int kth = *os.find_by_order(1); // 1st index (0-based) => second smallest: 10
+cout << kth << "\\n";
+// if index out of range, returns end()</code></pre>
+
+<h2>When to use indexed_set</h2>
+<p>Use it when you need both set properties (unique sorted keys) and order statistics: count of elements less than a value, or retrieving the kth smallest element. It's not standard C++, but works on GCC judges (Codeforces, AtCoder).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Not part of ISO C++  may not work on all judges (e.g., MSVC).</li>
+  <li>Operations are O(log n).</li>
+  <li>You can also use <code>tree</code> with <code>null_mapped_type</code> for set, or map variants.</li>
+  <li>For duplicates, use <code>pair&ltT,int&gt</code> with unique second field.</li>
+</ul>
+
+<blockquote>indexed_set is the secret weapon of CP  it gives you array indexing on a sorted set. Use it wisely, but remember it's not standard.</blockquote>
+`
 },
 
 
