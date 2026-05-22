@@ -6166,6 +6166,52 @@ auto it = find(v.begin(), v.end(), 3);</code></pre>
 
 <blockquote>Iterators are the universal remotes of the STL  they let you control any container with the same buttons.</blockquote>
 `
+},{
+  slug: "using-begin-end-with-sort-reverse-shuffle",
+  title: "Using begin() and end() with sort, reverse, random_shuffle",
+  topic: "STL Basics",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Many STL algorithms take two iterators defining a range. Learn the classics: sort, reverse, and shuffle.",
+  tags: ["begin", "end", "sort", "reverse", "shuffle", "algorithms"],
+  html: `
+<p>The STL provides many algorithms that work on ranges. The pattern is always the same: pass <code>begin()</code> and <code>end()</code> iterators (or pointers for arrays). Here are three usefull ones.</p>
+
+<h2>sort  arrange elements in order</h2>
+<pre><code>vector&ltint&gt v = {5, 2, 8, 1, 9};
+sort(v.begin(), v.end()); // {1,2,5,8,9}
+sort(v.begin(), v.end(), greater&ltint&gt()); // descending</code></pre>
+
+<h2>reverse  flip the order</h2>
+<pre><code>reverse(v.begin(), v.end()); // {9,8,5,2,1}</code></pre>
+
+<h2>random_shuffle / shuffle  random permutation</h2>
+<p><code>random_shuffle</code> is deprecated in C++14 and removed in C++17. Use <code>shuffle</code> with a random engine.</p>
+<pre><code>#include &ltrandom&gt
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+shuffle(v.begin(), v.end(), rng);</code></pre>
+
+<h2>Working with arrays</h2>
+<pre><code>int arr[] = {5,2,8,1,9};
+int n = 5;
+sort(arr, arr + n);
+reverse(arr, arr + n);
+shuffle(arr, arr + n, rng);</code></pre>
+
+<h2>Partial ranges  sorting only part of container</h2>
+<pre><code>sort(v.begin(), v.begin() + 3); // sorts first 3 elements only</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Algorithms require randomaccess iterators for <code>sort</code> (vector, array, deque).</li>
+  <li><code>list</code> has its own member <code>sort()</code> because it lacks random access.</li>
+  <li>Always include <code>&ltalgorithm&gt</code> and <code>&ltrandom&gt</code> for shuffle.</li>
+  <li>These algorithms modify the container inplace.</li>
+</ul>
+
+<blockquote>sort, reverse, shuffle  the three musketeers of range manipulation. Give them begin and end, and they transform your data.</blockquote>
+`
 },
 
 ]
