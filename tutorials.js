@@ -6000,6 +6000,60 @@ else cout << "Already existed\\n";</code></pre>
 
 <blockquote>Map's autoinsertion is like a helpful ghost  it can be your best friend or your worst enemy, depending on whether you expected it.</blockquote>
 `
+},{
+  slug: "iterating-over-map-keys-and-values",
+  title: "Iterating Over a Map's Keys and Values",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Maps store pairs. Learn to loop over keys, values, or both using iterators and structured bindings.",
+  tags: ["map", "iteration", "keys", "values", "structured bindings"],
+  html: `
+<p>Iterating over a map yields keyvalue pairs in order of keys. Each element is a <code>pair&ltconst Key, Value&gt</code>. You can access the key with <code>.first</code> and the value with <code>.second</code>.</p>
+
+<h2>Basic iteration with pair</h2>
+<pre><code>map&ltstring, int&gt ages = {{"Alice", 25}, {"Bob", 30}, {"Charlie", 28}};
+for (auto it = ages.begin(); it != ages.end(); ++it) {
+    cout << it->first << " -> " << it->second << "\\n";
+}</code></pre>
+
+<h2>Rangebased for loop (C++11)</h2>
+<pre><code>for (const auto& p : ages) {
+    cout << p.first << ": " << p.second << "\\n";
+}</code></pre>
+
+<h2>Structured bindings (C++17)  cleanest</h2>
+<pre><code>for (const auto& [name, age] : ages) {
+    cout << name << " is " << age << " years old\\n";
+}</code></pre>
+
+<h2>Iterating only keys</h2>
+<pre><code>for (const auto& p : ages) {
+    cout << p.first << " ";
+}
+// or using a transform iterator, but that's overkill</code></pre>
+
+<h2>Iterating only values</h2>
+<pre><code>for (const auto& p : ages) {
+    cout << p.second << " ";
+}</code></pre>
+
+<h2>Reverse iteration</h2>
+<pre><code>for (auto it = ages.rbegin(); it != ages.rend(); ++it) {
+    cout << it->first << "\\n";
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Keys are const  you cannot modify them via iterator.</li>
+  <li>Use <code>auto&</code> to avoid copying pairs.</li>
+  <li>Structured bindings make code much more readable.</li>
+  <li>Iteration order is sorted by key (ascending by default).</li>
+</ul>
+
+<blockquote>Walking through a map with structured bindings feels like magic  key and value appear as if by name, no more .first and .second clutter.</blockquote>
+`
 },
 
 ]
