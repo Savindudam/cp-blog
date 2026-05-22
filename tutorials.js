@@ -6551,6 +6551,58 @@ a ^= b;</code></pre>
 
 <blockquote>Bitwise operations on bitsets are like having a thousand tiny workers flipping switches in parallel  instant results.</blockquote>
 `
+},{
+  slug: "deque-double-ended-queue",
+  title: "Deque: Double-Ended Queue",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "std::deque allows O(1) push/pop at both ends. Like a vector that can grow from the front as well.",
+  tags: ["deque", "double-ended queue", "push_front", "pop_front"],
+  html: `
+<p><code>std::deque</code> (doubleended queue) is a sequence container that supports constant time insertion and removal at both the beginning and the end. It's like a vector that can also grow from the front efficiently. Internally, it's implemented as a list of blocks (chunks), so it doesn't reallocate all elements when growing from the front.</p>
+
+<h2>Basic operations</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+deque&ltint&gt dq;
+dq.push_back(10);   // [10]
+dq.push_front(5);   // [5,10]
+dq.push_back(15);   // [5,10,15]
+cout << dq.front() << "\\n"; // 5
+cout << dq.back() << "\\n";  // 15
+dq.pop_front();     // [10,15]
+dq.pop_back();      // [10]</code></pre>
+
+<h2>Accessing elements</h2>
+<pre><code>cout << dq[0] << "\\n"; // random access O(1)
+cout << dq.at(1) << "\\n"; // bounds-checked</code></pre>
+
+<h2>When to use deque</h2>
+<ul>
+  <li>Sliding window problems where you need to add/remove from both ends.</li>
+  <li>When you need a queue that can also pop from the back (e.g., monotonic queue).</li>
+  <li>As a replacement for vector when you frequently insert at front.</li>
+</ul>
+
+<h2>Performance characteristics</h2>
+<ul>
+  <li>push_front, push_back, pop_front, pop_back: O(1) amortized.</li>
+  <li>random access []: O(1).</li>
+  <li>insert/erase in middle: O(n).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Deque is not guaranteed to have contiguous storage (unlike vector).</li>
+  <li>It typically uses more memory than vector.</li>
+  <li>Use <code>deque</code> for BFS queues, sliding window max/min, and when you need both ends.</li>
+</ul>
+
+<blockquote>Deque is the Swiss Army knife of queues  you can open from either end. Perfect for problems where the action happens at both sides.</blockquote>
+`
 },
 
 
