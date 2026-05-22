@@ -6928,6 +6928,48 @@ cout << os.order_of_key({10, 2}) << "\\n";  // 2</code></pre>
 
 <blockquote>order_of_key and find_by_order turn your set into a dynamic array. Ask "how many before?" or "who is the kth?" and get answers instantly.</blockquote>
 `
+},{
+  slug: "algorithm-efficiency-data-structures-vs-sorting",
+  title: "Algorithm Efficiency: Data Structures vs Sorting",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Sometimes it's better to sort once and use two pointers than to use a logn data structure for every query.",
+  tags: ["efficiency", "sorting", "data structures", "trade-offs"],
+  html: `
+<p>In competitive programming, you often face a choice: use a balanced BST (like <code>set</code> or <code>map</code>) for O(log n) operations, or sort the data once and use two pointers or binary search for O(1) or O(log n) per query. Sorting can be cheaper if you have many queries or if you can preprocess.</p>
+
+<h2>The trade-off</h2>
+<p>Data structures like <code>set</code> give you O(log n) insert, delete, and lookup. Sorting an array costs O(n log n) upfront, but then you can answer queries in O(log n) with binary search. If you have many queries and the data doesn't change, sorting is often better.</p>
+
+<h2>Example: finding common elements between two arrays</h2>
+<p>Approach 1: put one array in a set (O(n log n)), then loop through the other (O(m log n))  total O((n+m) log n).</p>
+<p>Approach 2: sort both arrays O(n log n + m log m), then two pointers O(n+m)  total O(n log n + m log m). For large n,m, sorting may be faster because constants are smaller.</p>
+
+<h2>When to use data structures</h2>
+<ul>
+  <li>When you need dynamic updates (insertions/deletions) between queries.</li>
+  <li>When the data is too large to sort repeatedly.</li>
+  <li>When you need order statistics (kth smallest) dynamically.</li>
+</ul>
+
+<h2>When to prefer sorting</h2>
+<ul>
+  <li>Static data (no changes after preprocessing).</li>
+  <li>When you need to answer many queries that can be batched offline.</li>
+  <li>When the constant factor of tree structures is too high.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sorting is often faster than using a set because of cache locality.</li>
+  <li>For small n, even O(n^2) might beat O(n log n) due to constants.</li>
+  <li>Always consider the number of operations and data size.</li>
+</ul>
+
+<blockquote>Choosing between sorting and data structures is like deciding between building a library (sort) or hiring a librarian (set). Both work, but one may be cheaper for your needs.</blockquote>
+`
 },
 
 
