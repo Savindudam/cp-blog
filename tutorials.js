@@ -7092,6 +7092,57 @@ cout << os.order_of_key({10, 2}) << "\\n";  // 2</code></pre>
 
 <blockquote>Brute force is the sledgehammer of algorithms  when the nail is small, it's the fastest tool in the shed.</blockquote>
 `
+},{
+  slug: "generating-all-subsets-using-recursion",
+  title: "Generating All Subsets Using Recursion",
+  topic: "Brute Force",
+  difficulty: "Medium",
+  readMinutes: 7,
+  date: "2026-05-22",
+  excerpt: "Recursive backtracking to enumerate all subsets of a set. Each element is either included or excluded.",
+  tags: ["subsets", "recursion", "backtracking", "generation"],
+  html: `
+<p>One way to generate all subsets is to use recursion. At each step, you decide whether to include the current element or not. This generates exactly 2^n subsets. It's a great introduction to backtracking.</p>
+
+<h2>Recursive function</h2>
+<pre><code>void generateSubsets(vector&ltint&gt& nums, int idx, vector&ltint&gt& current, vector&ltvector&ltint&gt&gt& result) {
+    if (idx == nums.size()) {
+        result.push_back(current);
+        return;
+    }
+    // exclude current element
+    generateSubsets(nums, idx+1, current, result);
+    // include current element
+    current.push_back(nums[idx]);
+    generateSubsets(nums, idx+1, current, result);
+    current.pop_back(); // backtrack
+}</code></pre>
+
+<h2>Usage</h2>
+<pre><code>vector&ltint&gt nums = {1,2,3};
+vector&ltvector&ltint&gt&gt subsets;
+vector&ltint&gt current;
+generateSubsets(nums, 0, current, subsets);
+for (auto& sub : subsets) {
+    for (int x : sub) cout << x << " ";
+    cout << "\\n";
+}</code></pre>
+
+<h2>Output (order may vary)</h2>
+<p>Empty set, then {3}, {2}, {2,3}, {1}, {1,3}, {1,2}, {1,2,3} depending on recursion order.</p>
+
+<h2>Time complexity</h2>
+<p>O(2^n * n) because there are 2^n subsets and each takes O(n) to copy. For n  20, that's about 20 million operations  acceptable.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Recursion depth = n (safe for n  10^5? No, for large n you'd use bitmask iteration).</li>
+  <li>This method is good for generating subsets when you need to process each subset in a custom order.</li>
+  <li>Always backtrack (pop_back) to restore state.</li>
+</ul>
+
+<blockquote>Recursive subset generation is like a decision tree  at each branch, you choose to take or leave. At the leaves, you have a subset.</blockquote>
+`
 },
 
 
