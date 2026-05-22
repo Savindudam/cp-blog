@@ -5907,6 +5907,54 @@ ages.emplace("David", 28); // C++11, constructs in place</code></pre>
 
 <blockquote>std::map is your personal phonebook  you give it a name, it gives you the number, and everything stays alphabetized.</blockquote>
 `
+},{
+  slug: "accessing-map-elements-with-operator",
+  title: "Accessing Map Elements with [] Operator",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "The [] operator on map is convenient but dangerous  it inserts a defaultconstructed value if the key is missing.",
+  tags: ["map", "operator[]", "access", "insertion"],
+  html: `
+<p>The <code>[]</code> operator on <code>std::map</code> is a doubleedged sword. It returns a reference to the value associated with the key. But if the key does not exist, it <strong>inserts a defaultconstructed value</strong> and returns a reference to that. This can lead to suprising bugs.</p>
+
+<h2>Basic usage  reading and writing</h2>
+<pre><code>map&ltstring, int&gt m;
+m["apple"] = 5;     // inserts key "apple" with value 5
+cout << m["apple"] << "\\n"; // 5</code></pre>
+
+<h2>The trap  reading a missing key inserts it!</h2>
+<pre><code>cout << m["banana"] << "\\n"; // 0 (default int), and key "banana" is now in map!
+cout << m.size() << "\\n"; // 2 (apple and banana)</code></pre>
+
+<h2>Safer access using find or at</h2>
+<pre><code>if (m.find("cherry") != m.end()) {
+    cout << m["cherry"] << "\\n";
+}
+// or
+try {
+    cout << m.at("cherry") << "\\n"; // throws out_of_range
+} catch (out_of_range& e) {
+    cout << "Not found\\n";
+}</code></pre>
+
+<h2>Using [] for counting frequencies</h2>
+<p>This pattern is actually usefull for counting:</p>
+<pre><code>map&ltint, int&gt freq;
+int arr[] = {1,2,2,3,3,3};
+for (int x : arr) freq[x]++; // inserts with 0 then increments</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>[]</code> always returns a reference  never const.</li>
+  <li>If the key doesn't exist, it's created with valueinitialized value (0 for ints, empty string, etc.).</li>
+  <li>Use <code>at()</code> or <code>find()</code> for readonly access without insertion.</li>
+  <li>For counting, <code>[]</code> is convenient and idiomatic.</li>
+</ul>
+
+<blockquote>The [] operator on map is like a vending machine  if you ask for something that isn't there, it quietly adds it and gives you an empty product. Use with caution.</blockquote>
+`
 },
 
 ]
