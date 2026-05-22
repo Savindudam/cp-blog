@@ -6115,6 +6115,57 @@ unordered_map&ltPoint, int, PointHash&gt pointsMap;</code></pre>
 
 <blockquote>unordered_map is the sports car of maps  blazing fast on the open road, but if the road is full of potholes (hash collisions), it crawls.</blockquote>
 `
+},{
+  slug: "iterators-and-ranges-in-stl",
+  title: "Iterators and Ranges in the C++ STL",
+  topic: "STL Basics",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-22",
+  excerpt: "Iterators are the glue of the STL. They point to elements and define ranges [begin, end). Learn the common iterator categories.",
+  tags: ["iterators", "ranges", "STL", "begin", "end"],
+  html: `
+<p>Iterators are objects that point to elements in containers. They behave like pointers. Most STL algorithms operate on <strong>ranges</strong> defined by two iterators: <code>begin</code> (inclusive) and <code>end</code> (exclusive). This halfopen range [begin, end) is the standard pattern.</p>
+
+<h2>Types of iterators (simplified)</h2>
+<ul>
+  <li><strong>Input/Output</strong>  read/write once.</li>
+  <li><strong>Forward</strong>  can move forward, read/write multiple times.</li>
+  <li><strong>Bidirectional</strong>  forward and backward (list, set, map).</li>
+  <li><strong>Random Access</strong>  can jump (vector, array, deque).</li>
+</ul>
+
+<h2>Getting iterators from containers</h2>
+<pre><code>vector&ltint&gt v = {1,2,3};
+auto it = v.begin(); // iterator to first element
+auto end = v.end();  // iterator to one past last element
+while (it != end) {
+    cout << *it << " ";
+    ++it;
+}
+// also: cbegin(), cend() for const iterators</code></pre>
+
+<h2>The halfopen range [begin, end)</h2>
+<p>This means: include begin, exclude end. Advantages: empty range when begin == end, and you can loop while (it != end).</p>
+
+<h2>Algorithms using iterators</h2>
+<pre><code>sort(v.begin(), v.end());
+reverse(v.begin(), v.end());
+auto it = find(v.begin(), v.end(), 3);</code></pre>
+
+<h2>Iterator invalidation</h2>
+<p>Modifying a container can invalidate iterators. For vectors, insert/erase may invalidate all iterators. For sets/maps, iterators remain valid except those to erased elements.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always use <code>!= end()</code> not <code>< end()</code> (except for random access).</li>
+  <li>Dereferencing <code>end()</code> is undefined behaviour.</li>
+  <li>Use <code>auto</code> to simplify iterator type declarations.</li>
+  <li>Rangebased for loops use iterators behind the scenes.</li>
+</ul>
+
+<blockquote>Iterators are the universal remotes of the STL  they let you control any container with the same buttons.</blockquote>
+`
 },
 
 ]
