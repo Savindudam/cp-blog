@@ -6510,6 +6510,47 @@ cout << s << "\\n";</code></pre>
 
 <blockquote>Building a bitset from a string is like reading a binary number  the leftmost digit is the big boss (most significant).</blockquote>
 `
+},{
+  slug: "bitwise-and-or-xor-on-bitsets",
+  title: "Bitwise AND, OR, XOR on Bitsets",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Bitsets support bitwise operations: &, |, ^, ~. These operate elementwise on all bits in parallel.",
+  tags: ["bitset", "bitwise", "AND", "OR", "XOR", "NOT"],
+  html: `
+<p>One of the main advantages of <code>bitset</code> over <code>vector&ltbool&gt</code> is that you can perform bitwise operations on entire bitsets at once. These operations are very fast because they work on whole machine words under the hood.</p>
+
+<h2>Bitwise AND, OR, XOR</h2>
+<pre><code>bitset&lt8&gt a("11001100");
+bitset&lt8&gt b("10101010");
+bitset&lt8&gt and_res = a & b; // 10001000
+bitset&lt8&gt or_res  = a | b; // 11101110
+bitset&lt8&gt xor_res = a ^ b; // 01100110
+bitset&lt8&gt not_res = ~a;    // 00110011</code></pre>
+
+<h2>Compound assignment</h2>
+<pre><code>a &= b; // a = a & b
+a |= b;
+a ^= b;</code></pre>
+
+<h2>Using bitset for set operations on small universes</h2>
+<p>If you have a set of integers from 0 to N-1 where N <= 64 or N <= 1000, you can represent subsets as bitsets and use bitwise operations for union (|), intersection (&), and symmetric difference (^).</p>
+
+<h2>Example: checking if a is subset of b</h2>
+<pre><code>if ((a & b) == a) cout << "a subset of b\\n";</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Bitwise ops work on all bits simultaneously  O(N/word_size) time.</li>
+  <li>Both bitsets must have the same size.</li>
+  <li>These operations are much faster than looping over bits manually.</li>
+  <li>Use <code>~</code> for complement (flip all bits).</li>
+</ul>
+
+<blockquote>Bitwise operations on bitsets are like having a thousand tiny workers flipping switches in parallel  instant results.</blockquote>
+`
 },
 
 
