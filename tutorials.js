@@ -6312,6 +6312,49 @@ auto it = cs.find(2);
 
 <blockquote>find is the searchlight of the set  it scans the tree and points exactly to the element or tells you it's not there. Reliable and fast.</blockquote>
 `
+},{
+  slug: "lower-bound-upper-bound-on-sets",
+  title: "Using lower_bound and upper_bound on Sets",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Sets are sorted, so you can use lower_bound and upper_bound to find ranges of elements. These are member functions, not the generic ones.",
+  tags: ["set", "lower_bound", "upper_bound", "range queries"],
+  html: `
+<p>Because sets are sorted, you can ask: "what is the first element >= x?" (<code>lower_bound</code>) or "first element > x?" (<code>upper_bound</code>). Always use the <strong>member functions</strong> of set, not the generic <code>std::lower_bound</code>, because the generic version runs in O(n) for sets (nonrandomaccess iterators).</p>
+
+<h2>lower_bound  first element not less than x</h2>
+<pre><code>set&ltint&gt s = {10, 20, 30, 40, 50};
+auto it = s.lower_bound(25); // points to 30
+it = s.lower_bound(30);      // points to 30
+it = s.lower_bound(60);      // returns s.end()</code></pre>
+
+<h2>upper_bound  first element greater than x</h2>
+<pre><code>auto it = s.upper_bound(30); // points to 40
+it = s.upper_bound(40);      // points to 50
+it = s.upper_bound(50);      // returns s.end()</code></pre>
+
+<h2>Counting elements in a range [l, r]</h2>
+<pre><code>int l = 25, r = 45;
+auto low = s.lower_bound(l);
+auto high = s.upper_bound(r);
+int count = distance(low, high); // O(k) where k is number of elements in range
+for (auto it = low; it != high; ++it) cout << *it << " "; // 30 40</code></pre>
+
+<h2>Difference between lower_bound and upper_bound</h2>
+<p>For a value that exists: <code>lower_bound</code> returns iterator to that element, <code>upper_bound</code> returns iterator to next element. For a value not present: both return same iterator (first element greater than x).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Member functions: <code>s.lower_bound(x)</code>  O(log n).</li>
+  <li>Generic: <code>lower_bound(s.begin(), s.end(), x)</code>  O(n) for set!</li>
+  <li>Always use member functions for set and map.</li>
+  <li>These functions are usefull for interval queries and nearest value problems.</li>
+</ul>
+
+<blockquote>lower_bound and upper_bound turn your set into a makeshift database  ask for a threshold, and it gives you the first element thatmeets it.</blockquote>
+`
 },
 
 ]
