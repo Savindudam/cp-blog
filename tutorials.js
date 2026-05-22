@@ -5810,6 +5810,48 @@ auto hi = ms.upper_bound(5); // first element >5
 
 <blockquote>Multiset is the generous sibling of set  it doesn't turn away duplicates, it welcomes them with open arms.</blockquote>
 `
+},{
+  slug: "erasing-one-instance-from-multiset",
+  title: "Erasing One Instance from a Multiset",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Erase by value removes all copies. To remove just one, use an iterator from find().",
+  tags: ["multiset", "erase", "one instance", "iterator"],
+  html: `
+<p>One common pitfall with multiset: calling <code>erase(value)</code> removes <strong>all</strong> elements with that value. If you only want to delete a single instance, you must erase by iterator.</p>
+
+<h2>Erase by value  removes all duplicates</h2>
+<pre><code>multiset&ltint&gt ms = {1, 2, 2, 2, 3};
+ms.erase(2); // removes all three 2's
+// ms now contains {1, 3}
+cout << ms.size() << "\\n"; // 2</code></pre>
+
+<h2>Erase one instance using iterator</h2>
+<pre><code>multiset&ltint&gt ms = {1, 2, 2, 2, 3};
+auto it = ms.find(2);
+if (it != ms.end()) ms.erase(it); // removes only one 2
+// ms now contains {1, 2, 2, 3}</code></pre>
+
+<h2>Erase one instance using extract (C++17)</h2>
+<pre><code>auto node = ms.extract(2); // extracts one node (any)
+// node is now a node handle, ms has one fewer 2</code></pre>
+
+<h2>Erasing a range of duplicates</h2>
+<pre><code>auto first = ms.find(2);
+auto last = ms.upper_bound(2);
+ms.erase(first, last); // removes all 2's</code></pre
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>erase(value)</code> returns number of elements removed.</li>
+  <li><code>find</code> returns iterator to the first occurrence (any).</li>
+  <li>After erasing by iterator, that iterator is invalidated.</li>
+  <li>Always check that iterator is not <code>end()</code> before erasing.</li>
+</ul>
+
+<blockquote>Erasing from multiset is like surgery  you need to be precise. The value scalpel cuts deep, the iterator scalpel is gentle.</blockquote>
+`
 },
 
 
