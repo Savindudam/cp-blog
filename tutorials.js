@@ -7044,6 +7044,54 @@ cout << os.order_of_key({10, 2}) << "\\n";  // 2</code></pre>
 
 <blockquote>Finding common elements is the "hello world" of algorithm comparison. Three different tools, one problem  choose wisely based on your data.</blockquote>
 `
+},{
+  slug: "complete-search-brute-force-introduction",
+  title: "Complete Search (Brute Force) Introduction",
+  topic: "Brute Force",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "Brute force means trying all possibilities. It's the simplest algorithm and often the first you should consider when n is small.",
+  tags: ["brute force", "complete search", "exhaustive", "small n"],
+  html: `
+<p>Complete search, also known as brute force, means generating every possible candidate solution and checking if it's valid. When the search space is small (n  20 or 25), brute force is often the easiest and fastest way to get a correct solution. It's also a baseline for testing more efficent algorithms.</p>
+
+<h2>When to use brute force</h2>
+<ul>
+  <li>n  10  O(n!) permutations.</li>
+  <li>n  20  O(2^n) subsets.</li>
+  <li>n  1000  O(n^2) double loops.</li>
+  <li>Always check constraints first.</li>
+</ul>
+
+<h2>Types of complete search</h2>
+<ul>
+  <li>Iterating over all subsets (bitmasks).</li>
+  <li>Generating all permutations (next_permutation).</li>
+  <li>Nested loops for all pairs or triples.</li>
+  <li>Recursive backtracking with pruning.</li>
+</ul>
+
+<h2>Example: find two numbers in array that sum to target</h2>
+<pre><code>for (int i = 0; i < n; i++) {
+    for (int j = i+1; j < n; j++) {
+        if (arr[i] + arr[j] == target) return true;
+    }
+}
+// O(n^2)  fine for n  5000</code></pre>
+
+<h2>Optimizing brute force</h2>
+<p>Sometimes you can prune branches: stop early if partial solution is already invalid. This is called backtracking with pruning.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Brute force is not always stupid  it's often the intended solution for small constraints.</li>
+  <li>Use it as a starting point before optimizing.</li>
+  <li>Know the limits: 2^20 = 1,048,576 (fine), 2^30 = 1,073,741,824 (too many).</li>
+</ul>
+
+<blockquote>Brute force is the sledgehammer of algorithms  when the nail is small, it's the fastest tool in the shed.</blockquote>
+`
 },
 
 
