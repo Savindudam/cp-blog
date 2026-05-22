@@ -6416,6 +6416,55 @@ best = *it; // 50</code></pre>
 
 <blockquote>Finding the nearest element in a set is like looking for the closest bus stop  check the one just ahead and the one just behind, pick the closer.</blockquote>
 `
+},{
+  slug: "bitset-compact-array-of-bits",
+  title: "Bitset: Compact Array of Bits",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "std::bitset stores bits in a compact, fixedsize array. Supports bitwise operations and is very memory efficient.",
+  tags: ["bitset", "bits", "compact", "bitwise"],
+  html: `
+<p><code>std::bitset</code> is a fixedsize sequence of bits (0/1). It's extremly memory efficient: 1 bit per element, unlike <code>vector&ltbool&gt</code> which has issues. Bitset is great for representing sets of small integers, flags, or performing bitwise operations on many bits at once.</p>
+
+<h2>Creating bitsets</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+bitset&lt8&gt b1;          // 8 bits, all 0
+bitset&lt8&gt b2(42);     // 42 in binary: 00101010
+bitset&lt8&gt b3(string("10101010")); // from string</code></pre>
+
+<h2>Accessing and modifying bits</h2>
+<pre><code>bitset&lt5&gt b; // 00000
+b[0] = 1;    // 00001
+b[2] = 1;    // 00101
+cout << b[2] << "\\n"; // 1
+b.set(1);    // set bit 1 to 1  00111
+b.reset(0);  // set bit 0 to 0  00110
+b.flip(2);   // toggle bit 2  00010</code></pre>
+
+<h2>Useful methods</h2>
+<pre><code>bitset&lt8&gt b(0b10101010);
+cout << b.count() << "\\n";    // number of 1's: 4
+cout << b.size() << "\\n";     // 8
+cout << b.any() << "\\n";      // true (at least one 1)
+cout << b.none() << "\\n";     // false
+cout << b.test(3) << "\\n";    // test bit 3 (0based)  0
+string s = b.to_string();      // "10101010"
+unsigned long ul = b.to_ulong(); // 170</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Size is a compiletime constant (template parameter).</li>
+  <li>Cannot allocate bitset dynamically  use <code>vector&ltbool&gt</code> or <code>boost::dynamic_bitset</code> for runtime size.</li>
+  <li>Bitwise operations are very fast (wordlevel).</li>
+  <li>Bitset is much faster than boolean array for many operations.</li>
+</ul>
+
+<blockquote>Bitset is the minimalist's dream  it stores only what matters: 0 or 1, no waste. Perfect for flags and small sets.</blockquote>
+`
 },
 
 
