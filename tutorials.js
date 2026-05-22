@@ -6603,6 +6603,61 @@ cout << dq.at(1) << "\\n"; // bounds-checked</code></pre>
 
 <blockquote>Deque is the Swiss Army knife of queues  you can open from either end. Perfect for problems where the action happens at both sides.</blockquote>
 `
+},{
+  slug: "stack-lifo-data-structure",
+  title: "Stack: LIFO Data Structure",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "std::stack is a container adaptor that provides LIFO (lastin, firstout) access. Wrap it around deque, vector, or list.",
+  tags: ["stack", "LIFO", "push", "pop", "top"],
+  html: `
+<p><code>std::stack</code> is a simple LIFO data structure. You can only access the top element. It's implemented as a wrapper around another container (by default <code>deque</code>). Stacks are perfect for DFS, bracket matching, and undo/redo features.</p>
+
+<h2>Basic operations</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+stack&ltint&gt st;
+st.push(10);
+st.push(20);
+st.push(30);
+cout << st.top() << "\\n"; // 30
+st.pop();                 // removes 30
+cout << st.top() << "\\n"; // 20
+cout << st.size() << "\\n"; // 2
+cout << st.empty() << "\\n"; // 0 (false)</code></pre>
+
+<h2>Underlying container</h2>
+<p>You can specify the underlying container:</p>
+<pre><code>stack&ltint, vector&ltint&gt&gt st_vec; // uses vector (less overhead)
+stack&ltint, list&ltint&gt&gt st_list;   // uses list</code></pre>
+
+<h2>Classic example: bracket validation</h2>
+<pre><code>bool isValid(string s) {
+    stack&ltchar&gt st;
+    for (char c : s) {
+        if (c == '(' || c == '{' || c == '[') st.push(c);
+        else if (st.empty()) return false;
+        else if ((c == ')' && st.top() != '(') ||
+                 (c == '}' && st.top() != '{') ||
+                 (c == ']' && st.top() != '[')) return false;
+        else st.pop();
+    }
+    return st.empty();
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>stack</code> has no iterators  you can't loop over it.</li>
+  <li><code>top()</code> returns reference  you can modify top element.</li>
+  <li>Always check <code>empty()</code> before calling <code>top()</code> or <code>pop()</code>.</li>
+  <li>Common algorithms: DFS (explicit stack), expression evaluation, parenthesis.</li>
+</ul>
+
+<blockquote>Stack is the model of a cafeteria tray pile  the last one put on is the first one taken off. Simple and essential.</blockquote>
+`
 },
 
 
