@@ -7297,7 +7297,99 @@ for (int i = 0; i < n; i++) {
 <blockquote>Extracting elements from a bitmask is like unpacking a suitcase  each bit tells you what's inside. Use bit tricks to unpack efficiently.</blockquote>
 `
 },
+{
+  slug: "finding-elements-in-subset-from-bit-value",
+  title: "Finding Elements in a Subset from Bit Value",
+  topic: "Brute Force",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Given a mask, extract which elements are included. Use bitwise AND with (1<<i) or iterate over set bits. Includes methods for large n and practical examples.",
+  tags: ["bitmask", "subset", "extract", "bitwise"],
+  html: `
+<p>Once you have a mask representing a subset, you'll often need to know which specific elements are included. There are two common approches: loop over all possible indices, or iterate only over set bits using builtin functions. Each has its use case depending on n and the density of the subset.</p>
 
+<h2>Method 1: Loop over all indices (simple but O(n) per mask)</h2>
+<pre><code>int mask = 13; // binary 1101 (bits 0,2,3 set if 0-indexed from LSB)
+int n = 4;
+for (int i = 0; i < n; i++) {
+    if (mask & (1 << i)) {
+        cout << "Element " << i << " is in subset\\n";
+    }
+}</code></pre>
+<p>This is easy to write and understand. For n  20 and iterating over all 2^n masks, the total extra work is O(n * 2^n). That's acceptable for n=20 (about 20 million operations). For n=25, it's about 800 million  borderline.</p>
+
+<h2>Method 2: Iterate only over set bits (efficient for sparse masks)</h2>
+<pre><code>int m = mask;
+while (m) {
+    int lowest_bit = m & -m;          // extract lowest set bit
+    int index = __builtin_ctz(lowest_bit); // position (0based)
+    cout << "Element " << index << " is in subset\\n";
+    m ^= lowest_bit;                  // clear that bit
+}</code></pre>
+<p>This loops only k times where k = number of set bits. If subsets are sparse (few elements), this is much faster. For dense subsets, it's still O(n) but with smaller constant.</p>
+
+<h2>Getting the value of elements (mapping to actual data)</h2>
+<pre><code>vector&ltint&gt arr = {10, 20, 30, 40, 50};
+int mask = 21; // binary 10101 (bits 0,2,4 set -> indices 0,2,4)
+int sum = 0;
+vector&ltint&gt subset;
+for (int i = 0; i < arr.size(); i++) {
+    if (mask & (1 << i)) {
+        sum += arr[i];
+        subset.push_back(arr[i]);
+    }
+}
+cout << "Sum: " << sum << "\\n"; // 10+30+50=90
+cout << "Subset: ";
+for (int x : subset) cout << x << " "; // 10 30 50</code></pre>
+
+<h2>Extracting elements for n > 31 (using long long)</h2>
+<pre><code>long long mask = (1LL << 40) | (1LL << 35); // bits 35 and 40 set
+for (int i = 0; i < 60; i++) {
+    if (mask & (1LL << i)) {
+        cout << "Bit " << i << " is set\\n";
+    }
+}</code></pre>
+
+<h2>Using builtins for large n</h2>
+<pre><code>long long m = mask;
+while (m) {
+    long long lowest_bit = m & -m;
+    int index = __builtin_ctzll(lowest_bit);
+    cout << index << " ";
+    m -= lowest_bit;
+}</code></pre>
+
+<h2>Practical example: sum of subset equals target</h2>
+<pre><code>vector&ltint&gt nums = {3, 5, 7, 9, 11};
+int target = 14;
+int n = nums.size();
+for (int mask = 0; mask < (1 << n); mask++) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (mask & (1 << i)) sum += nums[i];
+    }
+    if (sum == target) {
+        cout << "Found subset: ";
+        for (int i = 0; i < n; i++)
+            if (mask & (1 << i)) cout << nums[i] << " ";
+        cout << "\\n";
+    }
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>__builtin_ctz</code> for unsigned int, <code>__builtin_ctzll</code> for unsigned long long.</li>
+  <li><code>mask & -mask</code> isolates the lowest set bit.</li>
+  <li><code>mask ^ (1 << i)</code> toggles bit i.</li>
+  <li>For n  30, int is fine; for n  60, use long long.</li>
+  <li>Never shift by more than the bit width  undefined behaviour.</li>
+</ul>
+
+<blockquote>Extracting elements from a bitmask is like unpacking a suitcase  each bit tells you what's inside. Use the right tool for the job: full scan for small n, sparse iteration for large masks.</blockquote>
+`
+},
 
 
 
