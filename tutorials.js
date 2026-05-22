@@ -6658,6 +6658,63 @@ stack&ltint, list&ltint&gt&gt st_list;   // uses list</code></pre>
 
 <blockquote>Stack is the model of a cafeteria tray pile  the last one put on is the first one taken off. Simple and essential.</blockquote>
 `
+},{
+  slug: "queue-fifo-data-structure",
+  title: "Queue: FIFO Data Structure",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "std::queue provides FIFO (firstin, firstout) access. Wrap around deque (default) or list.",
+  tags: ["queue", "FIFO", "push", "pop", "front"],
+  html: `
+<p><code>std::queue</code> is a container adaptor that gives you firstin, firstout behavior. You push to the back and pop from the front. Queues are used in BFS, task scheduling, and buffering.</p>
+
+<h2>Basic operations</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+queue&ltint&gt q;
+q.push(10);
+q.push(20);
+q.push(30);
+cout << q.front() << "\\n"; // 10
+cout << q.back() << "\\n";  // 30
+q.pop();                    // removes 10
+cout << q.front() << "\\n"; // 20
+cout << q.size() << "\\n";  // 2</code></pre>
+
+<h2>Underlying container</h2>
+<pre><code>queue&ltint, list&ltint&gt&gt q_list; // uses list (no random access, but O(1) pop)</code></pre>
+
+<h2>BFS example (simplified)</h2>
+<pre><code>vector&ltint&gt bfs(const vector&ltvector&ltint&gt&gt& graph, int start) {
+    vector&ltint&gt dist(graph.size(), -1);
+    queue&ltint&gt q;
+    dist[start] = 0;
+    q.push(start);
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int v : graph[u]) {
+            if (dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+    return dist;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>No iterators  can't traverse all elements.</li>
+  <li><code>front()</code> returns the oldest element (the one to be popped next).</li>
+  <li><code>back()</code> returns the most recently pushed element.</li>
+  <li>Always check <code>empty()</code> before <code>front()</code> or <code>pop()</code>.</li>
+</ul>
+
+<blockquote>Queue is like a line at the grocery store  first come, first served. BFS wouldn't be the same without it.</blockquote>
+`
 },
 
 
