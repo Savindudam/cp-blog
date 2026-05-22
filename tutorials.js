@@ -5955,6 +5955,51 @@ for (int x : arr) freq[x]++; // inserts with 0 then increments</code></pre>
 
 <blockquote>The [] operator on map is like a vending machine  if you ask for something that isn't there, it quietly adds it and gives you an empty product. Use with caution.</blockquote>
 `
+},{
+  slug: "map-automatically-inserts-default-values",
+  title: "Map Automatically Inserts Default Values",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "When you use [] on a map with a missing key, a defaultconstructed value is inserted. Understand the implications.",
+  tags: ["map", "default insertion", "value-initialization", "trap"],
+  html: `
+<p>This is a deeper look at the automatic insertion behavior of <code>map::operator[]</code>. The inserted value is <strong>valueinitialized</strong>. For fundamental types, that means zero. For classes, the default constructor is called. This can be both usefull and dangerous.</p>
+
+<h2>What valueinitialization means</h2>
+<pre><code>map&ltint, int&gt m;
+int& val = m[10]; // key 10 doesn't exist  inserted with 0
+cout << val << "\\n"; // 0
+val = 42;
+cout << m[10] << "\\n"; // 42</code></pre>
+
+<h2>With string values</h2>
+<pre><code>map&ltint, string&gt m2;
+string& s = m2[1]; // inserts with empty string ""
+cout << s.empty() << "\\n"; // 1 (true)
+s = "hello";
+cout << m2[1] << "\\n"; // "hello"</code></pre>
+
+<h2>Why this can be expensive</h2>
+<p>If you accidentally query many missing keys, your map will bloat with default entries. This wastes memory and may affect performance.</p>
+
+<h2>Using try_emplace (C++17) to avoid unnecessary default construction</h2>
+<pre><code>map&ltint, string&gt m3;
+auto [it, inserted] = m3.try_emplace(5, "five");
+if (inserted) cout << "Inserted\\n";
+else cout << "Already existed\\n";</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Default insertion can be a silent performance killer.</li>
+  <li>Use <code>find</code> if you only need to test existence.</li>
+  <li>Use <code>try_emplace</code> or <code>insert</code> to avoid overwriting existing values.</li>
+  <li>For counting, the automatic zero initialization is exactly what you want.</li>
+</ul>
+
+<blockquote>Map's autoinsertion is like a helpful ghost  it can be your best friend or your worst enemy, depending on whether you expected it.</blockquote>
+`
 },
 
 ]
