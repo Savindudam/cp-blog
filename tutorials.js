@@ -6054,6 +6054,67 @@ for (auto it = ages.begin(); it != ages.end(); ++it) {
 
 <blockquote>Walking through a map with structured bindings feels like magic  key and value appear as if by name, no more .first and .second clutter.</blockquote>
 `
+},{
+  slug: "unordered-map-hash-based-maps",
+  title: "Unordered Map for Hash-Based Maps",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-22",
+  excerpt: "std::unordered_map offers average O(1) insert, lookup, and delete. No ordering, but faster than std::map.",
+  tags: ["unordered_map", "hash map", "O(1)", "hash table"],
+  html: `
+<p>If you don't need keys to be sorted, <code>std::unordered_map</code> is usually faster than <code>std::map</code>. It uses a hash table, giving average constanttime operations. However, worstcase can be O(n) due to collisions, and there's no order.</p>
+
+<h2>Basic usage</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+unordered_map&ltstring, int&gt um;
+um["apple"] = 5;
+um["banana"] = 3;
+um["apple"]++; // now 6
+cout << um["apple"] << "\\n"; // 6</code></pre>
+
+<h2>Checking existence</h2>
+<pre><code>if (um.find("cherry") != um.end()) {
+    cout << "Found\\n";
+}
+if (um.count("banana")) { // count returns 0 or 1
+    cout << "banana exists\\n";
+}</code></pre>
+
+<h2>Iteration  order is arbitrary</h2>
+<pre><code>for (const auto& [key, val] : um) {
+    cout << key << ": " << val << "\\n";
+} // order not guaranteed, may change between runs</code></pre>
+
+<h2>Custom hash for user types</h2>
+<pre><code>struct Point { int x, y; };
+struct PointHash {
+    size_t operator()(const Point& p) const {
+        return hash&ltint&gt()(p.x) ^ (hash&ltint&gt()(p.y) << 1);
+    }
+};
+unordered_map&ltPoint, int, PointHash&gt pointsMap;</code></pre>
+
+<h2>When to use unordered_map</h2>
+<ul>
+  <li>You only need fast lookup, insert, delete.</li>
+  <li>You don't need sorted keys or range queries.</li>
+  <li>Your hash function is good (no excessive collisions).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Average O(1), worst O(n).</li>
+  <li>Memory usage higher than map due to buckets.</li>
+  <li>In cp, beware of hash flooding attacks  some judges use fixed hashes; use <code>map</code> if suspicious.</li>
+  <li><code>reserve</code> can preallocate buckets to reduce rehashing.</li>
+</ul>
+
+<blockquote>unordered_map is the sports car of maps  blazing fast on the open road, but if the road is full of potholes (hash collisions), it crawls.</blockquote>
+`
 },
 
 ]
