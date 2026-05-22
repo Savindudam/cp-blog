@@ -7193,6 +7193,55 @@ for (int mask = 0; mask < (1 << n); mask++) {
 
 <blockquote>Bitmask subsets turn math into code  every integer from 0 to 2^n-1 is a unique combination. Simple and elegant.</blockquote>
 `
+},{
+  slug: "iterating-over-subsets-with-bitmasks",
+  title: "Iterating Over Subsets with Bitmasks",
+  topic: "Brute Force",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Loop over all masks from 0 to (1<<n)-1. For each mask, use bitwise operations to test membership.",
+  tags: ["bitmask", "iteration", "subset", "bitwise"],
+  html: `
+<p>Once you have the bitmask representation, iterating over subsets is just a for loop. Inside, you often need to check which bits are set. Common operations: checking bit i, setting bit i, clearing bit i.</p>
+
+<h2>Standard loop</h2>
+<pre><code>int n = 5;
+for (int mask = 0; mask < (1 << n); mask++) {
+    // process subset represented by mask
+}</code></pre>
+
+<h2>Extracting the elements of the subset</h2>
+<pre><code>for (int i = 0; i < n; i++) {
+    if (mask & (1 << i)) {
+        // element i is in the subset
+    }
+}</code></pre>
+
+<h2>Optimized iteration over set bits (only ones)</h2>
+<p>If n is large but subsets are sparse, iterate over only set bits:</p>
+<pre><code>int submask = mask;
+while (submask) {
+    int lsb = submask & -submask; // lowest set bit
+    int i = __builtin_ctz(lsb);   // index of that bit
+    // process element i
+    submask -= lsb;
+}</code></pre>
+
+<h2>Counting elements in subset</h2>
+<pre><code>int cnt = __builtin_popcount(mask); // number of set bits</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>(1 << i)</code> gives a mask with only bit i set.</li>
+  <li><code>mask & (1 << i)</code> is nonzero if bit i is set.</li>
+  <li><code>mask | (1 << i)</code> sets bit i.</li>
+  <li><code>mask & ~(1 << i)</code> clears bit i.</li>
+  <li>Builtins like <code>__builtin_popcount</code> are fast.</li>
+</ul>
+
+<blockquote>Bitmask iteration is the workhorse of exponential algorithms  clean, fast, and easy to write. Learn it and love it.</blockquote>
+`
 },
 
 
