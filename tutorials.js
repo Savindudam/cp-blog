@@ -6715,6 +6715,65 @@ cout << q.size() << "\\n";  // 2</code></pre>
 
 <blockquote>Queue is like a line at the grocery store  first come, first served. BFS wouldn't be the same without it.</blockquote>
 `
+},{
+  slug: "priority-queue-max-heap-in-cpp",
+  title: "Priority Queue (Max-Heap) in C++",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-22",
+  excerpt: "std::priority_queue gives you a maxheap by default. The largest element is always at the top. O(log n) push/pop.",
+  tags: ["priority_queue", "max-heap", "heap", "top"],
+  html: `
+<p><code>std::priority_queue</code> is a container adaptor that provides constant time access to the largest element (by default). It's implemented asa binary heap. Use it whenever you need to repeatedly extract the maximum (or minimum) element.</p>
+
+<h2>Basic maxheap</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+priority_queue&ltint&gt pq; // max-heap
+pq.push(10);
+pq.push(5);
+pq.push(20);
+cout << pq.top() << "\\n"; // 20
+pq.pop();                 // removes 20
+cout << pq.top() << "\\n"; // 10</code></pre>
+
+<h2>Minheap (smallest on top)</h2>
+<pre><code>priority_queue&ltint, vector&ltint&gt, greater&ltint&gt&gt min_pq;
+min_pq.push(10);
+min_pq.push(5);
+min_pq.push(20);
+cout << min_pq.top() << "\\n"; // 5</code></pre>
+
+<h2>Priority queue of pairs (compare by first, then second)</h2>
+<pre><code>priority_queue&ltpair&ltint,int&gt&gt pqp; // sorts by first then second, both descending
+pqp.push({1, 5});
+pqp.push({2, 3});
+pqp.push({1, 9});
+cout << pqp.top().first << " " << pqp.top().second << "\\n"; // 2 3</code></pre>
+
+<h2>Custom comparator (minheap by custom criteria)</h2>
+<pre><code>struct Compare {
+    bool operator()(int a, int b) { return a > b; } // reverse for min-heap
+};
+priority_queue&ltint, vector&ltint&gt, Compare&gt custom_pq;</code></pre>
+
+<h2>Common use: Dijkstra's algorithm</h2>
+<pre><code>using P = pair&ltint,int&gt; // (distance, node)
+priority_queue&ltP, vector&ltP&gt, greater&ltP&gt&gt pq; // min-heap by distance</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Default is maxheap (largest on top).</li>
+  <li>No iterators  can't traverse.</li>
+  <li><code>push</code> and <code>pop</code> are O(log n).</li>
+  <li>Use <code>greater&ltT&gt</code> for minheap.</li>
+  <li>For Dijkstra or A*, you'll use minheap.</li>
+</ul>
+
+<blockquote>Priority queue is like a VIP line  the most important (largest) person always gets to the front. Perfect for scheduling and greedy algorithms.</blockquote>
+`
 },
 
 
