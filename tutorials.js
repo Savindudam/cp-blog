@@ -6775,7 +6775,59 @@ priority_queue&ltP, vector&ltP&gt, greater&ltP&gt&gt pq; // min-heap by distance
 <blockquote>Priority queue is like a VIP line  the most important (largest) person always gets to the front. Perfect for scheduling and greedy algorithms.</blockquote>
 `
 },
+{
+  slug: "priority-queue-with-greater-for-min-heap",
+  title: "Priority Queue with Greater for Min-Heap",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "By default priority_queue is a max-heap. Use greater<int> to turn it into a min-heap for smallest element on top.",
+  tags: ["priority_queue", "min-heap", "greater", "heap"],
+  html: `
+<p>The default <code>priority_queue</code> gives you a maxheap (largest element on top). But sometimes you need the smallest element first  like in Dijkstra's algorithm or when merging sorted lists. The soluton is to use the <code>greater</code> comparator.</p>
 
+<h2>Min-heap syntax</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+priority_queue&ltint, vector&ltint&gt, greater&ltint&gt&gt minHeap;
+minHeap.push(10);
+minHeap.push(5);
+minHeap.push(20);
+cout << minHeap.top() << "\\n"; // 5
+minHeap.pop();
+cout << minHeap.top() << "\\n"; // 10</code></pre>
+
+<h2>Why three template arguments?</h2>
+<p><code>priority_queue&ltT, Container, Compare&gt</code>. The container defaults to <code>vector&ltT&gt</code>, but if you want to specify <code>greater&ltT&gt</code>, you must also specify the container. So it's always: <code>priority_queue&ltT, vector&ltT&gt, greater&ltT&gt&gt</code>.</p>
+
+<h2>Min-heap of pairs (by first then second)</h2>
+<p>For <code>pair&ltint,int&gt</code>, the default comparator sorts by first then second ascending. With <code>greater</code>, you get ascending (min) on first, then second. That's often what you want for Dijkstra:</p>
+<pre><code>using P = pair&ltint,int&gt; // (distance, node)
+priority_queue&ltP, vector&ltP&gt, greater&ltP&gt&gt pq;
+pq.push({5, 1});
+pq.push({3, 2});
+pq.push({4, 3});
+cout << pq.top().first << "\\n"; // 3</code></pre>
+
+<h2>Custom comparator for min-heap on custom logic</h2>
+<pre><code>struct Compare {
+    bool operator()(int a, int b) { return a > b; }
+};
+priority_queue&ltint, vector&ltint&gt, Compare&gt minHeap2;</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>greater&ltT&gt</code> is defined in <code>&ltfunctional&gt</code> (included by bits/stdc++.h).</li>
+  <li>The comparator must return true if the first argument should come <strong>after</strong> the second (opposite of sort).</li>
+  <li>For min-heap, use <code>greater&ltT&gt</code>.</li>
+  <li>For max-heap with custom types, you can overload <code>operator&lt</code> or provide a comparator that returns <code>a < b</code>.</li>
+</ul>
+
+<blockquote>Turning a max-heap into a min-heap is like flipping the world upside down  the smallest becomes king. Use greater and ascend.</blockquote>
+`
+},
 
 
 
