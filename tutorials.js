@@ -7242,6 +7242,60 @@ while (submask) {
 
 <blockquote>Bitmask iteration is the workhorse of exponential algorithms  clean, fast, and easy to write. Learn it and love it.</blockquote>
 `
+},{
+  slug: "finding-elements-in-subset-from-bit-value",
+  title: "Finding Elements in a Subset from Bit Value",
+  topic: "Brute Force",
+  difficulty: "Easy",
+  readMinutes: 5,
+  date: "2026-05-22",
+  excerpt: "Given a mask, extract which elements are included. Use bitwise AND with (1<<i) or iterate over set bits.",
+  tags: ["bitmask", "subset", "extract", "bitwise"],
+  html: `
+<p>Once you have a mask representing a subset, you'll often need to know which specific elements are included. There are twocommon approches: loop over all possible indices, or iterate only over set bits using builtin functions.</p>
+
+<h2>Loop over all indices (simple but O(n))</h2>
+<pre><code>int mask = 13; // binary 1101 (bits 0,2,3 set if 0-indexed from LSB)
+for (int i = 0; i < n; i++) {
+    if (mask & (1 << i)) {
+        cout << "Element " << i << " is in subset\\n";
+    }
+}</code></pre>
+
+<h2>Iterate only over set bits (efficient for sparse masks)</h2>
+<pre><code>int m = mask;
+while (m) {
+    int lowest_bit = m & -m;          // extract lowest set bit
+    int index = __builtin_ctz(lowest_bit); // position (0based)
+    cout << "Element " << index << " is in subset\\n";
+    m ^= lowest_bit;                  // clear that bit
+}</code></pre>
+
+<h2>Getting the value of elements (if mapping to actual data)</h2>
+<pre><code>vector&ltint&gt arr = {10, 20, 30, 40};
+int mask = 5; // binary 0101 (bits 0 and 2 set)
+int sum = 0;
+for (int i = 0; i < 4; i++) {
+    if (mask & (1 << i)) sum += arr[i];
+}
+cout << "Sum of subset: " << sum << "\\n"; // 10+30=40</code></pre>
+
+<h2>Collecting subset into vector</h2>
+<pre><code>vector&ltint&gt subset;
+for (int i = 0; i < n; i++) {
+    if (mask >> i & 1) subset.push_back(arr[i]);
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li><code>__builtin_ctz</code> counts trailing zeros  gives index of lowest set bit (0based).</li>
+  <li><code>m & -m</code> isolates the lowest set bit.</li>
+  <li>Looping over all i is fine for n  30 (30 iterations per mask).</li>
+  <li>For n=60, use <code>long long</code> and <code>__builtin_ctzll</code>.</li>
+</ul>
+
+<blockquote>Extracting elements from a bitmask is like unpacking a suitcase  each bit tells you what's inside. Use bit tricks to unpack efficiently.</blockquote>
+`
 },
 
 
