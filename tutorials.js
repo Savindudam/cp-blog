@@ -6970,6 +6970,80 @@ cout << os.order_of_key({10, 2}) << "\\n";  // 2</code></pre>
 
 <blockquote>Choosing between sorting and data structures is like deciding between building a library (sort) or hiring a librarian (set). Both work, but one may be cheaper for your needs.</blockquote>
 `
+},{
+  slug: "common-elements-problem-set-unordered-set-sorting",
+  title: "Solving Common Elements Problem with Set, Unordered Set, and Sorting",
+  topic: "Algorithm Analysis",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-22",
+  excerpt: "Given two arrays, find the intersection. Compare three approaches: set, unordered_set, and sorting + two pointers.",
+  tags: ["intersection", "set", "unordered_set", "sorting", "two pointers"],
+  html: `
+<p>The problem: given two arrays A and B, output the common elements (intersection) without duplicates. This is a classic that illustrates the tradeoffs between different data structures and algorithms.</p>
+
+<h2>Approach 1: using std::set (ordered)</h2>
+<pre><code>vector&ltint&gt intersection_set(vector&ltint&gt& a, vector&ltint&gt& b) {
+    set&ltint&gt s(a.begin(), a.end());
+    vector&ltint&gt res;
+    for (int x : b) {
+        if (s.find(x) != s.end()) {
+            res.push_back(x);
+            s.erase(x); // to avoid duplicates in result
+        }
+    }
+    return res;
+}
+// Time: O((n+m) log n), Space: O(n)</code></pre>
+
+<h2>Approach 2: using unordered_set (hash)</h2>
+<pre><code>vector&ltint&gt intersection_unordered(vector&ltint&gt& a, vector&ltint&gt& b) {
+    unordered_set&ltint&gt us(a.begin(), a.end());
+    vector&ltint&gt res;
+    for (int x : b) {
+        if (us.find(x) != us.end()) {
+            res.push_back(x);
+            us.erase(x);
+        }
+    }
+    return res;
+}
+// Average O(n+m), worst O(n*m) if bad hash, Space O(n)</code></pre>
+
+<h2>Approach 3: sorting + two pointers</h2>
+<pre><code>vector&ltint&gt intersection_sort(vector&ltint&gt a, vector&ltint&gt b) {
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    vector&ltint&gt res;
+    int i = 0, j = 0;
+    while (i < a.size() && j < b.size()) {
+        if (a[i] < b[j]) i++;
+        else if (a[i] > b[j]) j++;
+        else {
+            if (res.empty() || res.back() != a[i]) res.push_back(a[i]);
+            i++; j++;
+        }
+    }
+    return res;
+}
+// Time: O(n log n + m log m), Space: O(1) extra</code></pre>
+
+<h2>Comparison</h2>
+<ul>
+  <li>Set: simple, good for dynamic data, O(log n) per lookup.</li>
+  <li>Unordered_set: fastest average, but worst case can be slow; not orderpreserving.</li>
+  <li>Sorting: no extra memory (if you can modify input), good cache behavior, usually fastest in practice for static data.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>If you need the result sorted, sorting + two pointers gives it for free.</li>
+  <li>If arrays are already sorted, two pointers is O(n+m).</li>
+  <li>Hash set is great but beware of collisions (use custom hash or reserve).</li>
+</ul>
+
+<blockquote>Finding common elements is the "hello world" of algorithm comparison. Three different tools, one problem  choose wisely based on your data.</blockquote>
+`
 },
 
 
