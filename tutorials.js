@@ -5759,7 +5759,58 @@ unordered_set&ltPoint, PointHash&gt points;</code></pre>
 
 <blockquote>unordered_set is the hare  blazing fast on average, but can stumble when collisions happen. Use it when speed is king and order doesn't matter.</blockquote>
 `
-},>
+},
+{
+  slug: "multiset-allowing-duplicate-elements",
+  title: "Multiset: Allowing Duplicate Elements",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-22",
+  excerpt: "std::multiset is like set but allows multiple copies of the same value. Elements remain sorted.",
+  tags: ["multiset", "duplicates", "ordered", "BST"],
+  html: `
+<p>Sometimes you need a sorted collection where duplicates are allowed. <code>std::multiset</code> is the answer. It behaves like <code>std::set</code> but does not enforce uniqueness. You can insert the same value many times, and each copy is stored seperately.</p>
+
+<h2>Basic usage</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+multiset&ltint&gt ms;
+ms.insert(5);
+ms.insert(3);
+ms.insert(5);
+ms.insert(5);
+cout << ms.size() << "\\n"; // 4
+for (int x : ms) cout << x << " "; // 3 5 5 5</code></pre>
+
+<h2>Count returns number of occurences</h2>
+<pre><code>cout << ms.count(5) << "\\n"; // 3
+cout << ms.count(10) << "\\n"; // 0</code></pre>
+
+<h2>Finding elements  returns iterator to first occurrence</h2>
+<pre><code>auto it = ms.find(5); // points to the first 5
+cout << *it << "\\n"; // 5</code></pre>
+
+<h2>Lower and upper bound</h2>
+<pre><code>auto lo = ms.lower_bound(5); // first element >=5
+auto hi = ms.upper_bound(5); // first element >5
+// range [lo, hi) contains all 5's</code></pre>
+
+<h2>When to use multiset</h2>
+<p>Multiset is perfect for sliding window problems, maintaining a bag of items, or when you need to track frequencies while keeping order.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>All operations (insert, erase, find) are O(log n).</li>
+  <li>Elements are sorted according to comparator (default ascending).</li>
+  <li><code>count</code> can be O(log n + frequency) but O(log n) in practice.</li>
+  <li>Use <code>extract</code> (C++17) to move elements without copying.</li>
+</ul>
+
+<blockquote>Multiset is the generous sibling of set  it doesn't turn away duplicates, it welcomes them with open arms.</blockquote>
+`
+},
 
 
 ]
