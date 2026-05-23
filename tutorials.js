@@ -8251,6 +8251,73 @@ int main() {
 
 <blockquote>The exchange argument is like showing you can swap a greedy choice into any optimal solution without breaking it. Once you master it, you can prove many greedy algorithms correct.</blockquote>
 `
+},{
+  slug: "tasks-and-deadlines-scheduling-maximize-points",
+  title: "Tasks and Deadlines: Scheduling to Maximize Points",
+  topic: "Greedy",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Each task has a deadline and a profit if completed before deadline. Schedule tasks to maximize total profit. Greedy by profit or deadline?",
+  tags: ["scheduling", "deadlines", "profit maximization", "greedy"],
+  html: `
+<p>Another classic scheduling problem: you have n tasks, each with a deadline d_i and a profit p_i (or points). Each task takes one unit of time. You want to schedule a subset of tasks (each at most one per time unit, integer times) such that each scheduled task finishes by its deadline, and the total profit is maximized.</p>
+
+<h2>Greedy approach (deadline + profit)</h2>
+<p>Sort tasks by profit descending. For each task, try to schedule it at the latest available time slot  its deadline. Use a data structure (like a set or DSU) to find free slots. This is known as "scheduling with deadlines" or "job sequencing with deadlines".</p>
+
+<h2>Implementation using a set of free slots</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+struct Task {
+    int deadline, profit;
+};
+
+int maxProfit(vector&ltTask&gt& tasks) {
+    sort(tasks.begin(), tasks.end(), [](const Task& a, const Task& b) {
+        return a.profit > b.profit;
+    });
+    int maxDeadline = 0;
+    for (auto& t : tasks) maxDeadline = max(maxDeadline, t.deadline);
+    vector&ltbool&gt slot(maxDeadline + 1, false);
+    int totalProfit = 0;
+    for (auto& t : tasks) {
+        for (int time = t.deadline; time >= 1; time--) {
+            if (!slot[time]) {
+                slot[time] = true;
+                totalProfit += t.profit;
+                break;
+            }
+        }
+    }
+    return totalProfit;
+}
+
+int main() {
+    vector&ltTask&gt tasks = {{4, 20}, {1, 10}, {1, 40}, {1, 30}};
+    cout << maxProfit(tasks) << "\\n"; // 40+30+20=90 (schedule at times 1,2,3? deadlines: 1,1,1,4 - schedule 40 at time1, 30 at? time2 but deadline 1? cannot. Actually careful.)
+    // Better to use DSU for O(n log n) but simple loop is O(n^2).
+    return 0;
+}</code></pre>
+
+<p>Correct output for example: tasks (deadline,profit): (4,20), (1,10), (1,40), (1,30). Sort by profit: 40 (d=1), 30 (d=1), 20 (d=4), 10 (d=1). Schedule 40 at time1. Schedule 30 at time2? but deadline 1, cannot. Schedule 20 at time4 (free). Schedule 10 at time? no slot. Total = 40+20=60. But optimal might be 40+30+20? 30 cannot be scheduled because deadline1, only one slot at time1. So 60 is max. The algorithm works.</p>
+
+<h2>Optimized with disjoint set union (DSU)</h2>
+<p>To find the latest free slot quickly, use a parent array where parent[t] points to the next free slot. Initially parent[t] = t. After using slot t, union t with t-1.</p>
+
+<h2>Time complexity</h2>
+<p>O(n log n) for sorting + O(n (n)) for DSU.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sort by profit descending, not by deadline.</li>
+  <li>Schedule each task at the latest possible slot to leave room for others.</li>
+  <li>This is a greedy algorithm that works because of the exchange argument (similar to activity selection).</li>
+</ul>
+
+<blockquote>Scheduling with deadlines is like packing a suitcase  put the most valuable items in first, but leave space for later. Greedy by profit works when each task takes one unit.</blockquote>
+`
 },
  
 
