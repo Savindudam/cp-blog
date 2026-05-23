@@ -7389,6 +7389,84 @@ for (int mask = 0; mask < (1 << n); mask++) {
 
 <blockquote>Extracting elements from a bitmask is like unpacking a suitcase  each bit tells you what's inside. Use the right tool for the job: full scan for small n, sparse iteration for large masks.</blockquote>
 `
+},{
+  slug: "generating-all-permutations-recursively",
+  title: "Generating All Permutations Recursively",
+  topic: "Brute Force",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Recursive backtracking to generate all n! permutations of a set. Useful when you need to try every ordering.",
+  tags: ["permutations", "recursion", "backtracking", "factorial"],
+  html: `
+<p>Permutations are all possible orderings of a set of elements. There are n! permutations, which grows factorially fast: 10! = 3.6 million, 12! = 479 million, 15! = 1.3 trillion. So recursion is only feasible for n  10 or maybe 11. The recursive method is educational and forms the basis of many backtracking problems.</p>
+
+<h2>The idea</h2>
+<p>At each step, you choose an element that hasn't been used yet, add it to the current permutation, and recurse. When the permutation length reaches n, you have a complete permutation.</p>
+
+<h2>Recursive implementation (using used array)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+void generatePermutations(vector&ltint&gt& nums, vector&ltbool&gt& used, vector&ltint&gt& current, vector&ltvector&ltint&gt&gt& result) {
+    if (current.size() == nums.size()) {
+        result.push_back(current);
+        return;
+    }
+    for (int i = 0; i < nums.size(); i++) {
+        if (!used[i]) {
+            used[i] = true;
+            current.push_back(nums[i]);
+            generatePermutations(nums, used, current, result);
+            current.pop_back();
+            used[i] = false;
+        }
+    }
+}
+
+int main() {
+    vector&ltint&gt nums = {1, 2, 3};
+    vector&ltvector&ltint&gt&gt perms;
+    vector&ltint&gt current;
+    vector&ltbool&gt used(nums.size(), false);
+    generatePermutations(nums, used, current, perms);
+    for (auto& p : perms) {
+        for (int x : p) cout << x << " ";
+        cout << "\\n";
+    }
+    return 0;
+}</code></pre>
+
+<h2>Output (6 permutations for {1,2,3})</h2>
+<p>1 2 3<br>1 3 2<br>2 1 3<br>2 3 1<br>3 1 2<br>3 2 1</p>
+
+<h2>Without extra used array (swapping method)</h2>
+<p>You can also generate permutations by swapping elements in place. This is more memory efficient but modifies the original array.</p>
+<pre><code>void permute(vector&ltint&gt& nums, int idx, vector&ltvector&ltint&gt&gt& result) {
+    if (idx == nums.size()) {
+        result.push_back(nums);
+        return;
+    }
+    for (int i = idx; i < nums.size(); i++) {
+        swap(nums[idx], nums[i]);
+        permute(nums, idx+1, result);
+        swap(nums[idx], nums[i]); // backtrack
+    }
+}</code></pre>
+
+<h2>Complexity</h2>
+<p>O(n! * n) because there are n! permutations and each takes O(n) to copy. For n=10, that's about 36 million operations  acceptable. For n=11, 399 million  borderline. For n=12, 5.7 billion  too slow.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Recursion depth = n, fine for n  10.</li>
+  <li>Always restore state (backtrack) to avoid leaving modifications.</li>
+  <li>For duplicates, use a set or skip if same element used at same level.</li>
+  <li>In cp, <code>next_permutation</code> is usually preferred for its simplicity.</li>
+</ul>
+
+<blockquote>Recursive permutations are like building a tree of choices  each branch chooses the next element. At the leaves, you have a complete ordering.</blockquote>
+`
 },
 
 
