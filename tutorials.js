@@ -7545,6 +7545,87 @@ int main() {
 
 <blockquote>N-Queens is the classic backtracking problem  it teaches you to think about state, constraints, and how to prune early. Master it and you'll be ready for many search problems.</blockquote>
 `
+},{
+  slug: "implementing-n-queens-backtracking-in-cpp",
+  title: "Implementing N-Queens Backtracking in C++",
+  topic: "Backtracking",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-23",
+  excerpt: "Full implementation of N-Queens with board printing and solution counting. Includes pruning and optimization.",
+  tags: ["N-Queens", "backtracking", "C++", "implementation"],
+  html: `
+<p>Let's implement a complete NQueens solver that not only counts solutions but also prints the board for each solution (or the first few). We'll use the same diagonal tracking arrays but add a board array to record queen positions for printing.</p>
+
+<h2>Full code with printing</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int N;
+vector&ltbool&gt cols, diag1, diag2;
+vector&ltint&gt queens; // queens[row] = col
+int solutionCount = 0;
+int printLimit = 5; // print first 5 solutions
+
+void printBoard() {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (queens[i] == j) cout << "Q ";
+            else cout << ". ";
+        }
+        cout << "\\n";
+    }
+    cout << "---\\n";
+}
+
+void backtrack(int row) {
+    if (row == N) {
+        solutionCount++;
+        if (solutionCount <= printLimit) {
+            cout << "Solution " << solutionCount << ":\\n";
+            printBoard();
+        }
+        return;
+    }
+    for (int col = 0; col < N; col++) {
+        int d1 = row + col;
+        int d2 = row - col + N - 1;
+        if (cols[col] || diag1[d1] || diag2[d2]) continue;
+        cols[col] = diag1[d1] = diag2[d2] = true;
+        queens[row] = col;
+        backtrack(row + 1);
+        cols[col] = diag1[d1] = diag2[d2] = false;
+    }
+}
+
+int main() {
+    cout << "Enter board size N: ";
+    cin >> N;
+    cols.assign(N, false);
+    diag1.assign(2*N-1, false);
+    diag2.assign(2*N-1, false);
+    queens.resize(N);
+    backtrack(0);
+    cout << "Total solutions for " << N << "-Queens: " << solutionCount << "\\n";
+    return 0;
+}</code></pre>
+
+<h2>Optimization: symmetry reduction (optional)</h2>
+<p>For N-Queens, you can reduce search by only trying the first row's columns up to N/2, then multiply by 2 for symmetric solutions (except when N is odd and middle column is unique).</p>
+
+<h2>Iterative version (stack-based)</h2>
+<p>For very deep recursion, you might convert to iterative with explicit stack, but for N  20 recursion is fine.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The diagonal indices range from 0 to 2N-2. Allocate arrays of size 2N-1.</li>
+  <li>Use vectors for dynamic size (N known at runtime).</li>
+  <li>For N=15, there are over 2 million solutions  printing all would be huge.</li>
+  <li>This algorithm runs in O(N!) time but with heavy pruning.</li>
+</ul>
+
+<blockquote>Implementing N-Queens is a rite of passage for backtracking. It forces you to think about state, pruning, and data representation. Code it once, and you'll never forget the pattern.</blockquote>
+`
 },
 
 
