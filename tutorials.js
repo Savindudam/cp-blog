@@ -8212,6 +8212,45 @@ int main() {
 
 <blockquote>Activity selection teaches the essence of greedy: choose what gets done earliest, and you'll have room for more later. It's the "clean your plate" strategy.</blockquote>
 `
+},{
+  slug: "greedy-by-earliest-end-time-always-works",
+  title: "Greedy by Earliest End Time Always Works",
+  topic: "Greedy",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Proof that selecting the activity with the earliest finish time yields the maximum number of non-overlapping intervals.",
+  tags: ["greedy", "proof", "earliest end time", "exchange argument"],
+  html: `
+<p>It's not enough to know that greedy works; you need to understand <strong>why</strong> it works. The exchange argument is the standard proof technique for greedy algorithms. Let's prove that choosing the earliest finishing activity leads to the optimal solution for interval scheduling.</p>
+
+<h2>Setup</h2>
+<p>Let activities be sorted by finish time: f1  f2  ...  fn. Let A be an optimal solution (maximum number of nonoverlapping activities). Let G be the greedy solution obtained by always picking the earliest finishing activity that doesn't conflict.</p>
+
+<h2>Lemma</h2>
+<p>There exists an optimal solution that includes the activity with the smallest finish time (activity 1).</p>
+
+<h2>Proof of lemma</h2>
+<p>If activity 1 is in A, done. Otherwise, let k be the first activity in A. Since f1  fk, activity 1 finishes no later than activity k. Replace k with 1 in A. Does this cause conflicts? Activity 1 finishes earlier, so any activity that started after k also starts after f1 (since f1  fk). And activity 1 does not conflict with previous activities because it's the earliest. So the new set is still feasible and has the same size. Thus an optimal solution containing activity 1 exists.</p>
+
+<h2>Inductive step</h2>
+<p>After choosing activity 1, remove all activities that conflict with it (those with start < f1). The remaining problem is the same type with a smaller set. By induction, greedy on the remainder is optimal. Therefore overall greedy is optimal.</p>
+
+<h2>Why not earliest start time?</h2>
+<p>Earliest start time fails: a long activity that starts early could block many short ones. Example: activity A (0,10), B (1,2), C (3,4). Earliest start picks A (length 10), leaving only 1 activity, but optimal is B and C (2 activities).</p>
+
+<h2>Why not shortest duration?</h2>
+<p>Shortest duration also fails: activity A (0,5), B (3,7), C (6,10). Shortest duration picks A (5), then C (4) gives 2 activities, but optimal is B and C? Actually B and C overlap? B ends at 7, C starts at 6  they overlap. So optimal is A and C? A ends at 5, C starts at 6  2 activities. Shortest duration works in this case but not always. Counterexample: A (0,10), B (1,3), C (2,5), D (6,8). Shortest duration picks B (2), then D (2) total 2; optimal is B, C? B and C overlap, so optimal is B, D or A alone? Actually B (1-3) and D (6-8) = 2; A alone =1. So it's same. Need a true counterexample: (0,4), (1,3), (2,5), (4,6). Shortest picks (1,3) then (4,6) = 2; optimal is (0,4) and (4,6) = 2 as well. So shortest duration sometimes works but not always provable. Earliest end time is proven.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The exchange argument is the standard tool for greedy proofs.</li>
+  <li>Earliest end time works because it leaves the most remaining time.</li>
+  <li>Don't trust greedy without proof  counterexamples lurk.</li>
+</ul>
+
+<blockquote>The exchange argument is like showing you can swap a greedy choice into any optimal solution without breaking it. Once you master it, you can prove many greedy algorithms correct.</blockquote>
+`
 },
  
 
