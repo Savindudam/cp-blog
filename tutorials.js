@@ -7626,6 +7626,60 @@ int main() {
 
 <blockquote>Implementing N-Queens is a rite of passage for backtracking. It forces you to think about state, pruning, and data representation. Code it once, and you'll never forget the pattern.</blockquote>
 `
+},{
+  slug: "optimizing-backtracking-pruning-search-tree",
+  title: "Optimizing Backtracking: Pruning the Search Tree",
+  topic: "Backtracking",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Pruning means cutting branches early when they cannot lead to a valid solution. Dramatically speeds up backtracking.",
+  tags: ["backtracking", "pruning", "optimization", "search tree"],
+  html: `
+<p>Backtracking explores a tree of possibilities. Without pruning, it can be impossibly slow. Pruning means detecting early that a partial solution cannot be extended to a full valid solution, so you skip the entire subtree. This is the art of making exponential algorithms feasible for small n.</p>
+
+<h2>Types of pruning</h2>
+<ul>
+  <li><strong>Feasibility pruning:</strong> If current partial solution violates constraints, stop.</li>
+  <li><strong>Optimality pruning:</strong> If current partial solution cannot beat the best found so far, stop (for optimization problems).</li>
+  <li><strong>Symmetry pruning:</strong> Skip equivalent states (e.g., same board rotated).</li>
+  <li><strong>Bound pruning:</strong> Use an estimate of remaining work to decide if it's worth continuing.</li>
+</ul>
+
+<h2>Example: N-Queens with forward checking</h2>
+<p>Instead of checking only current queen, you can precompute which columns/diagonals are still available for future rows. This is a form of constraint propagation.</p>
+
+<h2>Example: Sudoku solver pruning</h2>
+<p>In Sudoku, after placing a number, you immediately eliminate that number from the row, column, and box. If any cell has no possible numbers left, prune.</p>
+
+<h2>Pruning in subset sum (find subset that sums to target)</h2>
+<pre><code>bool subsetSum(vector&ltint&gt& nums, int target, int idx, int currentSum) {
+    if (currentSum == target) return true;
+    if (idx == nums.size() || currentSum > target) return false; // prune
+    // include nums[idx]
+    if (subsetSum(nums, target, idx+1, currentSum + nums[idx])) return true;
+    // exclude nums[idx]
+    if (subsetSum(nums, target, idx+1, currentSum)) return true;
+    return false;
+}</code></pre>
+<p>The <code>currentSum > target</code> prunes branches that exceed the target.</p>
+
+<h2>Ordering matters</h2>
+<p>Choosing the right order to explore branches can drastically affect pruning efficiency. For example, in subset sum, sorting numbers descending often prunes earlier because large numbers cause overshoot faster.</p>
+
+<h2>Heuristic pruning: branch and bound</h2>
+<p>For optimization (e.g., travelling salesman), you can keep a best known solution. If the cost of the current partial path plus a lower bound of the remaining path is already >= best, prune.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Pruning is problemspecific  no universal formula.</li>
+  <li>More aggressive pruning can sometimes be slower if the check itself is expensive.</li>
+  <li>Always test: sometimes simpler backtracking with less pruning is faster due to overhead.</li>
+  <li>Pruning is what makes exponential algorithms practical for n up to 30 or 40.</li>
+</ul>
+
+<blockquote>Pruning is like having a GPS that tells you "dead end ahead" before you waste time driving down the street. It turns an exponential explosion into a manageable crawl.</blockquote>
+`
 },
 
 
