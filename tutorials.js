@@ -7755,6 +7755,77 @@ int main() {
 
 <blockquote>Grid path backtracking is a great testbed for pruning techniques. Watch out for dead ends  they're the biggest waste of time.</blockquote>
 `
+},{
+  slug: "meet-in-the-middle-technique",
+  title: "Meet in the Middle Technique",
+  topic: "Optimization",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Split the problem into two halves, solve each separately, then combine results. Turns O(2^n) into O(2^(n/2)).",
+  tags: ["meet in the middle", "split", "subset sum", "exponential"],
+  html: `
+<p>Meet in the middle is a technique that reduces exponential complexity from O(2^n) to O(2^(n/2)) by splitting the input into two halves. It's especially usefull for problems like subset sum, twosum with many elements, or finding pairs that satisfy a condition.</p>
+
+<h2>The idea</h2>
+<p>Instead of enumerating all 2^n subsets, you enumerate all subsets of the first half (2^(n/2) subsets) and all subsets of the second half (2^(n/2)). Then you combine them efficiently using sorting and binary search or two pointers.</p>
+
+<h2>When to use</h2>
+<ul>
+  <li>n  40 (since 2^20 = 1 million, feasible).</li>
+  <li>Problem involves choosing a subset or pairing elements from two groups.</li>
+  <li>Brute force would be 2^n but n is too large (e.g., n=40).</li>
+</ul>
+
+<h2>Classic example: subset sum (find if any subset sums to target)</h2>
+<p>Brute force: O(2^n). Meet in the middle: O(2^(n/2) * log(2^(n/2))).</p>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+bool subsetSumMeetInMiddle(vector&ltint&gt& nums, int target) {
+    int n = nums.size();
+    int half = n / 2;
+    vector&ltint&gt leftSums, rightSums;
+    // enumerate all subsets of left half
+    for (int mask = 0; mask < (1 << half); mask++) {
+        int sum = 0;
+        for (int i = 0; i < half; i++) {
+            if (mask & (1 << i)) sum += nums[i];
+        }
+        leftSums.push_back(sum);
+    }
+    // enumerate all subsets of right half
+    int rightHalf = n - half;
+    for (int mask = 0; mask < (1 << rightHalf); mask++) {
+        int sum = 0;
+        for (int i = 0; i < rightHalf; i++) {
+            if (mask & (1 << i)) sum += nums[half + i];
+        }
+        rightSums.push_back(sum);
+    }
+    sort(rightSums.begin(), rightSums.end());
+    for (int s : leftSums) {
+        int need = target - s;
+        if (binary_search(rightSums.begin(), rightSums.end(), need)) return true;
+    }
+    return false;
+}</code></pre>
+
+<h2>Space complexity</h2>
+<p>O(2^(n/2)) memory. For n=40, that's about 1 million integers  fine.</p>
+
+<h2>Variations</h2>
+<ul>
+  <li>Count number of subsets summing to target (use frequency map).</li>
+  <li>Closest sum to target (binary search for closest).</li>
+  <li>Four-sum problem (split into two pairs).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Meet in the middle turns exponential into halfexponential.</li>
+  <li>Always sort one half and use binary search for combinatparately then matching them. It's the ultimate trick for moderatesized exponential problems.</blockquote>
+`
 },
 
 
