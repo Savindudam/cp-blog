@@ -7467,6 +7467,84 @@ int main() {
 
 <blockquote>Recursive permutations are like building a tree of choices  each branch chooses the next element. At the leaves, you have a complete ordering.</blockquote>
 `
+},{
+  slug: "backtracking-n-queens-problem",
+  title: "Backtracking: N-Queens Problem",
+  topic: "Backtracking",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-23",
+  excerpt: "Place N queens on an NN chessboard so that no two attack each other. Classic backtracking example.",
+  tags: ["backtracking", "N-Queens", "recursion", "pruning"],
+  html: `
+<p>The NQueens problem asks: how many ways can you place N queens on an NN chessboard such that no two queens share the same row, column, or diagonal? It's the quintessential backtracking problem because you can place queens row by row and prune branches where attacks occur.</p>
+
+<h2>Problem constraints</h2>
+<ul>
+  <li>Each row must have exactly one queen (since N queens on N rows).</li>
+  <li>Each column must have at most one queen.</li>
+  <li>Each diagonal (both directions) must have at most one queen.</li>
+</ul>
+
+<h2>Backtracking approach</h2>
+<p>Place a queen in row r, try each column c from 0 to N-1. Before placing, check if column and diagonals are free. If yes, place and recurse to next row. If no column works, backtrack (remove queen and try next column in previous row).</p>
+
+<h2>Optimized representation</h2>
+<p>Instead of a 2D board, use three boolean arrays:</p>
+<ul>
+  <li><code>cols[c]</code>  column c occupied?</li>
+  <li><code>diag1[r+c]</code>  main diagonal (top-left to bottom-right) occupied?</li>
+  <li><code>diag2[r-c+N-1]</code>  anti-diagonal (top-right to bottom-left) occupied?</li>
+</ul>
+
+<h2>Count all solutions (C++)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int N;
+vector&ltbool&gt cols, diag1, diag2;
+int countSolutions = 0;
+
+void backtrack(int row) {
+    if (row == N) {
+        countSolutions++;
+        return;
+    }
+    for (int col = 0; col < N; col++) {
+        int d1 = row + col;
+        int d2 = row - col + N - 1;
+        if (cols[col] || diag1[d1] || diag2[d2]) continue;
+        cols[col] = diag1[d1] = diag2[d2] = true;
+        backtrack(row + 1);
+        cols[col] = diag1[d1] = diag2[d2] = false;
+    }
+}
+
+int main() {
+    N = 8;
+    cols.assign(N, false);
+    diag1.assign(2*N-1, false);
+    diag2.assign(2*N-1, false);
+    backtrack(0);
+    cout << "Number of solutions for " << N << "-Queens: " << countSolutions << "\\n";
+    return 0;
+}</code></pre>
+
+<h2>Output for N=8</h2>
+<p>Number of solutions for 8-Queens: 92</p>
+
+<h2>Time complexity</h2>
+<p>Worst case explores many branches, but pruning makes it much faster than O(N!). For N=8, it's fine. For N=20, it's still huge (exponential).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use diagonal indices carefully: d1 = r+c, d2 = r-c+N-1 gives range 0..2N-2.</li>
+  <li>Backtracking is recursion + undo.</li>
+  <li>N-Queens is often used to teach pruning and state representation.</li>
+</ul>
+
+<blockquote>N-Queens is the classic backtracking problem  it teaches you to think about state, constraints, and how to prune early. Master it and you'll be ready for many search problems.</blockquote>
+`
 },
 
 
