@@ -64,3 +64,9 @@ You can read and understand every line of code in minutes.
                Updated the UI.
                Some functions edited.
                Applied theme switch possible.
+
+ 2026-05-22 :
+              Made 100 tutorials wohooooooooo!
+
+ 2026-05-23 :
+              Reached 150 tutorials
