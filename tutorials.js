@@ -8376,6 +8376,61 @@ int main() {
 <blockquote>Shortest Job First is intuitive  do the quick tasks first to reduce everyone's waiting. The math agrees: it's provably optimal.</blockquote>
 `
 },
- 
+{
+  slug: "minimizing-sum-of-absolute-differences-median",
+  title: "Minimizing Sum of Absolute Differences (Median)",
+  topic: "Greedy/Math",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Given points on a line, find a point x that minimizes  |a_i - x|. The answer is the median. Proof and implementation.",
+  tags: ["median", "absolute deviation", "optimization", "greedy"],
+  html: `
+<p>The problem: given an array of numbers a_1...a_n, find a value x that minimizes the sum of absolute differences S(x) =  |a_i - x|. This is a classic result: the minimizer is any median of the array. For even n, any value between the two middle numbers gives the same sum.</p>
+
+<h2>Intuition</h2>
+<p>Imagine you're at x. Moving left decreases distance to points on the left and increases distance to points on the right. The optimal point balances the number of points on each side.</p>
+
+<h2>Proof sketch</h2>
+<p>The derivative (subgradient) of S(x) is (# of points < x) - (# of points > x). Setting to zero gives equal numbers on both sides  median.</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+long long minSumAbsolute(vector&ltint&gt& arr) {
+    sort(arr.begin(), arr.end());
+    int median = arr[arr.size() / 2]; // for odd, middle; for even, lower median works
+    long long sum = 0;
+    for (int x : arr) sum += abs(x - median);
+    return sum;
+}
+
+int main() {
+    vector&ltint&gt arr = {1, 3, 8, 10, 15};
+    cout << minSumAbsolute(arr) << "\\n"; // median=8, sum = 7+5+0+2+7=21
+    return 0;
+}</code></pre>
+
+<h2>Even number of points</h2>
+<p>Any x between the two middle points gives the same sum. For simplicity, pick the lower median.</p>
+
+<h2>Applications</h2>
+<ul>
+  <li>Minimizing total distance to a meeting point on a line.</li>
+  <li>Facility location problem (1D).</li>
+  <li>Stick length problem (CSES)  make all sticks equal with minimal cost.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Median minimizes sum of absolute deviations, not mean.</li>
+  <li>Mean minimizes sum of squared deviations (next tutorial).</li>
+  <li>Sorting is O(n log n), but you can find median in O(n) using nth_element.</li>
+</ul>
+
+<blockquote>When you need to gather everyone to a point on a line, meet at the median  it's the fairest spot, minimizing total travel.</blockquote>
+`
+},
 
 ]
