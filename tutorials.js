@@ -7826,7 +7826,93 @@ bool subsetSumMeetInMiddle(vector&ltint&gt& nums, int target) {
   <li>Meet in the middle turns exponential into halfexponential.</li>
   <li>Always sort one half and use binary search for combinatparately then matching them. It's the ultimate trick for moderatesized exponential problems.</blockquote>
 `
+},{
+  slug: "solving-subset-sum-meet-in-the-middle",
+  title: "Solving Subset Sum with Meet in the Middle O(2^(n/2))",
+  topic: "Optimization",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Detailed implementation of subset sum using meet in the middle. Handles target sum and counts solutions.",
+  tags: ["subset sum", "meet in the middle", "binary search", "counting"],
+  html: `
+<p>The subset sum problem: given an array of integers (can be positive or negative) and a target sum, does any subset sum to the target? For n up to 40, meet in the middle is perfect. Here's a full implementation that also counts the number of subsets achieving the target.</p>
+
+<h2>Checking existence</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+bool existsSubsetSum(vector&ltint&gt& nums, int target) {
+    int n = nums.size();
+    int half = n / 2;
+    vector&ltint&gt left, right;
+    for (int mask = 0; mask < (1 << half); mask++) {
+        int sum = 0;
+        for (int i = 0; i < half; i++)
+            if (mask & (1 << i)) sum += nums[i];
+        left.push_back(sum);
+    }
+    int rightSize = n - half;
+    for (int mask = 0; mask < (1 << rightSize); mask++) {
+        int sum = 0;
+        for (int i = 0; i < rightSize; i++)
+            if (mask & (1 << i)) sum += nums[half + i];
+        right.push_back(sum);
+    }
+    sort(right.begin(), right.end());
+    for (int s : left) {
+        if (binary_search(right.begin(), right.end(), target - s)) return true;
+    }
+    return false;
+}</code></pre>
+
+<h2>Counting the number of subsets that sum to target</h2>
+<pre><code>int countSubsetSum(vector&ltint&gt& nums, int target) {
+    int n = nums.size();
+    int half = n / 2;
+    vector&ltint&gt left, right;
+    for (int mask = 0; mask < (1 << half); mask++) {
+        int sum = 0;
+        for (int i = 0; i < half; i++)
+            if (mask & (1 << i)) sum += nums[i];
+        left.push_back(sum);
+    }
+    int rightSize = n - half;
+    for (int mask = 0; mask < (1 << rightSize); mask++) {
+        int sum = 0;
+        for (int i = 0; i < rightSize; i++)
+            if (mask & (1 << i)) sum += nums[half + i];
+        right.push_back(sum);
+    }
+    sort(right.begin(), right.end());
+    int count = 0;
+    for (int s : left) {
+        int need = target - s;
+        auto lo = lower_bound(right.begin(), right.end(), need);
+        auto hi = upper_bound(right.begin(), right.end(), need);
+        count += (hi - lo);
+    }
+    return count;
+}</code></pre>
+
+<h2>Handling large values and negative numbers</h2>
+<p>If numbers can be negative, the sum range may be large. But the meetinthemiddle approach still works; you just need to store all sums (they can be negative).</p>
+
+<h2>Optimization: store sums as vector and use two pointers after sorting both sides (instead of binary search per left)</h2>
+<p>If you need to find the closest sum, you can sort both left and right and use two pointers for O(2^(n/2) log) or O(2^(n/2)) with careful merging.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Time complexity: O(2^(n/2) * n/2) for generation + O(2^(n/2) log(2^(n/2))) for sorting/search.</li>
+  <li>Memory: O(2^(n/2)). For n=40, that's about 2^20 = 1,048,576 integers  fine.</li>
+  <li>If n is odd, one half gets n/2, the other gets n/2+1  still fine.</li>
+  <li>For counting duplicates, use `lower_bound` and `upper_bound` as shown.</li>
+</ul>
+
+<blockquote>Meet in the middle transforms subset sum from impossible to possible for n=40. It's a game changer  memorize this pattern.</blockquote>
+`
 },
+
 
 
 
