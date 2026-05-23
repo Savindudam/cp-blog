@@ -7680,6 +7680,81 @@ int main() {
 
 <blockquote>Pruning is like having a GPS that tells you "dead end ahead" before you waste time driving down the street. It turns an exponential explosion into a manageable crawl.</blockquote>
 `
+},{
+  slug: "counting-paths-in-grid-with-pruning",
+  title: "Counting Paths in a Grid with Pruning Optimizations",
+  topic: "Backtracking",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-23",
+  excerpt: "Count number of paths from top-left to bottom-right in a grid, with obstacles and pruning techniques like visited tracking.",
+  tags: ["grid paths", "pruning", "backtracking", "DFS"],
+  html: `
+<p>Counting paths in a grid is a classic backtracking problem. You can move right or down (or all four directions). Without pruning, the search space can be huge. But with proper pruning (like marking visited cells), you can count all simple paths. This teaches you how to avoid cycles and redundant exploration.</p>
+
+<h2>Problem: unique paths with obstacles (only right and down)</h2>
+<p>If only right and down moves are allowed, you don't need backtracking  it's just combinatorial (DP). But if you allow all four directions, it becomes a path counting problem on a graph.</p>
+
+<h2>Counting all simple paths from (0,0) to (R-1,C-1) with 4-directional moves</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int R, C;
+vector&ltvector&ltint&gt&gt grid; // 0 free, 1 obstacle
+vector&ltvector&ltbool&gt&gt visited;
+int pathCount = 0;
+int dx[4] = {1, -1, 0, 0};
+int dy[4] = {0, 0, 1, -1};
+
+void dfs(int x, int y, int steps, int totalCells) {
+    if (x == R-1 && y == C-1) {
+        if (steps == totalCells - 1) pathCount++; // visited all free cells? optional condition
+        else pathCount++;
+        return;
+    }
+    for (int d = 0; d < 4; d++) {
+        int nx = x + dx[d], ny = y + dy[d];
+        if (nx >= 0 && nx < R && ny >= 0 && ny < C && !grid[nx][ny] && !visited[nx][ny]) {
+            visited[nx][ny] = true;
+            dfs(nx, ny, steps+1, totalCells);
+            visited[nx][ny] = false;
+        }
+    }
+}
+
+int main() {
+    R = 3, C = 3;
+    grid.assign(R, vector&ltint&gt(C, 0));
+    visited.assign(R, vector&ltbool&gt(C, false));
+    visited[0][0] = true;
+    dfs(0, 0, 1, R*C);
+    cout << "Number of Hamiltonian paths (visiting all cells exactly once): " << pathCount << "\\n";
+    return 0;
+}</code></pre>
+
+<h2>Pruning optimizations</h2>
+<ul>
+  <li><strong>Dead end detection:</strong> If a cell has only one unvisited neighbor that is not the target, pruning can be applied.</li>
+  <li><strong>Cutting corners:</strong> In grid path problems, you can sometimes use parity (Manhattan distance) pruning.</li>
+  <li><strong>Bounds:</strong> If remaining steps cannot reach target due to obstacles, prune.</li>
+</ul>
+
+<h2>Advanced pruning: Warnsdorff's rule for knight's tour</h2>
+<p>When counting paths, you can order moves by the number of future moves (try the least promising first) to prune earlier.</p>
+
+<h2>Complexity</h2>
+<p>Without pruning, 4-directional grid path counting is O(4^(R*C))  impossible for large grids. With pruning, you can solve up to R*C  30 or so.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always mark visited to prevent cycles.</li>
+  <li>Use symmetry and deadend detection to prune aggressively.</li>
+  <li>For large grids, consider DP or meetinthemiddle instead.</li>
+  <li>Path counting is often used to test pruning effectiveness.</li>
+</ul>
+
+<blockquote>Grid path backtracking is a great testbed for pruning techniques. Watch out for dead ends  they're the biggest waste of time.</blockquote>
+`
 },
 
 
