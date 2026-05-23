@@ -8481,6 +8481,42 @@ int main() {
 
 <blockquote>The mean is the balance point of squared distances  it's pulled by outliers more strongly than the median, which is why it's sensitive to extreme values.</blockquote>
 `
+},{
+  slug: "data-compression-and-binary-codes",
+  title: "Data Compression and Binary Codes",
+  topic: "Compression",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Introduction to data compression: assign shorter codes to frequent symbols. Binary codes and fixed-length vs variable-length.",
+  tags: ["compression", "binary codes", "fixed-length", "variable-length"],
+  html: `
+<p>Data compression is about representing information using fewer bits. The key idea: assign shorter codes to symbols that appear more frequently. This is the foundation of Huffman coding and many compression algorithms.</p>
+
+<h2>Fixed-length codes</h2>
+<p>In fixed-length coding, each symbol uses the same number of bits. Example: ASCII uses 8 bits per character. For n symbols, you need ceil(log2 n) bits per symbol. Simple but not optimal if frequencies vary.</p>
+
+<h2>Variable-length codes</h2>
+<p>In variable-length coding, frequent symbols get short codes (e.g., 1 bit), rare symbols get longer codes (e.g., 10 bits). This reduces average code length.</p>
+
+<h2>Example: English letters</h2>
+<p>In English, 'e' appears much more often than 'z'. A variable-length code might assign 'e' = "0", 'z' = "111111". The average number of bits per character decreases.</p>
+
+<h2>Average code length</h2>
+<p>If symbol i appears with probability p_i and has code length L_i, the average length is  p_i L_i. We want to minimize this subject to prefixfree constraints (next tutorial).</p>
+
+<h2>No compression is possible without frequency bias</h2>
+<p>If all symbols are equally likely, fixed-length codes are optimal (Shannon's source coding theorem).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Compression exploits nonuniform frequency.</li>
+  <li>Variable-length codes must be uniquely decodable.</li>
+  <li>Prefixfree codes allow instantaneous decoding.</li>
+</ul>
+
+<blockquote>Data compression is like packing a suitcase  put the heavy (frequent) items in the bottom (short codes) to save space.</blockquote>
+`
 },
 
 ]
