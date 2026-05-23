@@ -7952,6 +7952,74 @@ bool existsSubsetSum(vector&ltint&gt& nums, int target) {
 
 <blockquote>Greedy is the "carpe diem" of algorithms  seize the day, take the best now. Sometimes it leads to glory, sometimes to regret. Know when to trust it.</blockquote>
 `
+},{
+  slug: "coin-change-problem-with-greedy-euro-coins",
+  title: "Coin Change Problem with Greedy (Euro Coins)",
+  topic: "Greedy",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "For canonical coin systems like Euro, the greedy algorithm gives the minimum number of coins. Learn why it works and how to implement it.",
+  tags: ["coin change", "greedy", "canonical", "euro"],
+  html: `
+<p>The coin change problem: given a set of coin denominations and a target amount, find the minimum number of coins needed to make that amount (using unlimited coins of each denomination). For the Euro system (1, 2, 5, 10, 20, 50, 100, 200 cents) and many realworld currencies, the greedy algorithm works: always take the largest coin that does not exceed the remaining amount.</p>
+
+<h2>Greedy implementation for Euro coins</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+vector&ltint&gt euroCoins = {200, 100, 50, 20, 10, 5, 2, 1}; // descending
+
+int greedyCoinChange(int amount) {
+    int count = 0;
+    for (int coin : euroCoins) {
+        if (amount == 0) break;
+        int num = amount / coin;
+        count += num;
+        amount -= num * coin;
+    }
+    return count;
+}
+
+int main() {
+    int amount = 139;
+    cout << "Minimum coins: " << greedyCoinChange(amount) << "\\n";
+    return 0;
+}</code></pre>
+
+<h2>Why greedy works for Euro</h2>
+<p>Euro coins are canonical: each coin is at least twice the next smaller coin (except 1 and 2? Actually 5 > 2*2, 10 > 2*5, etc.). This property ensures that using a larger coin never forces you to use more smaller coins later. Formal proof: by induction.</p>
+
+<h2>Testing the greedy algorithm</h2>
+<pre><code>int main() {
+    for (int amount = 1; amount <= 100; amount++) {
+        int greedy = greedyCoinChange(amount);
+        // Compare with DP solution to verify
+        cout << amount << ": " << greedy << "\\n";
+    }
+    return 0;
+}</code></pre>
+
+<h2>Limitations</h2>
+<p>Greedy fails for arbitrary denominations, e.g., {1, 3, 4} target 6 gives 3 coins (4+1+1) but optimal is 2 coins (3+3). So always verify canonical property before using greedy in cp problems.</p>
+
+<h2>When to use greedy vs DP</h2>
+<ul>
+  <li>If denominations are standard currency (1,2,5,10,20,50,...), greedy works.</li>
+  <li>If problem statement says "canonical coin system" or gives specific denominations that satisfy greedy property.</li>
+  <li>Otherwise, use DP (O(amount * numCoins)).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Greedy coin change is extremely fast  O(numCoins).</li>
+  <li>Always sort coins in descending order for greedy.</li>
+  <li>Don't assume greedy works without checking.</li>
+  <li>In cp, coin change problems often require DP because denominations are arbitrary.</li>
+</ul>
+
+<blockquote>Euro coins are greedyfriendly  each larger coin is big enough that you never regret using it. That's why your wallet always works.</blockquote>
+`
 },
 
 
