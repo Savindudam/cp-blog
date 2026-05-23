@@ -8137,6 +8137,81 @@ int main() {
 
 <blockquote>Dynamic programming is the safety net when greedy falls. For coin change, it's a simple loop that always finds the answer  no guessing required.</blockquote>
 `
+},{
+  slug: "activity-selection-problem-interval-scheduling",
+  title: "Activity Selection Problem (Interval Scheduling)",
+  topic: "Greedy",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Given start and end times of activities, select the maximum number that do not overlap. Greedy by earliest end time.",
+  tags: ["activity selection", "interval scheduling", "greedy", "non-overlapping"],
+  html: `
+<p>The activity selection problem is a classic greedy algorithm. You have a set of activities, each with a start time and an end time. You want to select the maximum number of nonoverlapping activities. The greedy choice: always pick the activity that finishes earliest, then remove overlapping activities and repeat.</p>
+
+<h2>Problem statement</h2>
+<p>Input: n activities, each with start[i] and end[i] (end >= start). Output: maximum size of a subset of activities that do not overlap (an activity ends at time t, another can start at t).</p>
+
+<h2>Greedy algorithm</h2>
+<ol>
+  <li>Sort activities by end time ascending.</li>
+  <li>Pick the first activity (earliest end).</li>
+  <li>For each subsequent activity, if its start time >= last selected end time, select it and update last end.</li>
+</ol>
+
+<h2>C++ implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+struct Activity {
+    int start, end;
+};
+
+bool compareEnd(const Activity& a, const Activity& b) {
+    return a.end < b.end;
+}
+
+int maxActivities(vector&ltActivity&gt& acts) {
+    if (acts.empty()) return 0;
+    sort(acts.begin(), acts.end(), compareEnd);
+    int count = 1;
+    int lastEnd = acts[0].end;
+    for (int i = 1; i < acts.size(); i++) {
+        if (acts[i].start >= lastEnd) {
+            count++;
+            lastEnd = acts[i].end;
+        }
+    }
+    return count;
+}
+
+int main() {
+    vector&ltActivity&gt acts = {{1,3}, {2,4}, {3,5}, {0,6}, {5,7}, {8,9}};
+    cout << "Maximum activities: " << maxActivities(acts) << "\\n"; // 4 (1-3,3-5,5-7,8-9)
+    return 0;
+}</code></pre>
+
+<h2>Why greedy works</h2>
+<p>Proof by exchange argument: If there is an optimal solution that does not include the earliest finishing activity, you can replace its first activity with the earliest finishing one without causing more overlaps. Thus greedy is optimal.</p>
+
+<h2>Complexity</h2>
+<p>O(n log n) due to sorting. The selection phase is O(n).</p>
+
+<h2>Variations</h2>
+<ul>
+  <li>Minimum number of rooms to schedule all activities (room allocation)  greedy by start time with minheap.</li>
+  <li>Weighted activity selection (max weight, not count)  DP with binary search.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Sorting by end time is critical  sorting by start time does not work.</li>
+  <li>Overlap condition: end time <= start time of next (nonoverlapping).</li>
+  <li>This algorithm is often used as a subroutine in more complex scheduling problems.</li>
+</ul>
+
+<blockquote>Activity selection teaches the essence of greedy: choose what gets done earliest, and you'll have room for more later. It's the "clean your plate" strategy.</blockquote>
+`
 },
  
 
