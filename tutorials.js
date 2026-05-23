@@ -8318,6 +8318,63 @@ int main() {
 
 <blockquote>Scheduling with deadlines is like packing a suitcase  put the most valuable items in first, but leave space for later. Greedy by profit works when each task takes one unit.</blockquote>
 `
+},{
+  slug: "scheduling-by-duration-proved-optimal",
+  title: "Scheduling by Duration Proved Optimal",
+  topic: "Greedy",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Minimize total completion time or average waiting time by scheduling shortest jobs first (SJF). Proof by exchange.",
+  tags: ["scheduling", "shortest job first", "completion time", "optimal"],
+  html: `
+<p>If you have a set of jobs, each with a processing time (duration), and you want to minimize the sum of completion times (or average waiting time), the optimal schedule is to process jobs in order of increasing duration. This is known as Shortest Job First (SJF) and is a classic greedy algorithm.</p>
+
+<h2>Problem definition</h2>
+<p>Given n jobs with processing times t1...tn, all available at time 0, schedule them on a single machine (nonpreemptive) to minimize the sum of completion times C_i = time when job i finishes. The sum of completion times is  C_i.</p>
+
+<h2>Greedy algorithm</h2>
+<p>Sort jobs by processing time ascending. Process them in that order.</p>
+
+<h2>C++ implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+long long sumCompletionTimes(vector&ltint&gt& times) {
+    sort(times.begin(), times.end());
+    long long total = 0;
+    long long currentTime = 0;
+    for (int t : times) {
+        currentTime += t;
+        total += currentTime;
+    }
+    return total;
+}
+
+int main() {
+    vector&ltint&gt times = {3, 5, 1, 2};
+    cout << sumCompletionTimes(times) << "\\n"; // order 1,2,3,5 -> completion times 1,3,6,11 sum=21
+    return 0;
+}</code></pre>
+
+<h2>Proof of optimality (exchange argument)</h2>
+<p>Consider any optimal schedule. If there exist two adjacent jobs i and j where i is scheduled before j but t_i > t_j, swapping them does not affect completion times of other jobs, but reduces the completion times of i and j. Specifically, before swap, completion of i = T, j = T + t_i. After swap, completion of j = T, i = T + t_j. The sum changes from (T + (T+t_i)) to (T + (T+t_j)) = decrease by (t_i - t_j) > 0. So the schedule is improved. Therefore any optimal schedule must have no inversion, meaning jobs are sorted by increasing duration.</p>
+
+<h2>Why not minimize average waiting time?</h2>
+<p>Average waiting time = ( C_i -  t_i)/n, so minimizing  C_i is equivalent to minimizing average waiting time.</p>
+
+<h2>Variation: weighted completion time</h2>
+<p>If jobs have weights (importance), minimize  w_i C_i. The optimal schedule is by ratio t_i / w_i (Smith's rule).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>SJF minimizes sum of completion times and average waiting time.</li>
+  <li>Proof by swapping adjacent inversions.</li>
+  <li>This is different from deadline scheduling  no here.</li>
+</ul>
+
+<blockquote>Shortest Job First is intuitive  do the quick tasks first to reduce everyone's waiting. The math agrees: it's provably optimal.</blockquote>
+`
 },
  
 
