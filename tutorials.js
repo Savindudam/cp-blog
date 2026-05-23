@@ -8061,6 +8061,82 @@ int main() {
 
 <blockquote>Greedy coin change is like trusting a GPS that only knows the next turn  sometimes it leads you into a dead end. Know the terrain before you drive.</blockquote>
 `
+},{
+  slug: "general-coin-problem-dynamic-programming-preview",
+  title: "General Coin Problem and Dynamic Programming Preview",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-23",
+  excerpt: "For arbitrary coin denominations, dynamic programming gives the optimal solution. Introduction to DP for coin change.",
+  tags: ["coin change", "dynamic programming", "DP", "min coins"],
+  html: `
+<p>When greedy fails, we turn to dynamic programming. The coin change problem (minimum coins) is a classic DP example. We'll solve it with both a topdown (memoization) and bottomup (tabulation) approach. This serves as a preview for the DP section.</p>
+
+<h2>Problem definition</h2>
+<p>Given coins of different denominations (unlimited supply of each) and atarget amount, find the minimum number of coins needed to make that amount. If impossible, return -1.</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[x] = minimum coins to make amount x. Then dp[0] = 0. For each coin c, we can consider using it: dp[x] = min(dp[x], dp[x - c] + 1) if x >= c.</p>
+
+<h2>Bottomup implementation (tabulation)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int minCoins(vector&ltint&gt& coins, int amount) {
+    vector&ltint&gt dp(amount + 1, INT_MAX);
+    dp[0] = 0;
+    for (int x = 1; x <= amount; x++) {
+        for (int c : coins) {
+            if (x >= c && dp[x - c] != INT_MAX) {
+                dp[x] = min(dp[x], dp[x - c] + 1);
+            }
+        }
+    }
+    return dp[amount] == INT_MAX ? -1 : dp[amount];
+}
+
+int main() {
+    vector&ltint&gt coins = {1, 3, 4};
+    int amount = 6;
+    cout << "Minimum coins: " << minCoins(coins, amount) << "\\n"; // 2 (3+3)
+    return 0;
+}</code></pre>
+
+<h2>Topdown approach (memoization)</h2>
+<pre><code>int minCoinsMemo(int amount, vector&ltint&gt& coins, vector&ltint&gt& memo) {
+    if (amount == 0) return 0;
+    if (memo[amount] != -1) return memo[amount];
+    int best = INT_MAX;
+    for (int c : coins) {
+        if (amount >= c) {
+            int sub = minCoinsMemo(amount - c, coins, memo);
+            if (sub != INT_MAX) best = min(best, sub + 1);
+        }
+    }
+    return memo[amount] = best;
+}</code></pre>
+
+<h2>Time and space complexity</h2>
+<p>O(amount * number of coins). For amount up to 10^4 and coins up to 10^2, this is fine.</p>
+
+<h2>Variations</h2>
+<ul>
+  <li>Number of ways to make amount (count combinations)  DP with different recurrence.</li>
+  <li>Bounded coins (limited supply)  need extra dimension or binary splitting.</li>
+  <li>Minimum coins with exact change  same as above.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>DP for coin change is a building block for many problems.</li>
+  <li>Initialize dp with a large value (INT_MAX) and set dp[0]=0.</li>
+  <li>Check for overflow when adding 1 to INT_MAX.</li>
+  <li>This DP works for any denomination system, even when greedy fails.</li>
+</ul>
+
+<blockquote>Dynamic programming is the safety net when greedy falls. For coin change, it's a simple loop that always finds the answer  no guessing required.</blockquote>
+`
 },
  
 
