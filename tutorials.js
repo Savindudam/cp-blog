@@ -7911,6 +7911,47 @@ bool existsSubsetSum(vector&ltint&gt& nums, int target) {
 
 <blockquote>Meet in the middle transforms subset sum from impossible to possible for n=40. It's a game changer  memorize this pattern.</blockquote>
 `
+},{
+  slug: "greedy-algorithms-introduction-philosophy",
+  title: "Greedy Algorithms: Introduction and Philosophy",
+  topic: "Greedy",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Greedy means making the locally optimal choice at each step, hoping to reach a global optimum. Not always correct, but when it works, it's powerful.",
+  tags: ["greedy", "local optimum", "global optimum", "philosophy"],
+  html: `
+<p>Greedy algorithms build a solution step by step, always taking the best available option at the moment without looking ahead. This is like climbing a hill by always walking uphill  you might reach a peak, but not necessarily the highest peak. Greedy works for some problems (like coin change with canonical systems) but fails for others.</p>
+
+<h2>When does greedy work?</h2>
+<p>Greedy works when the problem exhibits <strong>optimal substructure</strong> (the optimal solution contains optimal solutions to subproblems) and the <strong>greedy choice property</strong> (a globally optimal solution can be reached by making locally optimal choices). Classic examples: Dijkstra's shortest path, Kruskal's MST, Huffman coding, activity selection.</p>
+
+<h2>When does greedy fail?</h2>
+<p>Greedy fails when a local decision now might lead to a worse overall result later. Example: coin change with denominations {1, 3, 4} and target 6. Greedy picks 4 then 1 then 1 (3 coins), but optimal is 3+3 (2 coins).</p>
+
+<h2>How to prove a greedy algorithm is correct</h2>
+<p>Usually by an exchange argument: assume an optimal solution exists, then show that you can transform it into the greedy solution without worsening it. This is standard in cp proofs.</p>
+
+<h2>Common greedy patterns</h2>
+<ul>
+  <li>Sorting by some key then processing in order (interval scheduling, scheduling deadlines).</li>
+  <li>Always pick the largest/smallest available (Huffman coding).</li>
+  <li>Always pick the earliest finishing time (activity selection).</li>
+</ul>
+
+<h2>Example: minimum number of coins (canonical system)</h2>
+<p>For coin systems like Euro (1,2,5,10,20,50,100,200), greedy works. For arbitrary denominations, you need DP.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Greedy is usually the first thing you try because it's simple and fast.</li>
+  <li>If you suspect greedy works, try to prove it or test against small cases.</li>
+  <li>Many cp problems are designed to have a greedy solution.</li>
+  <li>When in doubt, use DP; it's safer but slower.</li>
+</ul>
+
+<blockquote>Greedy is the "carpe diem" of algorithms  seize the day, take the best now. Sometimes it leads to glory, sometimes to regret. Know when to trust it.</blockquote>
+`
 },
 
 
