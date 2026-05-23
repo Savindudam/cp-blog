@@ -8022,7 +8022,46 @@ int main() {
 `
 },
 
+{
+  slug: "when-greedy-fails-for-coin-change-counterexample",
+  title: "When Greedy Fails for Coin Change (Counterexample)",
+  topic: "Greedy",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-23",
+  excerpt: "Greedy works for Euro coins but fails for arbitrary denominations. Classic counterexample: coins {1,3,4} and target 6.",
+  tags: ["greedy", "coin change", "counterexample", "DP"],
+  html: `
+<p>The greedy algorithm for coin change is intuitive and fast, but it's not always correct. For some coin systems, the local optimal choice (taking the largest coin) leads to a suboptimal global solution. Understanding why greedy fails helps you recognise when to use dynamic programming instead.</p>
 
+<h2>Classic counterexample: denominations {1, 3, 4}</h2>
+<p>Target amount = 6. Greedy approach (largest first): take 4, remaining 2  take 1, then another 1  total 3 coins (4+1+1). However, the optimal solution is 3+3 = 2 coins. Greedy fails!</p>
 
+<h2>Why does greedy fail here?</h2>
+<p>The coin 4 is not large enought to compensate for the fact that two 3's sum to 6. By taking a 4, you force yourself to use two 1's (which are inefficient). In canonical systems, each coin is at least twice the previous, so this situation cannot occur.</p>
+
+<h2>Another counterexample: denominations {1, 5, 6}</h2>
+<p>Target = 10. Greedy: 6+1+1+1+1 = 5 coins. Optimal: 5+5 = 2 coins.</p>
+
+<h2>General condition for greedy to work</h2>
+<p>A coin system is called <strong>canonical</strong> if the greedy algorithm produces the optimal solution for all amounts. The Euro system is canonical, as are many real currencies. But arbitrary systems (like those often given in cp problems) are not guaranteed to be canonical.</p>
+
+<h2>Testing if greedy fails for a given system</h2>
+<p>You can test by checking all amounts up to some bound (e.g., twice the largest coin). If greedy matches DP for all those amounts, the system is likely canonical.</p>
+
+<h2>Implication for cp</h2>
+<p>If a problem gives arbitrary coin denominations, assume greedy does NOT work unless stated otherwise. Use dynamic programming (unbounded knapsack) for minimum coins.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Greedy fails when a combination of smaller coins is more efficient than a larger coin.</li>
+  <li>Always test with small examples before implementing greedy for coin change.</li>
+  <li>In cp, coin change problems almost always expect DP unless denominations are special (e.g., powers of two).</li>
+</ul>
+
+<blockquote>Greedy coin change is like trusting a GPS that only knows the next turn  sometimes it leads you into a dead end. Know the terrain before you drive.</blockquote>
+`
+},
+ 
 
 ]
