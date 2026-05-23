@@ -8431,6 +8431,56 @@ int main() {
 
 <blockquote>When you need to gather everyone to a point on a line, meet at the median  it's the fairest spot, minimizing total travel.</blockquote>
 `
+},{
+  slug: "minimizing-sum-of-squared-differences-mean",
+  title: "Minimizing Sum of Squared Differences (Mean)",
+  topic: "Greedy/Math",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-23",
+  excerpt: "Minimizing  (a_i - x)^2 gives x = arithmetic mean. Derivation using calculus or algebra.",
+  tags: ["mean", "squared deviation", "variance", "optimization"],
+  html: `
+<p>If you want to minimize the sum of squared differences instead of absolute differences, the optimal x is the arithmetic mean, not the median. This is a foundational fact in statistics (the mean minimizes the sum of squared errors).</p>
+
+<h2>Problem</h2>
+<p>Given numbers a_1...a_n, find x that minimizes S(x) =  (a_i - x)^2.</p>
+
+<h2>Derivation</h2>
+<p>Expand: S(x) =  (a_i^2 - 2 a_i x + x^2) =  a_i^2 - 2x  a_i + n x^2. This is a quadratic in x: n x^2 - 2( a_i)x + constant. Vertex at x = (2  a_i) / (2n) = ( a_i)/n = mean.</p>
+
+<h2>Code</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+double minSumSquared(vector&ltdouble&gt& arr) {
+    double mean = accumulate(arr.begin(), arr.end(), 0.0) / arr.size();
+    double sum = 0;
+    for (double x : arr) sum += (x - mean) * (x - mean);
+    return sum;
+}
+
+int main() {
+    vector&ltdouble&gt arr = {1, 2, 3, 4, 5};
+    cout << minSumSquared(arr) << "\\n"; // mean=3, sum=4+1+0+1+4=10
+    return 0;
+}</code></pre>
+
+<h2>Integer variant</h2>
+<p>If x must be integer, the minimizer is floor(mean) or ceil(mean). Compute both and take the smaller sum.</p>
+
+<h2>Relation to variance</h2>
+<p>Sum of squared differences = n * variance. So minimizing this is equivalent to minimizing variance.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Mean minimizes squared error; median minimizes absolute error.</li>
+  <li>Use double for mean to avoid integer division issues.</li>
+  <li>For large n, sum of squares may overflow  use long long.</li>
+</ul>
+
+<blockquote>The mean is the balance point of squared distances  it's pulled by outliers more strongly than the median, which is why it's sensitive to extreme values.</blockquote>
+`
 },
 
 ]
