@@ -8517,6 +8517,46 @@ int main() {
 
 <blockquote>Data compression is like packing a suitcase  put the heavy (frequent) items in the bottom (short codes) to save space.</blockquote>
 `
+},{
+  slug: "prefix-free-codes-and-variable-length-codes",
+  title: "Prefix-Free Codes and Variable-Length Codes",
+  topic: "Compression",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-23",
+  excerpt: "Prefix-free (or prefix) codes ensure no code is a prefix of another, enabling unambiguous decoding. Huffman builds optimal prefix codes.",
+  tags: ["prefix-free", "variable-length", "decoding", "Huffman"],
+  html: `
+<p>When using variable-length codes, you need to ensure that the coded stream can be decoded uniquely. A simple way is to use <strong>prefix-free codes</strong> (also called prefix codes): no code word is a prefix of any other code word. Then you can decode by reading bits until you match a code word.</p>
+
+<h2>Example of prefix-free vs not</h2>
+<p>Prefix-free: {0, 10, 11}  good. Not prefix-free: {0, 01, 1}  because "0" is a prefix of "01". If you see "01", is it "0"+"1" or "01"? Ambiguous.</p>
+
+<h2>Why prefix-free?</h2>
+<p>Prefix-free codes are uniquely decodable without lookahead. You can decode greedily: read bits, as soon as you see a code word, output it and start again.</p>
+
+<h2>Binary tree representation</h2>
+<p>Every prefix-free code corresponds to a binary tree where each leaf is a code word (left=0, right=1). The depth of the leaf is the code length. The condition that no code is a prefix means no leaf has an ancestor that is also a leaf.</p>
+
+<h2>KraftMcMillan inequality</h2>
+<p>For a prefix-free code with code lengths L_i, we must have  2^{-L_i}  1. Conversely, if a set of lengths satisfies this, there exists a prefix-free code with those lengths.</p>
+
+<h2>Optimal prefix codes (Huffman)</h2>
+<p>Given frequencies, the Huffman algorithm builds the optimal prefix code (minimizing average length) by repeatedly merging the two smallest frequencies.</p>
+
+<h2>Example</h2>
+<p>Frequencies: A:5, B:2, C:1, D:1. Huffman: merge C,D (2), merge B,new(2) (4), merge A,new(4) (9). Codes: A=0, B=10, C=110, D=111. Average length = (5*1 + 2*2 + 1*3 + 1*3)/9 = (5+4+3+3)/9 = 15/9 1.67 bits.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Prefix-free codes enable instant decoding.</li>
+  <li>Binary tree visualization is essential.</li>
+  <li>Huffman coding is greedy and optimal.</li>
+  <li>Prefix codes are used in ZIP, JPEG, MP3 (Huffman coding).</li>
+</ul>
+
+<blockquote>Prefix-free codes are like having unique starting patterns  you always know where one symbol ends and the next begins.</blockquote>
+`
 },
 
 ]
