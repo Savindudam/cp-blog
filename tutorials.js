@@ -8722,6 +8722,55 @@ Node* buildHuffmanTree(vector&ltpair&ltchar,int&gt&gt& freq) {
 
 <blockquote>Building a Huffman tree is like constructing a binary family tree  leaves are symbols, internal nodes are mergers. Codes are the paths from root to leaves.</blockquote>
 `
+},{
+  slug: "dynamic-programming-overlapping-subproblems",
+  title: "Dynamic Programming: Overlapping Subproblems",
+  topic: "Dynamic Programming",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-24",
+  excerpt: "DP is recursion + memoization. Overlapping subproblems means the same subproblem is solved many times  caching avoids recomputation.",
+  tags: ["DP", "overlapping subproblems", "memoization", "optimal substructure"],
+  html: `
+<p>Dynamic programming is a method for solving problems by breaking them into smaller subproblems, solving each subproblem once, and storing the results. Two key properties are required: <strong>optimal substructure</strong> (a problem can be solved from subproblems) and <strong>overlapping subproblems</strong> (the same subproblem appears many times).</p>
+
+<h2>Overlapping subproblems explained</h2>
+<p>In recursion, a problem is divided into smaller instances. If the same small instance is needed multiple times, it's overlapping. Classic example: Fibonacci. fib(5) calls fib(4) and fib(3); fib(4) calls fib(3) and fib(2). fib(3) is computed twice. Without memoization, exponential time; with memoization, linear.</p>
+
+<h2>Memoization (topdown DP)</h2>
+<p>Store results of subproblems in a cache (array or map). Before computing, check if already computed.</p>
+<pre><code>int fib(int n, vector&ltint&gt& memo) {
+    if (n <= 1) return n;
+    if (memo[n] != -1) return memo[n];
+    return memo[n] = fib(n-1, memo) + fib(n-2, memo);
+}</code></pre>
+
+<h2>Tabulation (bottomup DP)</h2>
+<p>Iteratively compute subproblems from smallest to largest, filling a table.</p>
+<pre><code>int fib(int n) {
+    if (n <= 1) return n;
+    vector&ltint&gt dp(n+1);
+    dp[0] = 0; dp[1] = 1;
+    for (int i = 2; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];
+    return dp[n];
+}</code></pre>
+
+<h2>Recognizing overlapping subproblems</h2>
+<p>If a recursive solution repeatedly computes the same inputs, it's overlapping. Not every recursive problem has this  divide and conquer (like merge sort) does not have overlapping subproblems; each subproblem is unique.</p>
+
+<h2>Optimal substructure</h2>
+<p>Optimal solution to a problem contains optimal solutions to subproblems. Example: shortest path  subpaths of a shortest path are also shortest.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Overlapping subproblems make DP efficient.</li>
+  <li>Memoization is often easier to code from a recursive solution.</li>
+  <li>Tabulation avoids recursion overhead and stack limits.</li>
+  <li>Not all problems with optimal substructure have overlapping subproblems (e.g., divide & conquer).</li>
+</ul>
+
+<blockquote>Overlapping subproblems are like doublebooking  you don't want to do the same work twice. DP is your calendar that remembers what you've already done.</blockquote>
+`
 },
 
 
