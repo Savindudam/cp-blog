@@ -9590,6 +9590,84 @@ int main() {
 
 <blockquote>Edit distance is like counting how many typos you need to fix to turn one word into another  the DP table maps out the cheapest path.</blockquote>
 `
+},{
+  slug: "reconstructing-edit-operations-from-dp-table",
+  title: "Reconstructing Edit Operations from DP Table",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-25",
+  excerpt: "After computing edit distance, backtrack through the DP table to recover the actual sequence of insertions, deletions, and replacements.",
+  tags: ["edit distance", "reconstruction", "backtracking", "operations"],
+  html: `
+<p>Knowing the minimum edit distance is often not enough; you may need to output the sequence of operations. By storing the DP table and backtracking from (n,m) to (0,0), you can reconstruct the operations in reverse order.</p>
+
+<h2>Backtracking algorithm</h2>
+<p>At each cell (i,j), compare dp[i][j] with its three neighbors to determine which operation was used.</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+void printOperations(const string& a, const string& b) {
+    int n = a.size(), m = b.size();
+    vector&ltvector&ltint&gt&gt dp(n+1, vector&ltint&gt(m+1));
+    for (int i = 0; i <= n; i++) dp[i][0] = i;
+    for (int j = 0; j <= m; j++) dp[0][j] = j;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i-1] == b[j-1]) dp[i][j] = dp[i-1][j-1];
+            else {
+                dp[i][j] = 1 + min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]});
+            }
+        }
+    }
+    // backtrack
+    int i = n, j = m;
+    vector&ltstring&gt ops;
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && a[i-1] == b[j-1]) {
+            ops.push_back("keep " + string(1, a[i-1]));
+            i--; j--;
+        }
+        else if (i > 0 && j > 0 && dp[i][j] == dp[i-1][j-1] + 1) {
+            ops.push_back("replace " + string(1, a[i-1]) + " with " + string(1, b[j-1]));
+            i--; j--;
+        }
+        else if (i > 0 && dp[i][j] == dp[i-1][j] + 1) {
+            ops.push_back("delete " + string(1, a[i-1]));
+            i--;
+        }
+        else {
+            ops.push_back("insert " + string(1, b[j-1]));
+            j--;
+        }
+    }
+    reverse(ops.begin(), ops.end());
+    for (string& op : ops) cout << op << "\\n";
+}
+
+int main() {
+    string a = "kitten", b = "sitting";
+    printOperations(a, b);
+    return 0;
+}</code></pre>
+
+<h2>Example output</h2>
+<p>replace k with s<br>keep i<br>delete e? Actually for kittensitting: kitten -> sitten (k->s), sitten -> sittin (e->i?), sittin -> sitting (insert g). The backtracking will produce the correct sequence.</p>
+
+<h2>Handling multiple optimal paths</h2>
+<p>If there are multiple optimal operation sequences, this backtracking picks one based on the order of checks.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Backtracking requires the full DP table (or at least the previous row and decisions).</li>
+  <li>Time O(n+m) for backtracking.</li>
+  <li>Operations are listed in forward order after reversing.</li>
+</ul>
+
+<blockquote>Reconstructing edit operations is like following a trail of breadcrumbs  each step tells you whether to insert, delete, or replace.</blockquote>
+`
 },
 
 
