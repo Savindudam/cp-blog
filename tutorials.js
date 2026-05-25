@@ -9723,7 +9723,29 @@ int main() {
 <h2>Things to rememeber</h2><ul>
   <li>This is called "profile DP" or "DP with bitmask".</li>  <li>n must be small (typically  12).</li>  <li>The DFS for transitions can be precomputed for efficiency.</li>  <li>Modulo is necessary because number of tilings grows fast.</li></ul>
 <blockquote>Tiling with dominoes is like solving a jigsaw puzzle column by column  each column's state tells you where the next domino must start.</blockquote>`
-},</blockquote></li></ul></h2></code></pre></h2></p></h2>
+},{
+  slug: "state-representation-for-tiling-dp-top-and-bottom",
+  title: "State Representation for Tiling DP (Top and Bottom)",
+  topic: "Dynamic Programming",
+  difficulty: "Hard",
+  readMinutes: 9,
+  date: "2026-05-25",
+  excerpt: "Detailed explanation of the bitmask state in domino tiling: what the mask means, how to generate transitions, and optimizations.",
+  tags: ["tiling", "state representation", "bitmask", "profile DP"],
+  html: `
+<p>The state in tiling DP is a bitmask that represents which cells in the current column are already filled by a horizontal domino that started in the previous column. Understanding this state is crucial to implementing the DP correctly.</p>
+
+<h2>Columnbycolumn processing</h2><p>We process the grid from left to right. When we are at column i, some cells in this column may already be occupied because a horizontal domino placed in column i-1 extends into column i. These cells are marked by 1 bits in the mask. The remaining empty cells in column i must be filled using either vertical dominoes (within this column) or horizontal dominoes (that will extend to column i+1).</p>
+<h2>Mask bits</h2><p>For n rows, we use a bitmask of n bits. Bit j (0based from top) = 1 means the cell at (row j, column i) is already occupied. Bit 0 means it's free and needs to be filled now.</p>
+<h2>DFS transition generation</h2><p>We recursively go through rows from top to bottom. At row r:</p><ul>
+  <li>If mask has bit r set  cell already filled, move to next row.</li>  <li>Else, we have two choices:
+    <ul><li>Place a vertical domino covering (r, i) and (r+1, i). This requires r+1 < n and bit r+1 not set in mask. Both cells become filled in current column. No extension to next column.</li>    <li>Place a horizontal domino covering (r, i) and (r, i+1). This leaves (r,i) filled now, and sets bit r in the next mask (indicating that next column's cell is already occupied).</li></ul>  </li></ul>
+<h2>Initial and final states</h2><p>At column 0, mask = 0 (no preceding column). At column m, we require mask = 0 (all cells in the last column must be filled, no pending horizontal dominoes).</p>
+<h2>Optimization</h2><p>Precompute transitions for each mask to avoid DFS per column. Also, note that n is small ( 10), so 2^n  1024, transitions per mask are limited.</p>
+<h2>Things to rememeber</h2><ul>
+  <li>The mask only tracks horizontal dominoes sticking out to the right.</li>  <li>Vertical dominoes are placed entirely within the column and don't affect the next mask.</li>  <li>This DP works for any n up to about 12.</li></ul>
+<blockquote>The bitmask is like a sticky note on the column  it tells you which cells are already taken by dominoes from the left. Everything else must be filled now.</blockquote>`
+},</blockquote></li></ul></h2></p></h2></p></h2></li></ul></li></ul></p></h2></p></h2></blockquote></li></ul></h2></code></pre></h2></p></h2>
   date: "2026-05-25",
   excerpt: "Number of ways to tile a grid of size n x m using 1x2 or 2x1 dominoes. Classical DP with bitmask profile.",
   tags: ["tilings", "domino", "profile DP", "bitmask"],
