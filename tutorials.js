@@ -9330,6 +9330,71 @@ return dp[C-1];</code></pre>
 
 <blockquote>Grid DP is like planning a trip through a city  at each corner, choose the best direction from the left or above.</blockquote>
 `
+},{
+  slug: "knapsack-problem-subset-sum-with-dp",
+  title: "Knapsack Problem: Subset Sum with DP",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-25",
+  excerpt: "Given a set of integers, can you select a subset that sums exactly to a target? Classic subset sum DP using a 1D array.",
+  tags: ["subset sum", "knapsack", "DP", "boolean DP"],
+  html: `
+<p>The subset sum problem is a special case of the knapsack problem where each item has a weight and we want to achieve a target sum. It's a classic NPcomplete problem, but with DP we can solve it in O(n * target) time, which is pseudopolynomial.</p>
+
+<h2>Problem</h2>
+<p>Given an array of positive integers (sometimes nonnegative) and a target sum T, determine if there exists a subset whose sum equals T.</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[x] = true if we can achieve sum x using some subset of the items considered so far.</p>
+
+<h2>Transition (iterative, 1D array)</h2>
+<p>For each number num, we update dp from high to low to avoid reusing the same item multiple times (since it's 0/1 knapsack).</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+bool subsetSum(vector&ltint&gt& nums, int target) {
+    vector&ltbool&gt dp(target + 1, false);
+    dp[0] = true;
+    for (int num : nums) {
+        for (int x = target; x >= num; x--) {
+            if (dp[x - num]) dp[x] = true;
+        }
+    }
+    return dp[target];
+}
+
+int main() {
+    vector&ltint&gt nums = {3, 34, 4, 12, 5, 2};
+    int target = 9;
+    cout << (subsetSum(nums, target) ? "Yes" : "No") << "\\n"; // Yes (4+5)
+    return 0;
+}</code></pre>
+
+<h2>Why iterate backwards?</h2>
+<p>Iterating backwards ensures each item is used at most once. If we iterated forward, the same item could be used multiple times (unbounded knapsack).</p>
+
+<h2>Unbounded subset sum (multiple uses allowed)</h2>
+<p>For unbounded, iterate forward:</p>
+<pre><code>for (int x = num; x <= target; x++) {
+    if (dp[x - num]) dp[x] = true;
+}</code></pre>
+
+<h2>Recovering the subset</h2>
+<p>Store a 2D predecessor array or use a 1D "last" array to backtrack.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Time: O(n * target). Space: O(target).</li>
+  <li>Works for target up to ~1e5 and n up to 1e3.</li>
+  <li>Numbers must be positive (or handle negative with offset).</li>
+  <li>If numbers are large, use bitset for speed.</li>
+</ul>
+
+<blockquote>Subset sum DP is like packing a suitcase  you decide whether to take each item, and track all possible weights you can achieve.</blockquote>
+`
 },
 
 
