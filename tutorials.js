@@ -8886,6 +8886,72 @@ int dfs(int amount, vector&ltint&gt& coins) {
 
 <blockquote>Recursive DP with memoization is the most intuitive way to start with DP. Write the recursion first, then add caching  it almost feels like cheating.</blockquote>
 `
+},{
+  slug: "iterative-dp-for-coin-change-problem",
+  title: "Iterative DP for Coin Change Problem",
+  topic: "Dynamic Programming",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-24",
+  excerpt: "Bottomup DP (tabulation) for minimum coins and number of ways. Iterative approach avoids recursion and is often faster.",
+  tags: ["coin change", "iterative", "tabulation", "bottom-up"],
+  html: `
+<p>Tabulation builds the DP array from the base case up to the target. It's iterative, uses no recursion, and often has better constant factors. Let's implement minimum coins and number of ways bottomup.</p>
+
+<h2>Minimum coins (unbounded knapsack)</h2>
+<pre><code>int minCoinsIterative(vector&ltint&gt& coins, int amount) {
+    const int INF = 1e9;
+    vector&ltint&gt dp(amount + 1, INF);
+    dp[0] = 0;
+    for (int x = 1; x <= amount; x++) {
+        for (int c : coins) {
+            if (x >= c && dp[x - c] != INF) {
+                dp[x] = min(dp[x], dp[x - c] + 1);
+            }
+        }
+    }
+    return dp[amount] == INF ? -1 : dp[amount];
+}</code></pre>
+
+<h2>Number of ways (combinations, order doesn't matter)</h2>
+<p>To count combinations, iterate coins first, then amounts. This ensures each coin is considered only once per combination.</p>
+<pre><code>int countWaysIterative(vector&ltint&gt& coins, int amount) {
+    vector&ltint&gt dp(amount + 1, 0);
+    dp[0] = 1;
+    for (int c : coins) {
+        for (int x = c; x <= amount; x++) {
+            dp[x] += dp[x - c];
+        }
+    }
+    return dp[amount];
+}</code></pre>
+
+<h2>Number of ways (permutations, order matters)</h2>
+<p>If order matters (e.g., different sequences count as different), swap the loops: iterate amount first, then coins.</p>
+<pre><code>int countPermutations(vector&ltint&gt& coins, int amount) {
+    vector&ltint&gt dp(amount + 1, 0);
+    dp[0] = 1;
+    for (int x = 1; x <= amount; x++) {
+        for (int c : coins) {
+            if (x >= c) dp[x] += dp[x - c];
+        }
+    }
+    return dp[amount];
+}</code></pre>
+
+<h2>Space optimization</h2>
+<p>For minimum coins, we only need a 1D array. For combinations, also 1D. No need for 2D.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Iterative DP is usually faster and avoids stack overflow.</li>
+  <li>Be careful with loop order: coins first vs amount first changes meaning (combinations vs permutations).</li>
+  <li>Initialize dp[0] = 0 for min coins, = 1 for counting ways.</li>
+  <li>For large amount, use <code>long long</code> to avoid overflow.</li>
+</ul>
+
+<blockquote>Tabulation is like building a table from the bottom row up  solid, predictable, and no recursion drama.</blockquote>
+`
 },
 
 
