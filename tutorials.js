@@ -8558,5 +8558,90 @@ int main() {
 <blockquote>Prefix-free codes are like having unique starting patterns  you always know where one symbol ends and the next begins.</blockquote>
 `
 },
+{
+  slug: "huffman-coding-algorithm-step-by-step",
+  title: "Huffman Coding Algorithm Step by Step",
+  topic: "Compression",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-24",
+  excerpt: "Huffman coding builds an optimal prefix code by repeatedly merging the two smallest frequency nodes. Step-by-step walkthrough with example.",
+  tags: ["Huffman", "prefix code", "greedy", "compression"],
+  html: `
+<p>Huffman coding is a greedy algorithm that constructs an optimal prefixfree code for a set of symbols given their frequencies. It was developed by David Huffman in 1952 and is used in many compression standards (ZIP, JPEG, MP3). The algorithm biu
+lds a binary tree from the bottom up, merging the two least frequent nodes at each step.</p>
+
+<h2>The algorithm outline</h2>
+<ol>
+  <li>Create a leaf node for each symbol with its frequency.</li>
+  <li>Place all nodes in a minheap (priority queue) ordered by frequency.</li>
+  <li>While there is more than one node in the heap:
+    <ul><li>Extract the two nodes with smallest frequencies.</li>
+    <li>Create a new internal node whose frequency is the sum of the two.</li>
+    <li>Make the two extracted nodes its left and right children.</li>
+    <li>Insert the new node back into the heap.</li></ul>
+  </li>
+  <li>The remaining node is the root of the Huffman tree.</li>
+  <li>Assign codes by traversing the tree: left edge = 0, right edge = 1.</li>
+</ol>
+
+<h2>Stepbystep example</h2>
+<p>Frequencies: A:5, B:2, C:1, D:1, E:7</p>
+<p><strong>Step 1:</strong> Leaves: (C,1), (D,1), (B,2), (A,5), (E,7)</p>
+<p><strong>Step 2:</strong> Merge C(1) and D(1)  new node X(2). Heap: (B,2), (X,2), (A,5), (E,7)</p>
+<p><strong>Step 3:</strong> Merge B(2) and X(2)  new node Y(4). Heap: (A,5), (Y,4), (E,7)  actually order by freq: (Y,4), (A,5), (E,7)</p>
+<p><strong>Step 4:</strong> Merge Y(4) and A(5)  new node Z(9). Heap: (E,7), (Z,9)</p>
+<p><strong>Step 5:</strong> Merge E(7) and Z(9)  root(16). Tree complete.</p>
+
+<p><strong>Assign codes (example traversal):</strong><br>
+E: 0 (since it's left child of root? depends on tree shape). Let's assume left child is E, right is Z. Then E=0. Z=1, then A is left of Z? etc. Usually we assign 0 to left, 1 to right. Final codes: A=10, B=110, C=1110, D=1111, E=0 (depending on merging order).</p>
+
+<h2>C++ implementation (building tree, not yet outputting codes)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+struct Node {
+    char ch;
+    int freq;
+    Node *left, *right;
+    Node(char c, int f) : ch(c), freq(f), left(nullptr), right(nullptr) {}
+    Node(int f, Node* l, Node* r) : ch(0), freq(f), left(l), right(r) {}
+};
+
+struct Compare {
+    bool operator()(Node* a, Node* b) {
+        return a->freq > b->freq; // min-heap
+    }
+};
+
+Node* buildHuffmanTree(vector&ltpair&ltchar,int&gt&gt& freq) {
+    priority_queue&ltNode*, vector&ltNode*&gt, Compare&gt pq;
+    for (auto& p : freq) {
+        pq.push(new Node(p.first, p.second));
+    }
+    while (pq.size() > 1) {
+        Node* left = pq.top(); pq.pop();
+        Node* right = pq.top(); pq.pop();
+        Node* parent = new Node(left->freq + right->freq, left, right);
+        pq.push(parent);
+    }
+    return pq.top();
+}</code></pre>
+
+<h2>Time complexity</h2>
+<p>O(n log n) where n is number of distinct symbols. Each insertion/extraction from heap is O(log n).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Huffman coding is optimal for prefix codes given frequencies.</li>
+  <li>The tree is not unique  different merge orders produce different codes but same average length.</li>
+  <li>For symbols with equal frequency, tiebreaking affects code assignment but not optimality.</li>
+  <li>Huffman coding is used as a building block in many compression algorithms.</li>
+</ul>
+
+<blockquote>Huffman's algorithm is like building a tree from the ground up  always combine the smallest two, and you'll reach the optimal canopy.</blockquote>
+`
+},
+
 
 ]
