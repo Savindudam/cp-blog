@@ -9520,6 +9520,76 @@ int main() {
 
 <blockquote>Knapsack DP is the classic "what to pack" problem  maximize value without breaking the weight limit.</blockquote>
 `
+},{
+  slug: "edit-distance-levenshtein-distance-dp",
+  title: "Edit Distance (Levenshtein Distance) DP",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 10,
+  date: "2026-05-25",
+  excerpt: "Minimum number of operations (insert, delete, replace) to transform one string into another. Classic 2D DP with O(nm) time.",
+  tags: ["edit distance", "Levenshtein", "DP", "string"],
+  html: `
+<p>The edit distance (Levenshtein distance) measures the minimum number of singlecharacter operations (insertion, deletion, substitution) needed to change one string into another. It's a fundamental DP problem used in spell checking, DNA sequence alignment, and more.</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[i][j] = edit distance between the first i characters of string A and the first j characters of string B (1indexed).</p>
+
+<h2>Recurrence</h2>
+<ul>
+  <li>If A[i] == B[j]: dp[i][j] = dp[i-1][j-1] (no operation needed).</li>
+  <li>Else: dp[i][j] = 1 + min(dp[i-1][j],    // delete from A
+                                 dp[i][j-1],    // insert into A (or delete from B)
+                                 dp[i-1][j-1])  // replace</li>
+</ul>
+
+<h2>Base cases</h2>
+<ul>
+  <li>dp[0][j] = j (insert j characters into empty string)</li>
+  <li>dp[i][0] = i (delete i characters)</li>
+</ul>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int editDistance(const string& a, const string& b) {
+    int n = a.size(), m = b.size();
+    vector&ltvector&ltint&gt&gt dp(n+1, vector&ltint&gt(m+1, 0));
+    for (int i = 0; i <= n; i++) dp[i][0] = i;
+    for (int j = 0; j <= m; j++) dp[0][j] = j;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i-1] == b[j-1]) dp[i][j] = dp[i-1][j-1];
+            else {
+                dp[i][j] = 1 + min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]});
+            }
+        }
+    }
+    return dp[n][m];
+}
+
+int main() {
+    string a = "kitten", b = "sitting";
+    cout << editDistance(a, b) << "\\n"; // 3 (k->s, e->i, insert g)
+    return 0;
+}</code></pre>
+
+<h2>Space optimization (2 rows)</h2>
+<p>We only need the previous row, so space can be O(min(n,m)).</p>
+
+<h2>Operations cost customization</h2>
+<p>You can assign different costs to insert, delete, replace. Simply change the min addition accordingly.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Time O(n*m), space O(n*m) or O(min(n,m)).</li>
+  <li>Works for up to ~5000 characters each (25 million ops).</li>
+  <li>Used in many string similarity problems.</li>
+</ul>
+
+<blockquote>Edit distance is like counting how many typos you need to fix to turn one word into another  the DP table maps out the cheapest path.</blockquote>
+`
 },
 
 
