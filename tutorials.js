@@ -8952,6 +8952,64 @@ int dfs(int amount, vector&ltint&gt& coins) {
 
 <blockquote>Tabulation is like building a table from the bottom row up  solid, predictable, and no recursion drama.</blockquote>
 `
+},{
+  slug: "constructing-optimal-coin-combination",
+  title: "Constructing the Optimal Coin Combination",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-24",
+  excerpt: "Not just the minimum number of coins, but also which coins were used. Store predecessor information to reconstruct the solution.",
+  tags: ["coin change", "reconstruction", "backtracking", "optimal combination"],
+  html: `
+<p>Often you need not only the optimal value (minimum coins) but also the actual combination of coins that achieves it. This is called reconstruction or "printing the solution". You store, for each amount, which coin was used last in the optimal solution.</p>
+
+<h2>Storing predecessor</h2>
+<p>In addition to dp[x] (minimum coins), keep a <code>lastCoin[x]</code> that records which coin was used to achieve that minimum.</p>
+
+<pre><code>vector&ltint&gt minCoinsWithReconstruction(vector&ltint&gt& coins, int amount) {
+    const int INF = 1e9;
+    vector&ltint&gt dp(amount + 1, INF);
+    vector&ltint&gt lastCoin(amount + 1, -1);
+    dp[0] = 0;
+    for (int x = 1; x <= amount; x++) {
+        for (int c : coins) {
+            if (x >= c && dp[x - c] != INF && dp[x - c] + 1 < dp[x]) {
+                dp[x] = dp[x - c] + 1;
+                lastCoin[x] = c;
+            }
+        }
+    }
+    if (dp[amount] == INF) return {}; // no solution
+    vector&ltint&gt result;
+    int cur = amount;
+    while (cur > 0) {
+        int coin = lastCoin[cur];
+        result.push_back(coin);
+        cur -= coin;
+    }
+    return result; // coins used (order may be descending)
+}</code></pre>
+
+<h2>Example</h2>
+<p>coins = {1,3,4}, amount = 6. dp[6] = 2 (3+3). lastCoin[6] = 3 (since dp[3]+1 = 1+1=2). Then cur=3, lastCoin[3]=3, push 3, cur=0. Result = [3,3].</p>
+
+<h2>Reconstruction for number of ways (if needed)</h2>
+<p>For counting ways, you can also reconstruct by storing all predecessors, but there may be many. Usually reconstruction is for optimal (min/max) DP.</p>
+
+<h2>Using the reconstructed combination</h2>
+<p>You may need to output coins in ascending order or count frequencies. The result vector above is in the order of subtraction (last used coin first). Reverse it for the order of picking.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use an array to store the decision (which coin) at each state.</li>
+  <li>Initialize lastCoin to -1 to detect no solution.</li>
+  <li>Reconstruction is O(amount) in the worst case (but usually number of coins used).</li>
+  <li>For large amount, storing lastCoin is fine (one integer per amount).</li>
+</ul>
+
+<blockquote>Reconstruction turns the DP table from a black box into a transparent path  you can see exactly which coins built the answer.</blockquote>
+`
 },
 
 
