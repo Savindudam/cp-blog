@@ -9454,6 +9454,72 @@ for (int n
 
 <blockquote>The 1D DP trick is like writing notes on a whiteboard  you erase and write in the right order so you don't lose information.</blockquote>
 `
+},{
+  slug: "knapsack-with-weights-and-values",
+  title: "Knapsack with Weights and Values",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-25",
+  excerpt: "Classic 0/1 knapsack: maximize total value given weight capacity. Use 1D DP with backward iteration.",
+  tags: ["knapsack", "0/1 knapsack", "DP", "optimization"],
+  html: `
+<p>The knapsack problem is the generalization of subset sum: each item has a weight and a value. Given a maximum weight capacity W, choose items to maximize total value without exceeding W. This is a classic DP problem.</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[w] = maximum value achievable with total weight exactly w (or at most w). We'll use the "at most" version: dp[w] = max value using weight  w.</p>
+
+<h2>Transition (0/1 knapsack)</h2>
+<p>For each item (weight wi, value vi), we update dp from high to low:</p>
+<pre><code>for (int w = W; w >= wi; w--) {
+    dp[w] = max(dp[w], dp[w - wi] + vi);
+}</code></pre>
+
+<h2>Full implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int knapsack(vector&ltint&gt& weights, vector&ltint&gt& values, int W) {
+    int n = weights.size();
+    vector&ltint&gt dp(W + 1, 0);
+    for (int i = 0; i < n; i++) {
+        for (int w = W; w >= weights[i]; w--) {
+            dp[w] = max(dp[w], dp[w - weights[i]] + values[i]);
+        }
+    }
+    return dp[W];
+}
+
+int main() {
+    vector&ltint&gt weights = {2, 3, 4, 5};
+    vector&ltint&gt values = {3, 4, 5, 6};
+    int W = 5;
+    cout << knapsack(weights, values, W) << "\\n"; // max value = 7 (item0 + item1? 2+3=5 weight, value=3+4=7)
+    return 0;
+}</code></pre>
+
+<h2>Unbounded knapsack</h2>
+<p>If unlimited copies allowed, iterate forwards:</p>
+<pre><code>for (int w = weights[i]; w <= W; w++) {
+    dp[w] = max(dp[w], dp[w - weights[i]] + values[i]);
+}</code></pre>
+
+<h2>Space complexity</h2>
+<p>O(W) instead of O(n*W). Good for W up to 1e5.</p>
+
+<h2>Reconstruction</h2>
+<p>To know which items were selected, store a 2D table or use a separate array "choice" for each weight.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always iterate weights backwards in 0/1 knapsack.</li>
+  <li>dp[0] = 0 is the base.</li>
+  <li>If items have weight 0, handle separately.</li>
+  <li>For large W (e.g., 1e6) and many items, knapsack may be too slow  need meetinthemiddle or other techniques.</li>
+</ul>
+
+<blockquote>Knapsack DP is the classic "what to pack" problem  maximize value without breaking the weight limit.</blockquote>
+`
 },
 
 
