@@ -9260,6 +9260,76 @@ int main() {
 
 <blockquote>Patience sorting is like playing solitaire  you create piles, and the number of piles equals the LIS length.</blockquote>
 `
+},{
+  slug: "paths-in-a-grid-maximum-sum-path-dp",
+  title: "Paths in a Grid: Maximum Sum Path DP",
+  topic: "Dynamic Programming",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-25",
+  excerpt: "Given a grid with numbers, find the path from top-left to bottom-right moving only right and down that maximizes the sum.",
+  tags: ["grid DP", "maximum path sum", "2D DP", "classic"],
+  html: `
+<p>One of the simplest 2D DP problems: you have an R x C grid of integers (can be negative). You start at (0,0) and can only move right or down. Find the maximum sum path to (R-1, C-1). This is a classic problem that introduces state definition and transition.</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[i][j] = maximum sum to reach cell (i,j). Then:</p>
+<pre><code>dp[i][j] = grid[i][j] + max(dp[i-1][j], dp[i][j-1])</code></pre>
+<p>With boundary conditions: dp[0][0] = grid[0][0]; for first row, only from left; for first column, only from above.</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int maxPathSum(vector&ltvector&ltint&gt&gt& grid) {
+    int R = grid.size(), C = grid[0].size();
+    vector&ltvector&ltint&gt&gt dp(R, vector&ltint&gt(C, 0));
+    dp[0][0] = grid[0][0];
+    for (int i = 1; i < R; i++) dp[i][0] = dp[i-1][0] + grid[i][0];
+    for (int j = 1; j < C; j++) dp[0][j] = dp[0][j-1] + grid[0][j];
+    for (int i = 1; i < R; i++) {
+        for (int j = 1; j < C; j++) {
+            dp[i][j] = grid[i][j] + max(dp[i-1][j], dp[i][j-1]);
+        }
+    }
+    return dp[R-1][C-1];
+}
+
+int main() {
+    vector&ltvector&ltint&gt&gt grid = {{1,3,1}, {1,5,1}, {4,2,1}};
+    cout << maxPathSum(grid) << "\\n"; // 1+3+5+2+1=12
+    return 0;
+}</code></pre>
+
+<h2>Space optimization</h2>
+<p>We only need the previous row to compute the current row. So we can use a 1D DP array:</p>
+<pre><code>vector&ltint&gt dp(C, 0);
+dp[0] = grid[0][0];
+for (int j = 1; j < C; j++) dp[j] = dp[j-1] + grid[0][j];
+for (int i = 1; i < R; i++) {
+    dp[0] += grid[i][0];
+    for (int j = 1; j < C; j++) {
+        dp[j] = grid[i][j] + max(dp[j], dp[j-1]);
+    }
+}
+return dp[C-1];</code></pre>
+
+<h2>Variants</h2>
+<ul>
+  <li>Minimum sum path  replace max with min.</li>
+  <li>Path with obstacles  skip blocked cells.</li>
+  <li>Print the path  store direction (from left or from above).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This is a DAG (edges only right/down).</li>
+  <li>Negative numbers are fine  the DP handles them.</li>
+  <li>Time O(R*C), space O(R*C) or O(C).</li>
+</ul>
+
+<blockquote>Grid DP is like planning a trip through a city  at each corner, choose the best direction from the left or above.</blockquote>
+`
 },
 
 
