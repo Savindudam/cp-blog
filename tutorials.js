@@ -9010,6 +9010,67 @@ int dfs(int amount, vector&ltint&gt& coins) {
 
 <blockquote>Reconstruction turns the DP table from a black box into a transparent path  you can see exactly which coins built the answer.</blockquote>
 `
+},{
+  slug: "counting-number-of-ways-to-form-sum-with-dp",
+  title: "Counting Number of Ways to Form a Sum with DP",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-24",
+  excerpt: "Number of combinations (order doesn't matter) vs number of permutations (order matters). Classic DP for coin change 2.",
+  tags: ["counting ways", "coin combinations", "permutations", "DP"],
+  html: `
+<p>Given a set of coins (unlimited supply) and a target sum, count how many ways to make that sum. There are two common interpretations:</p>
+<ul>
+  <li><strong>Combinations</strong>: {1,2} and {2,1} are the same.</li>
+  <li><strong>Permutations</strong>: {1,2} and {2,1} are different.</li>
+</ul>
+<p>Both can be solved with DP, but the loop order changes.</p>
+
+<h2>Combinations (coin change 2  Leetcode 518)</h2>
+<p>Iterate coins outer loop, amount inner loop. This ensures each coin is considered only once per combination.</p>
+<pre><code>int countCombinations(vector&ltint&gt& coins, int amount) {
+    vector&ltint&gt dp(amount + 1, 0);
+    dp[0] = 1;
+    for (int c : coins) {
+        for (int x = c; x <= amount; x++) {
+            dp[x] += dp[x - c];
+        }
+    }
+    return dp[amount];
+}</code></pre>
+
+<h2>Permutations (order matters  Leetcode 377)</h2>
+<p>Iterate amount outer loop, coins inner loop. This allows sequences like 1+2 and 2+1 to be counted separately.</p>
+<pre><code>int countPermutations(vector&ltint&gt& coins, int amount) {
+    vector&ltunsigned long long&gt dp(amount + 1, 0);
+    dp[0] = 1;
+    for (int x = 1; x <= amount; x++) {
+        for (int c : coins) {
+            if (x >= c) dp[x] += dp[x - c];
+        }
+    }
+    return dp[amount];
+}</code></pre>
+
+<h2>Example</h2>
+<p>coins = {1,2}, amount = 3.<br>
+Combinations: {1,1,1}, {1,2}  2 ways.<br>
+Permutations: 1+1+1, 1+2, 2+1  3 ways.</p>
+
+<h2>Large amounts  use mod</h2>
+<p>Counting ways can overflow 64bit integers quickly. Use modulo as described in next tutorial.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Combinations: coins loop outside, amount loop inside (increasing).</li>
+  <li>Permutations: amount loop outside, coins loop inside.</li>
+  <li>Initialize dp[0] = 1 (one way to make sum 0  use no coins).</li>
+  <li>Watch out for overflow  use long long or modulo.</li>
+</ul>
+
+<blockquote>Counting ways is like counting different recipes  the order of ingredients matters in a sequence, but not in a set.</blockquote>
+`
 },
 
 
