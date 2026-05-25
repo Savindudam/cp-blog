@@ -8831,6 +8831,61 @@ int main() {
 
 <blockquote>Memoization turns a slow recursive explosion into a fast linear crawl  cache is king.</blockquote>
 `
+},{
+  slug: "implementing-coin-dp-recursively-with-memoization",
+  title: "Implementing Coin DP Recursively with Memoization",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-24",
+  excerpt: "Detailed implementation with different return types: minimum coins, number of ways, and coin combinations. Includes handling of large amounts.",
+  tags: ["coin change", "memoization", "recursive DP", "ways"],
+  html: `
+<p>Let's expand the coin change memoization to cover two common variants: minimum coins and number of ways to form the sum. Both use the same memoization pattern but different recurrences.</p>
+
+<h2>Variant 1: Minimum coins (as above)</h2>
+<p>Recurrence: dp[x] = min_{c  x} (1 + dp[x-c]).</p>
+
+<h2>Variant 2: Number of ways (order matters? combinations vs permutations)</h2>
+<p>We'll count combinations (order doesn't matter). For coin change combinations, the recurrence is different: ways[x] =  ways[x - c] for each coin, but to avoid overcounting permutations, we need to iterate coins in a fixed order. However, with memoization, we need to add a second state: the index of the coin we're allowed to use.</p>
+
+<pre><code>int countWays(int amount, vector&ltint&gt& coins, int idx, vector&ltvector&ltint&gt&gt& memo) {
+    if (amount == 0) return 1;
+    if (idx == coins.size() || amount < 0) return 0;
+    if (memo[amount][idx] != -1) return memo[amount][idx];
+    int include = countWays(amount - coins[idx], coins, idx, memo);
+    int exclude = countWays(amount, coins, idx + 1, memo);
+    return memo[amount][idx] = include + exclude;
+}</code></pre>
+
+<p>This is the standard "coin change 2" (Leetcode 518) solution.</p>
+
+<h2>Memoization with unordered_map for large amounts</h2>
+<p>If amount is large (e.g., up to 1e9) but number of coins small, use a map to store states.</p>
+<pre><code>unordered_map&ltint, int&gt memo;
+int dfs(int amount, vector&ltint&gt& coins) {
+    if (amount == 0) return 0;
+    if (memo.count(amount)) return memo[amount];
+    int best = INT_MAX;
+    for (int c : coins) {
+        if (amount >= c) {
+            int sub = dfs(amount - c, coins);
+            if (sub != INT_MAX) best = min(best, sub + 1);
+        }
+    }
+    return memo[amount] = best;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>For minimum coins, state is just amount (order of coins irrelevant).</li>
+  <li>For number of combinations, state is (amount, index) to avoid permutations.</li>
+  <li>Memoization works well for amount up to ~1e5 and coins up to 100.</li>
+  <li>For very large amount, iterative DP may be impossible due to memory; use map or change approach.</li>
+</ul>
+
+<blockquote>Recursive DP with memoization is the most intuitive way to start with DP. Write the recursion first, then add caching  it almost feels like cheating.</blockquote>
+`
 },
 
 
