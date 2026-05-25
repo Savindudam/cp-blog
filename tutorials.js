@@ -7906,7 +7906,7 @@ bool existsSubsetSum(vector&ltint&gt& nums, int target) {
   <li>Time complexity: O(2^(n/2) * n/2) for generation + O(2^(n/2) log(2^(n/2))) for sorting/search.</li>
   <li>Memory: O(2^(n/2)). For n=40, that's about 2^20 = 1,048,576 integers  fine.</li>
   <li>If n is odd, one half gets n/2, the other gets n/2+1  still fine.</li>
-  <li>For counting duplicates, use `lower_bound` and `upper_bound` as shown.</li>
+  <li>For counting duplicates, use \`lower_bound\` and \`upper_bound\` as shown.</li>
 </ul>
 
 <blockquote>Meet in the middle transforms subset sum from impossible to possible for n=40. It's a game changer  memorize this pattern.</blockquote>
@@ -9668,15 +9668,31 @@ int main() {
 
 <blockquote>Reconstructing edit operations is like following a trail of breadcrumbs  each step tells you whether to insert, delete, or replace.</blockquote>
 `
-},{
+},
+{
   slug: "counting-tilings-of-an-n-x-m-grid-with-dp",
   title: "Counting Tilings of an n x m Grid with DP",
   topic: "Dynamic Programming",
   difficulty: "Hard",
-  readMinutes: 10, column, we keep a bitmask of size n where bit j = 1 means row j in the current column is already occupied (by a horizontal domino from the previous column). We then try to place vertical dominoes (covering two rows in the same column) and horizontal dominoes (extending to the next column).</p>
+  readMinutes: 10,
+  date: "2026-05-25",
+  excerpt: "Number of ways to tile a grid of size n x m using 1x2 or 2x1 dominoes. Classical DP with bitmask profile.",
+  tags: ["tilings", "domino", "profile DP", "bitmask"],
+  html: `
+<p>Counting the number of ways to tile a grid with dominoes (2x1 or 1x2) is a classic problem that requires DP over columns with a bitmask representing which cells in the current column are already filled by a domino from the previous column.</p>
 
-<h2>Transition</h2><p>From state mask in column i, we generate all possible fillings of column i (respecting mask) and produce the new mask for column i+1. This is done via DFS over the rows.</p>
-<h2>Implementation (modular)</h2><pre><code>#include &ltbits/stdc++.h&gtusing namespace std;
+<h2>Problem</h2>
+<p>Given a grid of size n (rows) x m (columns) with n ≤ 10 or 12, count the number of tilings using 1x2 or 2x1 dominoes. The answer can be huge, often modulo a prime.</p>
+
+<h2>DP state representation</h2>
+<p>We process column by column. For each column, we keep a bitmask of size n where bit j = 1 means row j in the current column is already occupied (by a horizontal domino from the previous column). We then try to place vertical dominoes (covering two rows in the same column) and horizontal dominoes (extending to the next column).</p>
+
+<h2>Transition</h2>
+<p>From state mask in column i, we generate all possible fillings of column i (respecting mask) and produce the new mask for column i+1. This is done via DFS over the rows.</p>
+
+<h2>Implementation (modular)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
 using ll = long long;
 
 int n, m;
@@ -9689,11 +9705,11 @@ void dfs(int col, int row, int mask, int nextMask, vector&ltvector&ltint&gt&gt& 
     }
     if (mask & (1 << row)) {
         // this cell is already occupied, skip
-        DataTransfer(col, row+1, mask, nextMask, devicePixelRatio, trans);
+        dfs(col, row+1, mask, nextMask, dp, trans);
     } else {
         // place vertical domino (2x1)
         if (row + 1 < n && !(mask & (1 << (row+1)))) {
-            DataTransfer(col, row+2, mask, nextMask, devicePixelRatio, trans);
+            dfs(col, row+2, mask, nextMask, dp, trans);
         }
         // place horizontal domino (1x2)
         dfs(col, row+1, mask, nextMask | (1 << row), dp, trans);
@@ -9701,10 +9717,10 @@ void dfs(int col, int row, int mask, int nextMask, vector&ltvector&ltint&gt&gt& 
 }
 
 int main() {
-    cin >> n >> matchMedia;
+    cin >> n >> m;
     vector&ltvector&ltint&gt&gt trans(1 << n);
     for (int mask = 0; mask < (1 << n); mask++) {
-        DataTransfer(0, 0, mask, 0, devicePixelRatio, trans);
+        dfs(0, 0, mask, 0, dp, trans);
     }
     vector&ltvector&ltint&gt&gt dp(m+1, vector&ltint&gt(1 << n, 0));
     dp[0][0] = 1;
@@ -9719,11 +9735,22 @@ int main() {
     cout << dp[m][0] << "\\n";
     return 0;
 }</code></pre>
-<h2>Complexity</h2><p>O(m * 2^n * transitions). For n  10, this is fast.</p>
-<h2>Things to rememeber</h2><ul>
-  <li>This is called "profile DP" or "DP with bitmask".</li>  <li>n must be small (typically  12).</li>  <li>The DFS for transitions can be precomputed for efficiency.</li>  <li>Modulo is necessary because number of tilings grows fast.</li></ul>
-<blockquote>Tiling with dominoes is like solving a jigsaw puzzle column by column  each column's state tells you where the next domino must start.</blockquote>`
-},{
+
+<h2>Complexity</h2>
+<p>O(m * 2^n * transitions). For n ≤ 10, this is fast.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>This is called "profile DP" or "DP with bitmask".</li>
+  <li>n must be small (typically ≤ 12).</li>
+  <li>The DFS for transitions can be precomputed for efficiency.</li>
+  <li>Modulo is necessary because number of tilings grows fast.</li>
+</ul>
+
+<blockquote>Tiling with dominoes is like solving a jigsaw puzzle column by column – each column's state tells you where the next domino must start.</blockquote>
+`
+},
+{
   slug: "state-representation-for-tiling-dp-top-and-bottom",
   title: "State Representation for Tiling DP (Top and Bottom)",
   topic: "Dynamic Programming",
@@ -9735,28 +9762,81 @@ int main() {
   html: `
 <p>The state in tiling DP is a bitmask that represents which cells in the current column are already filled by a horizontal domino that started in the previous column. Understanding this state is crucial to implementing the DP correctly.</p>
 
-<h2>Columnbycolumn processing</h2><p>We process the grid from left to right. When we are at column i, some cells in this column may already be occupied because a horizontal domino placed in column i-1 extends into column i. These cells are marked by 1 bits in the mask. The remaining empty cells in column i must be filled using either vertical dominoes (within this column) or horizontal dominoes (that will extend to column i+1).</p>
-<h2>Mask bits</h2><p>For n rows, we use a bitmask of n bits. Bit j (0based from top) = 1 means the cell at (row j, column i) is already occupied. Bit 0 means it's free and needs to be filled now.</p>
-<h2>DFS transition generation</h2><p>We recursively go through rows from top to bottom. At row r:</p><ul>
-  <li>If mask has bit r set  cell already filled, move to next row.</li>  <li>Else, we have two choices:
-    <ul><li>Place a vertical domino covering (r, i) and (r+1, i). This requires r+1 < n and bit r+1 not set in mask. Both cells become filled in current column. No extension to next column.</li>    <li>Place a horizontal domino covering (r, i) and (r, i+1). This leaves (r,i) filled now, and sets bit r in the next mask (indicating that next column's cell is already occupied).</li></ul>  </li></ul>
-<h2>Initial and final states</h2><p>At column 0, mask = 0 (no preceding column). At column m, we require mask = 0 (all cells in the last column must be filled, no pending horizontal dominoes).</p>
-<h2>Optimization</h2><p>Precompute transitions for each mask to avoid DFS per column. Also, note that n is small ( 10), so 2^n  1024, transitions per mask are limited.</p>
-<h2>Things to rememeber</h2><ul>
-  <li>The mask only tracks horizontal dominoes sticking out to the right.</li>  <li>Vertical dominoes are placed entirely within the column and don't affect the next mask.</li>  <li>This DP works for any n up to about 12.</li></ul>
-<blockquote>The bitmask is like a sticky note on the column  it tells you which cells are already taken by dominoes from the left. Everything else must be filled now.</blockquote>`
-},</blockquote></li></ul></h2></p></h2></p></h2></li></ul></li></ul></p></h2></p></h2></blockquote></li></ul></h2></code></pre></h2></p></h2>
+<h2>Column‑by‑column processing</h2>
+<p>We process the grid from left to right. When we are at column i, some cells in this column may already be occupied because a horizontal domino placed in column i-1 extends into column i. These cells are marked by 1 bits in the mask. The remaining empty cells in column i must be filled using either vertical dominoes (within this column) or horizontal dominoes (that will extend to column i+1).</p>
+
+<h2>Mask bits</h2>
+<p>For n rows, we use a bitmask of n bits. Bit j (0‑based from top) = 1 means the cell at (row j, column i) is already occupied. Bit 0 means it's free and needs to be filled now.</p>
+
+<h2>DFS transition generation</h2>
+<p>We recursively go through rows from top to bottom. At row r:</p>
+<ul>
+  <li>If mask has bit r set → cell already filled, move to next row.</li>
+  <li>Else, we have two choices:
+    <ul><li>Place a vertical domino covering (r, i) and (r+1, i). This requires r+1 < n and bit r+1 not set in mask. Both cells become filled in current column. No extension to next column.</li>
+    <li>Place a horizontal domino covering (r, i) and (r, i+1). This leaves (r,i) filled now, and sets bit r in the next mask (indicating that next column's cell is already occupied).</li></ul>
+  </li>
+</ul>
+
+<h2>Initial and final states</h2>
+<p>At column 0, mask = 0 (no preceding column). At column m, we require mask = 0 (all cells in the last column must be filled, no pending horizontal dominoes).</p>
+
+<h2>Optimization</h2>
+<p>Precompute transitions for each mask to avoid DFS per column. Also, note that n is small (≤ 10), so 2^n ≤ 1024, transitions per mask are limited.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The mask only tracks horizontal dominoes sticking out to the right.</li>
+  <li>Vertical dominoes are placed entirely within the column and don't affect the next mask.</li>
+  <li>This DP works for any n up to about 12.</li>
+</ul>
+
+<blockquote>The bitmask is like a sticky note on the column – it tells you which cells are already taken by dominoes from the left. Everything else must be filled now.</blockquote>
+`
+},
+{
+  slug: "closed-form-formula-for-tiling-a-grid",
+  title: "Closed-Form Formula for Tiling a Grid",
+  topic: "Mathematics",
+  difficulty: "Hard",
+  readMinutes: 8,
   date: "2026-05-25",
-  excerpt: "Number of ways to tile a grid of size n x m using 1x2 or 2x1 dominoes. Classical DP with bitmask profile.",
-  tags: ["tilings", "domino", "profile DP", "bitmask"],
+  excerpt: "For a 2 x n grid, the number of domino tilings is the nth Fibonacci number. For larger dimensions, there are formulas using linear recurrences.",
+  tags: ["tiling", "closed form", "Fibonacci", "domino"],
   html: `
-<p>Counting the number of ways to tile a grid with dominoes (2x1 or 1x2) is a classic problem that requires DP over columns with a bitmask representing which cells in the current column are already filled by a domino from the previous column.</p>
+<p>While DP works for any grid, some special cases have closed‑form formulas. The most famous is the 2 x n tiling problem: the number of ways to tile a 2xn board with 1x2 or 2x1 dominoes is the nth Fibonacci number (with appropriate base cases). For larger heights, the number satisfies a linear recurrence that can be solved via matrix exponentiation.</p>
 
-<h2>Problem</h2>
-<p>Given a grid of size n (rows) x m (columns) with n  10 or 12, count the number of tilings using 1x2 or 2x1 dominoes. The answer can be huge, often modulo a prime.</p>
+<h2>2 x n tiling</h2>
+<p>Let f(n) be the number of tilings of a 2xn grid. Recurrence: f(n) = f(n-1) + f(n-2), with f(1)=1, f(2)=2. This is Fibonacci shifted: f(1)=1, f(2)=2, f(3)=3, f(4)=5, f(5)=8,... So f(n) = Fib(n+1).</p>
 
-<h2>DP state representation</h2>
-<p>We process column by column. For each
+<h2>3 x n tiling</h2>
+<p>The recurrence is more complex: f(n) = 4*f(n-2) - f(n-4) for even n, and 0 for odd n (because a 3xn board can only be tiled if n is even). For n=2, f(2)=3; n=4, f(4)=11; etc.</p>
+
+<h2>General n x m with m small</h2>
+<p>For fixed height n, the number of tilings for varying width m satisfies a linear recurrence of order at most 2^n. The recurrence can be derived from the transfer matrix (the DP transition matrix). Then we can compute large m using matrix exponentiation in O(n^3 log m).</p>
+
+<h2>Example: 2 x n closed form (Fibonacci)</h2>
+<pre><code>// Compute f(n) = Fib(n+1)
+int fib(int n) {
+    if (n <= 1) return n;
+    int a = 0, b = 1;
+    for (int i = 2; i <= n+1; i++) {
+        int c = a + b;
+        a = b; b = c;
+    }
+    return b;
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Closed forms exist only for small fixed heights.</li>
+  <li>For general n and m, DP with state compression is the standard approach.</li>
+  <li>Matrix exponentiation can handle large m but fixed n.</li>
+</ul>
+
+<blockquote>Tiling formulas are like hidden patterns – for 2xn it's Fibonacci, for bigger grids it's more complex but still beautiful.</blockquote>
+`
+},
 
 
 ]
