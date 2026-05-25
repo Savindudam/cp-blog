@@ -9204,6 +9204,62 @@ dp[3] = max(1, dp[0]+1 (3<4), dp[1]+1 (1<4), dp[2]+1 (2<4)) = max(1,2,2,3)=3 (1,
 
 <blockquote>O(n^2) LIS is the DP you write when you're not in a hurry  it's simple, correct, and works for n up to a few thousand.</blockquote>
 `
+},{
+  slug: "optimizing-lis-to-o-n-log-n-patience-sorting",
+  title: "Optimizing LIS to O(n log n) (Patience Sorting)",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-25",
+  excerpt: "The O(n^2) LIS is too slow for large n. Patience sorting finds LIS length in O(n log n) using binary search on piles.",
+  tags: ["LIS", "patience sorting", "O(n log n)", "binary search"],
+  html: `
+<p>The O(n^2) DP for Longest Increasing Subsequence works for n up to 5000, but for n = 100,000 it's impossible. There is a faster algorithm using a greedy method called <strong>patience sorting</strong>. It runs in O(n log n) and gives the length of the LIS (but not the actual sequence easily).</p>
+
+<h2>The algorithm</h2>
+<p>Maintain an array <code>tails</code> where <code>tails[i]</code> is the smallest possible last element of an increasing subsequence of length i+1. For each element x in the array, we find the first tail that is >= x (using binary search) and replace it with x. If x is larger than all tails, append it.</p>
+
+<h2>Why it works</h2>
+<p>This algorithm ensures that tails remains sorted. The length of tails at the end is the length of the LIS. The intuition: we always try to keep the tails as small as possible to allow longer subsequences.</p>
+
+<h2>Implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int LISLength(vector&ltint&gt& arr) {
+    vector&ltint&gt tails;
+    for (int x : arr) {
+        auto it = lower_bound(tails.begin(), tails.end(), x);
+        if (it == tails.end()) tails.push_back(x);
+        else *it = x;
+    }
+    return tails.size();
+}
+
+int main() {
+    vector&ltint&gt arr = {10, 9, 2, 5, 3, 7, 101, 18};
+    cout << LISLength(arr) << "\\n"; // 4
+    return 0;
+}</code></pre>
+
+<h2>Reconstructing the LIS (harder)</h2>
+<p>To recover the actual LIS, we need to store for each position the predecessor and use a more complex method. The standard O(n log n) for reconstruction uses an array of indices and binary search on values, storing the best predecessor.</p>
+
+<h2>Nondecreasing vs strictly increasing</h2>
+<p>For strictly increasing, use <code>lower_bound</code>. For nondecreasing (allow equal), use <code>upper_bound</code>.</p>
+
+<h2>Time and space</h2>
+<p>O(n log n) time, O(n) space.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Patience sorting gives length, not necessarily the sequence.</li>
+  <li>Binary search on tails is crucial  O(log n) per element.</li>
+  <li>This algorithm is often used as a subroutine in more complex DP optimizations.</li>
+</ul>
+
+<blockquote>Patience sorting is like playing solitaire  you create piles, and the number of piles equals the LIS length.</blockquote>
+`
 },
 
 
