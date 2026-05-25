@@ -8771,6 +8771,66 @@ Node* buildHuffmanTree(vector&ltpair&ltchar,int&gt&gt& freq) {
 
 <blockquote>Overlapping subproblems are like doublebooking  you don't want to do the same work twice. DP is your calendar that remembers what you've already done.</blockquote>
 `
+},{
+  slug: "coin-change-using-dp-memoization",
+  title: "Coin Change Using DP (Memoization)",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-24",
+  excerpt: "Solve the minimum coins problem with topdown memoization. Recursive function with cache for overlapping subproblems.",
+  tags: ["coin change", "memoization", "top-down", "DP"],
+  html: `
+<p>The coin change problem (minimum number of coins) is ideal for memoization. The naive recursive solution explores all combinations, leading to exponential time. But many subproblems repeat. By caching results for each amount, we reduce complexity to O(amount * number of coins).</p>
+
+<h2>Recursive definition</h2>
+<p>Let f(amount) = minimum coins to make amount. Then f(0)=0, f(amount) = min_{coin  amount} (1 + f(amount - coin)). If no coin works, return infinity.</p>
+
+<h2>Memoized recursive implementation</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int minCoinsMemo(int amount, vector&ltint&gt& coins, vector&ltint&gt& dp) {
+    if (amount == 0) return 0;
+    if (dp[amount] != -1) return dp[amount];
+    int best = INT_MAX;
+    for (int c : coins) {
+        if (amount >= c) {
+            int sub = minCoinsMemo(amount - c, coins, dp);
+            if (sub != INT_MAX) best = min(best, sub + 1);
+        }
+    }
+    return dp[amount] = best;
+}
+
+int main() {
+    vector&ltint&gt coins = {1, 3, 4};
+    int amount = 6;
+    vector&ltint&gt dp(amount + 1, -1);
+    int ans = minCoinsMemo(amount, coins, dp);
+    cout << (ans == INT_MAX ? -1 : ans) << "\\n"; // 2 (3+3)
+    return 0;
+}</code></pre>
+
+<h2>Understanding the state</h2>
+<p>State is just the remaining amount. Order of coins doesn't matter because we try all in the loop.</p>
+
+<h2>Why memoization helps</h2>
+<p>Without memoization, the recursion tree for amount=6 with coins {1,3,4} would have many overlapping calls. For example, f(3) appears from f(6-3) and from f(4-1) etc. Memoization ensures each amount is computed once.</p>
+
+<h2>Handling impossible amounts</h2>
+<p>If no combination exists, dp[amount] remains INT_MAX. At the end, check and return -1 if needed.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Initialize dp with -1 to distinguish uncomputed from 0.</li>
+  <li>Be careful with INT_MAX + 1 overflow  check sub != INT_MAX before adding 1.</li>
+  <li>This approach works for any coin denominations, even noncanonical.</li>
+  <li>Recursion depth can be up to amount (if coin=1). For amount up to 1e5, recursion may cause stack overflow  use iterative DP in that case.</li>
+</ul>
+
+<blockquote>Memoization turns a slow recursive explosion into a fast linear crawl  cache is king.</blockquote>
+`
 },
 
 
