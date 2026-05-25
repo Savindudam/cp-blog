@@ -9120,6 +9120,90 @@ dp[x] = (dp[x] + dp[x - c]) % MOD;</code></pre>
 
 <blockquote>Modulo is the fire extinguisher for integer overflow  it keeps the numbers from exploding.</blockquote>
 `
+},{
+  slug: "longest-increasing-subsequence-on2-dp",
+  title: "Longest Increasing Subsequence O(n^2) DP",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-24",
+  excerpt: "Find the length of the longest increasing subsequence (not necessarily contiguous). Simple O(n^2) DP using the standard recurrence.",
+  tags: ["LIS", "longest increasing subsequence", "O(n^2)", "DP"],
+  html: `
+<p>The Longest Increasing Subsequence (LIS) problem: given an array, find the length of the longest subsequence (not necessarily contiguous) where elements are in strictly increasing order. The O(n^2) DP is straightforward and a good starting point before optimizing to O(n log n).</p>
+
+<h2>DP state definition</h2>
+<p>Let dp[i] = length of the LIS ending at index i (including arr[i]). Then:</p>
+<pre><code>dp[i] = 1 + max{ dp[j] } for all j < i with arr[j] < arr[i]
+If no such j, dp[i] = 1.</code></pre>
+
+<h2>Implementation O(n^2)</h2>
+<pre><code>#include &ltbits/stdc++.h&gt
+using namespace std;
+
+int LIS(vector&ltint&gt& arr) {
+    int n = arr.size();
+    vector&ltint&gt dp(n, 1);
+    int ans = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] < arr[i]) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+        ans = max(ans, dp[i]);
+    }
+    return ans;
+}
+
+int main() {
+    vector&ltint&gt arr = {10, 9, 2, 5, 3, 7, 101, 18};
+    cout << LIS(arr) << "\\n"; // 4 (2,5,7,101 or 2,3,7,101)
+    return 0;
+}</code></pre>
+
+<h2>Stepbystep example</h2>
+<p>arr = [3, 1, 2, 4]<br>
+dp[0] = 1 (3)<br>
+dp[1] = 1 (1)<br>
+dp[2] = max(1, dp[1]+1 because 1<2) = 2 (1,2)<br>
+dp[3] = max(1, dp[0]+1 (3<4), dp[1]+1 (1<4), dp[2]+1 (2<4)) = max(1,2,2,3)=3 (1,2,4 or 3,4?) actually 1,2,4 length 3. So answer=3.</p>
+
+<h2>Reconstructing the LIS</h2>
+<p>Store predecessor array along with dp.</p>
+<pre><code>vector&ltint&gt reconstructLIS(vector&ltint&gt& arr) {
+    int n = arr.size();
+    vector&ltint&gt dp(n, 1), prev(n, -1);
+    int bestIdx = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] < arr[i] && dp[j] + 1 > dp[i]) {
+                dp[i] = dp[j] + 1;
+                prev[i] = j;
+            }
+        }
+        if (dp[i] > dp[bestIdx]) bestIdx = i;
+    }
+    vector&ltint&gt lis;
+    for (int i = bestIdx; i != -1; i = prev[i]) {
+        lis.push_back(arr[i]);
+    }
+    reverse(lis.begin(), lis.end());
+    return lis;
+}</code></pre>
+
+<h2>Time complexity</h2>
+<p>O(n^2). For n up to 5000, this is acceptable (25 million operations). For n up to 10^5, need O(n log n) solution (using patience sorting).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>LIS is about subsequence, not subarray (elements don't need to be consecutive).</li>
+  <li>The DP recurrence is similar to longest path in DAG (i -> j if i<j and arr[i]<arr[j]).</li>
+  <li>Strictly increasing: use <code>arr[j] < arr[i]</code>. For nondecreasing, use <=.</li>
+</ul>
+
+<blockquote>O(n^2) LIS is the DP you write when you're not in a hurry  it's simple, correct, and works for n up to a few thousand.</blockquote>
+`
 },
 
 
