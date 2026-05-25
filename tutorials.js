@@ -9395,6 +9395,65 @@ int main() {
 
 <blockquote>Subset sum DP is like packing a suitcase  you decide whether to take each item, and track all possible weights you can achieve.</blockquote>
 `
+},{
+  slug: "one-dimensional-dp-array-trick-for-subset-sum",
+  title: "One-Dimensional DP Array Trick for Subset Sum",
+  topic: "Dynamic Programming",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-25",
+  excerpt: "Save space by using a 1D boolean array instead of 2D. Iterate backwards for 0/1 knapsack, forwards for unbounded.",
+  tags: ["1D DP", "space optimization", "subset sum", "knapsack"],
+  html: `
+<p>The naive subset sum DP uses a 2D table of size n x target. But we can reduce space to O(target) by reusing a single array. The key is to iterate the target in the correct direction (backwards for 0/1, forwards for unbounded).</p>
+
+<h2>2D vs 1D</h2>
+<p>In 2D, dp[i][x] depends on dp[i-1][x] and dp[i-1][x - num]. With 1D, we need to update in place without overwriting values needed for the same item.</p>
+
+<h2>0/1 knapsack (each item once)  iterate backwards</h2>
+<pre><code>vector&ltbool&gt dp(target + 1, false);
+dp[0] = true;
+for (int num : nums) {
+    for (int x = target; x >= num; x--) {
+        if (dp[x - num]) dp[x] = true;
+    }
+}</code></pre>
+
+<h2>Unbounded knapsack (unlimited copies)  iterate forwards</h2>
+<pre><code>for (int num : nums) {
+    for (int x = num; x <= target; x++) {
+        if (dp[x - num]) dp[x] = true;
+    }
+}</code></pre>
+
+<h2>Counting number of ways (1D)</h2>
+<p>For counting ways, the same direction rules apply:</p>
+<pre><code>// 0/1 combinations
+for (int num : nums) {
+    for (int x = target; x >= num; x--) {
+        dp[x] += dp[x - num];bounded combinations
+for (int n
+    }
+}
+// unum : nums) {
+    for (int x = num; x <= target; x++) {
+        dp[x] += dp[x - num];
+    }
+}</code></pre>
+
+<h2>Why direction matters</h2>
+<p>Backwards ensures that when we update dp[x] using dp[x - num], the dp[x - num] hasn't been updated in the current iteration (so it still represents "without current item"). Forward allows the same item to be used repeatedly.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always initialize dp[0] = true (or 1 for counting).</li>
+  <li>For 0/1 knapsack: outer loop over items, inner loop target downwards.</li>
+  <li>For unbounded: inner loop target upwards.</li>
+  <li>This trick is essential for large targets where 2D table would be too big.</li>
+</ul>
+
+<blockquote>The 1D DP trick is like writing notes on a whiteboard  you erase and write in the right order so you don't lose information.</blockquote>
+`
 },
 
 
