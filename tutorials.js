@@ -9071,6 +9071,55 @@ Permutations: 1+1+1, 1+2, 2+1  3 ways.</p>
 
 <blockquote>Counting ways is like counting different recipes  the order of ingredients matters in a sequence, but not in a set.</blockquote>
 `
+},{
+  slug: "modulo-m-in-counting-solutions",
+  title: "Modulo m in Counting Solutions",
+  topic: "Dynamic Programming",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-24",
+  excerpt: "When counting ways, the answer can be enormous. Use modulo to keep numbers manageable and match problem requirements.",
+  tags: ["modulo", "counting", "DP", "integer overflow"],
+  html: `
+<p>In many counting problems, the number of ways can be astronomically large (e.g., 2^1000). The problem will ask for the answer modulo some number M (often 10^9+7). Taking modulo at each addition prevents overflow and keeps numbers within range.</p>
+
+<h2>Why modulo is needed</h2>
+<p>Without modulo, the number of ways would quickly exceed 64bit integers. For example, number of ways to make amount 1000 with coins {1,2} is the 1000th Fibonacci number  7e208  impossible to store natively.</p>
+
+<h2>Applying modulo in DP</h2>
+<p>Simply take modulo after every addition:</p>
+<pre><code>const int MOD = 1e9 + 7;
+dp[x] = (dp[x] + dp[x - c]) % MOD;</code></pre>
+
+<h2>Complete example (combinations with modulo)</h2>
+<pre><code>int countWaysMod(vector&ltint&gt& coins, int amount) {
+    const int MOD = 1000000007;
+    vector&ltint&gt dp(amount + 1, 0);
+    dp[0] = 1;
+    for (int c : coins) {
+        for (int x = c; x <= amount; x++) {
+            dp[x] = (dp[x] + dp[x - c]) % MOD;
+        }
+    }
+    return dp[amount];
+}</code></pre>
+
+<h2>Modulo for minimum coins?</h2>
+<p>Minimum coins problem does not involve counting, so modulo is not used (the answer itself is small). But if you are counting something like "number of ways to achieve minimum", you would modulo that count.</p>
+
+<h2>Negative numbers in modulo</h2>
+<p>When subtracting, ensure the result is nonnegative before modulo: <code>(a - b + MOD) % MOD</code>.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always use <code>% MOD</code> after every addition/multiplication in counting DP.</li>
+  <li>Use <code>long long</code> for intermediate if MOD^2 might overflow int.</li>
+  <li>Common mod primes: 1e9+7, 998244353.</li>
+  <li>Modulo operations are relatively slow, but necessary.</li>
+</ul>
+
+<blockquote>Modulo is the fire extinguisher for integer overflow  it keeps the numbers from exploding.</blockquote>
+`
 },
 
 
