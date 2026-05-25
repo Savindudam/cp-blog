@@ -8641,6 +8641,87 @@ Node* buildHuffmanTree(vector&ltpair&ltchar,int&gt&gt& freq) {
 
 <blockquote>Huffman's algorithm is like building a tree from the ground up  always combine the smallest two, and you'll reach the optimal canopy.</blockquote>
 `
+},{
+  slug: "building-a-huffman-tree-from-frequencies",
+  title: "Building a Huffman Tree from Frequencies",
+  topic: "Compression",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-24",
+  excerpt: "Complete C++ implementation of Huffman tree construction, code generation, and decoding. Includes memory management and traversal.",
+  tags: ["Huffman tree", "code generation", "decoding", "priority queue"],
+  html: `
+<p>Building the Huffman tree is only half the work. You also need to generate the binary codes for each symbol (by traversing the tree) and decode a compressed bitstream back to the original symbols. Here's a full implementation.</p>
+
+<h2>Generating codes from tree</h2>
+<pre><code>void generateCodes(Node* root, string code, unordered_map&ltchar, string&gt& codes) {
+    if (!root) return;
+    if (root->ch != 0) { // leaf node
+        codes[root->ch] = code;
+        return;
+    }
+    generateCodes(root->left, code + "0", codes);
+    generateCodes(root->right, code + "1", codes);
+}</code></pre>
+
+<h2>Encoding a string</h2>
+<pre><code>string encode(const string& text, unordered_map&ltchar, string&gt& codes) {
+    string encoded;
+    for (char c : text) encoded += codes[c];
+    return encoded;
+}</code></pre>
+
+<h2>Decoding a bitstring using the tree</h2>
+<pre><code>string decode(const string& encoded, Node* root) {
+    string decoded;
+    Node* curr = root;
+    for (char bit : encoded) {
+        if (bit == '0') curr = curr->left;
+        else curr = curr->right;
+        if (curr->ch != 0) { // leaf
+            decoded += curr->ch;
+            curr = root;
+        }
+    }
+    return decoded;
+}</code></pre>
+
+<h2>Complete example</h2>
+<pre><code>int main() {
+    vector&ltpair&ltchar,int&gt&gt freq = {{'A',5}, {'B',2}, {'C',1}, {'D',1}, {'E',7}};
+    Node* root = buildHuffmanTree(freq);
+    unordered_map&ltchar, string&gt codes;
+    generateCodes(root, "", codes);
+    for (auto& p : codes) cout << p.first << " : " << p.second << "\\n";
+    string text = "ABCDE";
+    string enc = encode(text, codes);
+    cout << "Encoded: " << enc << "\\n";
+    string dec = decode(enc, root);
+    cout << "Decoded: " << dec << "\\n";
+    return 0;
+}</code></pre>
+
+<h2>Memory management (delete tree)</h2>
+<pre><code>void deleteTree(Node* root) {
+    if (!root) return;
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}</code></pre>
+
+<h2>Handling frequencies as counts</h2>
+<p>If input is a string, first compute frequency map.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The tree must be traversed to assign codes  recursion works fine.</li>
+  <li>Decoding is linear in the length of the encoded string (O(len)).</li>
+  <li>Prefixfree property ensures greedy decoding works.</li>
+  <li>Always free memory to avoid leaks (though cp judges usually don't care).</li>
+</ul>
+
+<blockquote>Building a Huffman tree is like constructing a binary family tree  leaves are symbols, internal nodes are mergers. Codes are the paths from root to leaves.</blockquote>
+`
 },
 
 
