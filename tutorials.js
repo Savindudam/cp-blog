@@ -9934,6 +9934,50 @@ int fib(int n) {
 <blockquote>Two pointers for subarray sum is like moving a magnifying glass  you enlarge it when you need more, shrink when you have too much.</blockquote>
 `
 },
+{
+  slug: "2sum-problem-with-two-pointers-on-sorted-array",
+  title: "2SUM Problem with Two Pointers on Sorted Array",
+  topic: "Two Pointers",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-26",
+  excerpt: "Given a sorted array, find two numbers that sum to target. Use two pointers: one at start, one at end. O(n) time.",
+  tags: ["2sum", "two pointers", "sorted array", "target sum"],
+  html: `
+<p>The 2SUM problem is classic: given an array and a target, find two distinct elements that sum to target. If the array is sorted, we can solve it in O(n) using two pointers without needing a hashmap. This is a fundamental technique in CP.</p>
+
+<h2>Algorithm</h2>
+<pre><code>pair&ltint,int&gt twoSumSorted(vector&ltint&gt& arr, int target) {
+    int l = 0, r = arr.size() - 1;
+    while (l < r) {
+        int sum = arr[l] + arr[r];
+        if (sum == target) return {l, r};
+        else if (sum < target) l++;
+        else r--;
+    }
+    return {-1, -1};
+}</code></pre>
+
+<h2>Why it works</h2>
+<p>Because the array is sorted, if sum is too small, we increase the left pointer to get a larger sum. If sum is too large, we decrease the right pointer to get a smaller sum. This narrows down the search space.</p>
+
+<h2>Handling duplicates</h2>
+<p>If there are duplicate values, the first found pair is returned. To find all unique pairs, skip duplicates after finding a match.</p>
+
+<h2>Complexity</h2>
+<p>O(n) time, O(1) extra space.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The array must be sorted. If not, sort first (O(n log n)) then apply two pointers.</li>
+  <li>This works for any integers (positive/negative).</li>
+  <li>Also works for 3SUM, 4SUM by fixing one element and doing two pointers on the rest.</li>
+</ul>
+
+<blockquote>Twopointer 2SUM is like meeting in the middle  the two pointers walk towards each other until they find the right sum.</blockquote>
+`
+},
+     
 
 
 
