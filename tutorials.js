@@ -10595,6 +10595,39 @@ for (int i = N-1; i > 0; i--) tree[i] = tree[2*i] + tree[2*i+1];</code></pre>
 
 <blockquote>Bottomup segment tree is like building a pyramid from the base  you start with individual stones and work your way up.</blockquote>
 `
+},{
+  slug: "segment-tree-update-and-query-in-olog-n",
+  title: "Segment Tree Update and Query in O(log n)",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-26",
+  excerpt: "Why segment tree operations are logarithmic: each level of the tree reduces the interval size by half. Only O(log n) nodes are visited.",
+  tags: ["segment tree", "complexity", "O(log n)", "analysis"],
+  html: `
+<p>The power of a segment tree lies in its height. For an array of n elements, the tree has about log2(n) levels. Both update and query operations traverse at most O(log n) nodes. This makes it efficient even for large n (e.g., 10^5).</p>
+
+<h2>Why O(log n) for query?</h2>
+<p>When querying a range, we start at the root and recursively descend. At each level, we only descend into at most two branches that intersect the query range. The number of visited nodes is bounded by O(log n). In the iterative version, the loop runs at most 2*log2(n) steps.</p>
+
+<h2>Why O(log n) for update?</h2>
+<p>To update a point, we go from the leaf up to the root, updating each ancestor. The height is log2(n), so O(log n) nodes are updated.</p>
+
+<h2>Comparison with Fenwick tree</h2>
+<p>Both are O(log n), but segment tree has a higher constant factor. However, segment tree supports arbitrary associative operations (min, max, gcd) and range updates with lazy propagation, which Fenwick cannot do easily.</p>
+
+<h2>Example</h2>
+<p>n=8, tree height = 3. Query for range [2,5] visits about 6 nodes (less than 2*log2(8)=6). Update visits 4 nodes.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Logarithmic time is extremely fast  for n=10^5, log2(n)17.</li>
+  <li>Segment tree with lazy propagation can handle range updates in O(log n) as well.</li>
+  <li>Memory usage O(n)  about 4n for recursive, 2*next_power_of_two for iterative.</li>
+</ul>
+
+<blockquote>O(log n) is the sweet spot  fast enough for almost any CP constraint, and segment tree delivers it reliably.</blockquote>
+`
 },
      
 
