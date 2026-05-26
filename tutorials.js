@@ -10285,6 +10285,66 @@ public:
 <blockquote>2D prefix sum is like having a map of accumulaterainfall  you can compute any rectangle's total by adding and subtracting four corners.</blockquote>
 `
 },
+{
+  slug: "sparse-table-for-range-minimum-queries-o1",
+  title: "Sparse Table for Range Minimum Queries O(1)",
+  topic: "Range Queries",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-26",
+  excerpt: "Sparse table precomputes minimum (or maximum, GCD, etc.) for all intervals of length powers of two. Query in O(1) but no updates.",
+  tags: ["sparse table", "RMQ", "O(1) query", "static array"],
+  html: `
+<p>The sparse table is a data structure that answers range minimum queries (RMQ) in O(1) after O(n log n) preprocessing. It works for any idempotent operation (min, max, gcd, lcm) but not for sum (because sum is not idempotent). It's static – no updates.</p>
+
+<h2>Preprocessing</h2>
+<pre><code>class SparseTable {
+    vector&ltvector&ltint&gt&gt st;
+    vector&ltint&gt log;
+public:
+    SparseTable(vector&ltint&gt& arr) {
+        int n = arr.size();
+        log.resize(n+1);
+        log[1] = 0;
+        for (int i = 2; i <= n; i++) log[i] = log[i/2] + 1;
+        int K = log[n] + 1;
+        st.assign(K, vector&ltint&gt(n));
+        for (int i = 0; i < n; i++) st[0][i] = arr[i];
+        for (int j = 1; j < K; j++) {
+            for (int i = 0; i + (1<<j) <= n; i++) {
+                st[j][i] = min(st[j-1][i], st[j-1][i + (1<<(j-1))]);
+            }
+        }
+    }
+    int query(int l, int r) { // inclusive
+        int j = log[r - l + 1];
+        return min(st[j][l], st[j][r - (1<<j) + 1]);
+    }
+};</code></pre>
+
+<h2>How it works</h2>
+<p>st[j][i] = min over range [i, i+2^j - 1]. For query [l,r], let len = r-l+1, let k = floor(log2(len)). Then the min is min(st[k][l], st[k][r-2^k+1]). Because the two intervals overlap but that's fine for min.</p>
+
+<h2>Complexity</h2>
+<p>Preprocessing O(n log n), query O(1). Space O(n log n).</p>
+
+<h2>When to use</h2>
+<p>Use sparse table for static arrays when you have many queries and need O(1) response. If you need updates, use segment tree.</p>
+
+<h2>Other operations</h2>
+<p>Works for max, GCD, LCM, bitwise AND, bitwise OR (all idempotent and overlapping allowed). Does NOT work for sum or XOR (need no overlap).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The operation must be idempotent (f(x,x)=x) and associative.</li>
+  <li>Memory can be heavy for large n (e.g., n=1e5, log=17, ~1.7e6 integers).</li>
+  <li>Use 0‑based indexing for array, and inclusive queries.</li>
+</ul>
+
+<blockquote>Sparse table is like having a cheat sheet of pre‑computed intervals – you only need to combine two overlapping intervals to get the answer.</blockquote>
+`
+},
+
      
 
 
