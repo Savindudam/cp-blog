@@ -10628,6 +10628,64 @@ for (int i = N-1; i > 0; i--) tree[i] = tree[2*i] + tree[2*i+1];</code></pre>
 
 <blockquote>O(log n) is the sweet spot  fast enough for almost any CP constraint, and segment tree delivers it reliably.</blockquote>
 `
+},{
+  slug: "segment-tree-for-minimum-maximum-queries",
+  title: "Segment Tree for Minimum/Maximum Queries",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Segment tree can answer range minimum or maximum queries (RMQ) with point updates. The operation is min or max, which is associative and idempotent.",
+  tags: ["segment tree", "RMQ", "min", "max", "range query"],
+  html: `
+<p>Segment tree is perfect for range minimum (or maximum) queries. Unlike Fenwick tree, which only works for invertible operations like sum, segment tree works for any associative operation. Min and max are associative and also idempotent, but segment tree handles them gracefully.</p>
+
+<h2>Change combine function</h2>
+<p>Instead of summing, we take min (or max).</p>
+
+<h2>Building for min</h2>
+<pre><code>void build(int node, int l, int r, vector&ltint&gt& arr) {
+    if (l == r) tree[node] = arr[l];
+    else {
+        int mid = (l+r)/2;
+        build(2*node, l, mid, arr);
+        build(2*node+1, mid+1, r, arr);
+        tree[node] = min(tree[2*node], tree[2*node+1]);
+    }
+}</code></pre>
+
+<h2>Query for min</h2>
+<pre><code>int query(int node, int l, int r, int ql, int qr) {
+    if (qr < l || ql > r) return INT_MAX;
+    if (ql <= l && r <= qr) return tree[node];
+    int mid = (l+r)/2;
+    return min(query(2*node, l, mid, ql, qr),
+               query(2*node+1, mid+1, r, ql, qr));
+}</code></pre>
+
+<h2>Point update for min</h2>
+<pre><code>void update(int node, int l, int r, int idx, int val) {
+    if (l == r) tree[node] = val;
+    else {
+        int mid = (l+r)/2;
+        if (idx <= mid) update(2*node, l, mid, idx, val);
+        else update(2*node+1, mid+1, r, idx, val);
+        tree[node] = min(tree[2*node], tree[2*node+1]);
+    }
+}</code></pre>
+
+<h2>Iterative version for min</h2>
+<p>Replace sum with min in the merge step. For query, initialize res = INF for min, or -INF for max.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>For min, initialize neutral element as INF; for max, use -INF.</li>
+  <li>Segment tree with min is often used in problems like "range minimum query with updates".</li>
+  <li>It can also handle gcd, lcm, and other associative operations.</li>
+</ul>
+
+<blockquote>Switching from sum to min is like changing the lens  the tree structure stays the same, only the merge rule changes.</blockquote>
+`
 },
      
 
