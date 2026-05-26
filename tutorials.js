@@ -10430,6 +10430,62 @@ public:
 
 <blockquote>Add and sum are two sides of the same coin  one goes up the tree, the other goes down. Both dance to the rhythm of the lowest set bit.</blockquote>
 `
+},{
+  slug: "bit-implementation-using-pk-equals-k-and-minus-k",
+  title: "BIT Implementation Using p(k) = k & -k",
+  topic: "Data Structures",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-26",
+  excerpt: "The heart of Fenwick tree is the function LSB(i) = i & -i. It gives the lowest set bit, which determines the range of responsibility of each index.",
+  tags: ["Fenwick", "LSB", "bitwise", "implementation"],
+  html: `
+<p>The Fenwick tree relies on a single bitwise trick: <code>lsb = i & -i</code>. This isolates the lowest set bit of i. For example, i=6 (binary 110), -i is two's complement: 010, so 110 & 010 = 010 (2). That 2 tells us that BIT[6] covers a range of length 2 (indices 5-6). Understanding this is key to implementing BIT correctly.</p>
+
+<h2>Properties of i & -i</h2>
+<ul>
+  <li>Always returns a power of two.</li>
+  <li>For i odd, returns 1.</li>
+  <li>For i a power of two, returns i itself.</li>
+</ul>
+
+<h2>Update loop: i += i & -i</h2>
+<p>Moves i to the next index that covers the current one. For i=3 (binary 011), lsb=1, next=4 (100). For i=4, lsb=4, next=8. So indices that cover position 3 are 3,4,8,...</p>
+
+<h2>Query loop: i -= i & -i</h2>
+<p>Moves i to the previous disjoint range. For i=7 (111), lsb=1, next=6 (110); then lsb=2, next=4 (100); then lsb=4, next=0. So prefix sum up to 7 = BIT[7] + BIT[6] + BIT[4].</p>
+
+<h2>Complete implementation</h2>
+<pre><code>class Fenwick {
+    vector&ltint&gt bit;
+    int n;
+public:
+    Fenwick(int size) : n(size), bit(size+1, 0) {}
+    void add(int idx, int delta) {
+        while (idx <= n) {
+            bit[idx] += delta;
+            idx += idx & -idx;
+        }
+    }
+    int sum(int idx) {
+        int res = 0;
+        while (idx > 0) {
+            res += bit[idx];
+            idx -= idx & -idx;
+        }
+        return res;
+    }
+};</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The BIT array size is n+1 (1indexed).</li>
+  <li>Works for any cumulative operation that is invertible (sum, XOR, multiplication modulo prime).</li>
+  <li>For min/max, you need a different structure (segment tree).</li>
+</ul>
+
+<blockquote>i & -i is the secret handshake of Fenwick tree  it reveals how far each index's influence reaches.</blockquote>
+`
 },
      
 
