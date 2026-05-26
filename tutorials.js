@@ -10137,6 +10137,66 @@ int fib(int n) {
 
 <blockquote>Sliding window deque is like a VIP queue  only the candidate minima stay, and the oldest leaves when the window moves.</blockquote>
 `
+},{
+  slug: "range-queries-sum-minimum-maximum",
+  title: "Range Queries: Sum, Minimum, Maximum",
+  topic: "Range Queries",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-26",
+  excerpt: "Answer many queries of the form: what is the sum/min/max of subarray [l,r]? Static array can use prefix sums (sum) or sparse table (min/max).",
+  tags: ["range query", "prefix sum", "sparse table", "RMQ"],
+  html: `
+<p>Range queries are extremely common in CP. For a static array (no updates), we can preprocess to answer queries in O(1) or O(log n). For sum, prefix sums work. For min/max, sparse table gives O(1) query after O(n log n) preprocessing.</p>
+
+<h2>Range sum  prefix sum array</h2>
+<pre><code>vector&ltlong long&gt prefixSum(vector&ltint&gt& arr) {
+    vector&ltlong long&gt pref(arr.size() + 1, 0);
+    for (int i = 0; i < arr.size(); i++) pref[i+1] = pref[i] + arr[i];
+    return pref;
+}
+// query sum[l..r] (0-indexed): pref[r+1] - pref[l]</code></pre>
+
+<h2>Range minimum  sparse table</h2>
+<pre><code>class SparseTable {
+    vector&ltvector&ltint&gt&gt st;
+    vector&ltint&gt log;
+public:
+    SparseTable(vector&ltint&gt& arr) {
+        int n = arr.size();
+        log.resize(n+1);
+        log[1] = 0;
+        for (int i = 2; i <= n; i++) log[i] = log[i/2] + 1;
+        int K = log[n] + 1;
+        st.assign(K, vector&ltint&gt(n));
+        for (int i = 0; i < n; i++) st[0][i] = arr[i];
+        for (int j = 1; j < K; j++)
+            for (int i = 0; i + (1<<j) <= n; i++)
+                st[j][i] = min(st[j-1][i], st[j-1][i + (1<<(j-1))]);
+    }
+    int query(int l, int r) { // inclusive
+        int j = log[r - l + 1];
+        return min(st[j][l], st[j][r - (1<<j) + 1]);
+    }
+};</code></pre>
+
+<h2>Range maximum  same as min but with max function.</h2>
+
+<h2>When to use which</h2>
+<ul>
+  <li>Sum: prefix sums (O(1), no updates).</li>
+  <li>Min/Max: sparse table (O(1) query, static) or segment tree (O(log n), supports updates).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Prefix sums only work for sum (and other invertible operations like XOR).</li>
+  <li>Sparse table requires O(n log n) memory and preprocessing, but queries are O(1).</li>
+  <li>For updates, use Fenwick tree or segment tree.</li>
+</ul>
+
+<blockquote>Range queries are like having a cheat sheet  you precompute once, then answer instantly.</blockquote>
+`
 },
      
 
