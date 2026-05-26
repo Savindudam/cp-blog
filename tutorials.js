@@ -10344,7 +10344,44 @@ public:
 <blockquote>Sparse table is like having a cheat sheet of pre‑computed intervals – you only need to combine two overlapping intervals to get the answer.</blockquote>
 `
 },
+{
+  slug: "binary-indexed-tree-fenwick-tree-introduction",
+  title: "Binary Indexed Tree (Fenwick Tree) Introduction",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Fenwick tree is a data structure that supports point updates and prefix sum queries in O(log n). It's simpler and faster than segment tree for these operations.",
+  tags: ["Fenwick", "BIT", "prefix sum", "point update"],
+  html: `
+<p>A Binary Indexed Tree (Fenwick Tree) is a data structure that maintains an array of numbers and supports two operations efficiently: adding a value to an element (point update), and computing the sum of the first k elements (prefix sum). Both operations take O(log n) time. It uses less memory than a segment tree and is easier to code.</p>
 
+<h2>When to use Fenwick tree</h2>
+<p>Use it when you have an array that changes over time (updates) and you need to answer many prefix sum queries or range sum queries (by computing prefix[r] - prefix[l-1]). It does not support range updates easily (but can with two BITs).</p>
+
+<h2>Key idea</h2>
+<p>Each index i stores the sum of a range of elements. The range length is the least significant bit of i. The magic function <code>i & -i</code> isolates the lowest set bit.</p>
+
+<h2>Operations overview</h2>
+<ul>
+  <li><strong>add(i, delta)</strong>: add delta to element at index i. Update all BIT indices that cover i.</li>
+  <li><strong>sum(i)</strong>: return sum of elements from 1 to i. Traverse down the tree.</li>
+</ul>
+
+<h2>Example</h2>
+<p>For array size 8, BIT indices 1..8. BIT[4] covers indices 1-4, BIT[6] covers 5-6, etc.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Fenwick tree uses 1based indexing (most implementations).</li>
+  <li>It's much shorter to code than segment tree.</li>
+  <li>It cannot be used for noninvertible operations like min/max without modification (but can with a different design).</li>
+  <li>Supports only point updates and prefix queries; range updates require two BITs.</li>
+</ul>
+
+<blockquote>Fenwick tree is like a staircase  each step covers a different number of original elements, and you can climb up or down in log n steps.</blockquote>
+`
+},
      
 
 
