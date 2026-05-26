@@ -10032,6 +10032,63 @@ int fib(int n) {
 
 <blockquote>3SUM with two pointers is like fixing one element and solving 2SUM on the rest  elegant and fast enough for mediumsized arrays.</blockquote>
 `
+},{
+  slug: "finding-nearest-smaller-elements-using-stack",
+  title: "Finding Nearest Smaller Elements Using Stack",
+  topic: "Stack",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "For each element, find the nearest smaller element to the left (or right). Classic monotonic stack problem O(n).",
+  tags: ["stack", "monotonic stack", "nearest smaller", "next smaller"],
+  html: `
+<p>The "nearest smaller to left" (NSL) and "nearest smaller to right" (NSR) problems are classic examples of monotonic stacks. For each element, we want the index of the closest element on its left that is smaller. This can be computed in O(n) using a stack that maintains increasing order.</p>
+
+<h2 smaller to left</h2>
+<pre><code>vector&ltint&gt nearestSmallerLeft(vector&ltint&gt& arr) {
+    int n = arr.size();
+    vector&ltint&gt res(n, -1);
+    stack&ltint&gt st;
+    for (int i = 0; i < n; i++) {
+        while (!st.empty() && arr[st.top()] >= arr[i]) st.pop();
+        if (!st.empty()) res[i] = st.top();
+        st.push(i);
+    }
+    return res;
+}</code></pre>
+
+<h2>Nearest smaller to right</h2>
+<pre><code>vector&ltint&gt nearestSmallerRight(vector&ltint&gt& arr) {
+    int n = arr.size();
+    vector&ltint&gt res(n, n);
+    stack&ltint&gt st;
+    for (int i = n-1; i >= 0; i--) {
+        while (!st.empty() && arr[st.top()] >= arr[i]) st.pop();
+        if (!st.empty()) res[i] = st.top();
+        st.push(i);
+    }
+    return res;
+}</code></pre>
+
+<h2>Why stack works</h2>
+<p>The stack stores indices of elements in increasing order of value. When we see a new element, we pop all elements that are >= it because they cannot be the nearest smaller for any future element (the new one is smaller and closer).</p>
+
+<h2>Applications</h2>
+<ul>
+  <li>Largest rectangle in histogram (using nearest smaller left and right).</li>
+  <li>Maximal rectangle in binary matrix.</li>
+  <li>Stock span problem.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Monotonic stack is O(n).</li>
+  <li>Change the comparator for "greater" problems (nearest greater).</li>
+  <li>Store indices to get positions, or values if only values needed.</li>
+</ul>
+
+<blockquote>The monotonic stack is like a line of people  when a shorter person comes, taller ones leave because they'll never be the nearest smaller for anyone behind.</blockquote>
+`
 },
      
 
