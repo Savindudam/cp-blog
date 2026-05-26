@@ -10486,6 +10486,60 @@ public:
 
 <blockquote>i & -i is the secret handshake of Fenwick tree  it reveals how far each index's influence reaches.</blockquote>
 `
+},{
+  slug: "segment-tree-structure-and-sum-queries",
+  title: "Segment Tree: Structure and Sum Queries",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-26",
+  excerpt: "Segment tree stores aggregate information (like sum) for intervals. Supports point updates and range queries in O(log n). More flexible than Fenwick.",
+  tags: ["segment tree", "range query", "point update", "sum"],
+  html: `
+<p>A segment tree is a binary tree where each node represents a segment (interval) of the array. The root covers the whole array, its children cover the left and right halves, and leaves cover single elements. It can answer range queries (sum, min, max, etc.) and support point updates in O(log n).</p>
+
+<h2>Structure</h2>
+<p>For an array of size n, we build a tree of size about 4n. Node i (usually stored in an array) represents interval [l, r]. Its left child is 2*i, right child is 2*i+1.</p>
+
+<h2>Building the tree (sum)</h2>
+<pre><code>void build(int node, int l, int r, vector&ltint&gt& arr) {
+    if (l == r) tree[node] = arr[l];
+    else {
+        int mid = (l + r) / 2;
+        build(2*node, l, mid, arr);
+        build(2*node+1, mid+1, r, arr);
+        tree[node] = tree[2*node] + tree[2*node+1];
+    }
+}</code></pre>
+
+<h2>Range sum query</h2>
+<pre><code>int query(int node, int l, int r, int ql, int qr) {
+    if (qr < l || ql > r) return 0;
+    if (ql <= l && r <= qr) return tree[node];
+    int mid = (l + r) / 2;
+    return query(2*node, l, mid, ql, qr) + query(2*node+1, mid+1, r, ql, qr);
+}</code></pre>
+
+<h2>Point update</h2>
+<pre><code>void update(int node, int l, int r, int idx, int val) {
+    if (l == r) tree[node] = val;
+    else {
+        int mid = (l + r) / 2;
+        if (idx <= mid) update(2*node, l, mid, idx, val);
+        else update(2*node+1, mid+1, r, idx, val);
+        tree[node] = tree[2*node] + tree[2*node+1];
+    }
+}</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Segment tree can handle any associative operation (sum, min, max, gcd, etc.).</li>
+  <li>It uses O(n) space (about 4n).</li>
+  <li>Recursive implementation is easy; iterative version is faster but more complex.</li>
+</ul>
+
+<blockquote>Segment tree is like a hierarchical summary  each node knows the answer for its segment, and queries combine nodes without redundancy.</blockquote>
+`
 },
      
 
