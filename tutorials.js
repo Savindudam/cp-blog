@@ -10089,6 +10089,54 @@ int fib(int n) {
 
 <blockquote>The monotonic stack is like a line of people  when a shorter person comes, taller ones leave because they'll never be the nearest smaller for anyone behind.</blockquote>
 `
+},{
+  slug: "sliding-window-minimum-with-deque",
+  title: "Sliding Window Minimum with a Deque",
+  topic: "Deque",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Given an array and window size k, find the minimum in each sliding window. Use a deque to maintain indices of potential minima in O(n).",
+  tags: ["sliding window", "deque", "minimum", "monotonic queue"],
+  html: `
+<p>The sliding window minimum problem (and maximum) is solved efficiently using a monotonic deque (doubleended queue). The deque stores indices of array elements in increasing order of their values, so the front always contains the index of the minimum in the current window.</p>
+
+<h2>Algorithm</h2>
+<pre><code>vector&ltint&gt slidingWindowMin(vector&ltint&gt& arr, int k) {
+    deque&ltint&gt dq;
+    vector&ltint&gt result;
+    for (int i = 0; i < arr.size(); i++) {
+        // remove indices out of window
+        if (!dq.empty() && dq.front() == i - k) dq.pop_front();
+        // maintain increasing order: remove from back while arr[back] >= arr[i]
+        while (!dq.empty() && arr[dq.back()] >= arr[i]) dq.pop_back();
+        dq.push_back(i);
+        if (i >= k-1) result.push_back(arr[dq.front()]);
+    }
+    return result;
+}</code></pre>
+
+<h2>For maximum</h2>
+<p>Change the while condition to <code>arr[dq.back()] <= arr[i]</code>.</p>
+
+<h2>Complexity</h2>
+<p>Each element is pushed and popped at most once, so O(n).</p>
+
+<h2>Example</h2>
+<p>arr = [1,3,-1,-3,5,3,6,7], k=3. Output: [-1,-3,-3,-3,3,3].</p>
+
+<h2>Applications</h2>
+<p>Sliding window max/min is used in many problems: stock prices, sensor data, etc.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The deque stores indices, not values.</li>
+  <li>Remove from front when index is out of window.</li>
+  <li>Remove from back while the new value is better (smaller for min, larger for max).</li>
+</ul>
+
+<blockquote>Sliding window deque is like a VIP queue  only the candidate minima stay, and the oldest leaves when the window moves.</blockquote>
+`
 },
      
 
