@@ -10381,6 +10381,55 @@ public:
 
 <blockquote>Fenwick tree is like a staircase  each step covers a different number of original elements, and you can climb up or down in log n steps.</blockquote>
 `
+},{
+  slug: "bit-operations-sum-and-add-in-o-log-n",
+  title: "BIT Operations: sum and add in O(log n)",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 7,
+  date: "2026-05-26",
+  excerpt: "Detailed explanation of add and prefix sum operations in Fenwick tree. Why they are O(log n) and how the index updates work.",
+  tags: ["Fenwick", "BIT", "sum", "add", "update"],
+  html: `
+<p>The two core operations of a Fenwick tree are <code>add(idx, delta)</code> and <code>sum(idx)</code> (prefix sum). Both are O(log n) because they iterate over at most log2(n) indices. The magic comes from the bitwise trick <code>i += i & -i</code> for updating and <code>i -= i & -i</code> for querying.</p>
+
+<h2>add operation</h2>
+<pre><code>void add(int idx, int delta) {
+    while (idx <= n) {
+        bit[idx] += delta;
+        idx += idx & -idx;
+    }
+}</code></pre>
+<p>We add delta to all BIT indices that cover position idx. Those indices are obtained by repeatedly adding the lowest set bit.</p>
+
+<h2>prefix sum operation</h2>
+<pre><code>int sum(int idx) {
+    int res = 0;
+    while (idx > 0) {
+        res += bit[idx];
+        idx -= idx & -idx;
+    }
+    return res;
+}</code></pre>
+<p>We sum the values at indices that are responsible for disjoint ranges that together make up [1..idx].</p>
+
+<h2>Range sum</h2>
+<pre><code>int rangeSum(int l, int r) {
+    return sum(r) - sum(l-1);
+}</code></pre>
+
+<h2>Complexity</h2>
+<p>Each loop runs O(log n) times because each step clears the lowest set bit, so at most log2(n) steps.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Indices are 1based. If your input is 0based, shift by +1.</li>
+  <li>Fenwick tree only stores cumulative info, not the original array.</li>
+  <li>Updates affect all higher indices that cover the position.</li>
+</ul>
+
+<blockquote>Add and sum are two sides of the same coin  one goes up the tree, the other goes down. Both dance to the rhythm of the lowest set bit.</blockquote>
+`
 },
      
 
