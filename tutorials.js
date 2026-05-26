@@ -9888,6 +9888,51 @@ int fib(int n) {
 
 <blockquote>Amortized analysis is like a budget  you save up cheap operations to pay for expensive ones. In two pointers, each element's cost is spread out evenly.</blockquote>
 `
+},{
+  slug: "subarray-sum-problem-two-pointers-on",
+  title: "Subarray Sum Problem: Two Pointers O(n)",
+  topic: "Sliding Window",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-26",
+  excerpt: "Find a contiguous subarray that sums to a given target (with nonnegative numbers). Use two pointers to expand and contract window in O(n).",
+  tags: ["subarray sum", "two pointers", "sliding window", "positive numbers"],
+  html: `
+<p>When all numbers are nonnegative, the subarray sum problem has a simple twopointer solution. We maintain a window [l, r] and keep the current sum. If sum < target, we expand r. If sum > target, we shrink l. If sum == target, we record the subarray and then move either pointer. This runs in O(n).</p>
+
+<h2>Algorithm</h2>
+<pre><code>pair&ltint,int&gt subarraySum(vector&ltint&gt& arr, int target) {
+    int l = 0, r = 0, sum = 0;
+    while (r < arr.size()) {
+        sum += arr[r];
+        while (sum > target && l <= r) {
+            sum -= arr[l];
+            l++;
+        }
+        if (sum == target) return {l, r};
+        r++;
+    }
+    return {-1, -1}; // not found
+}</code></pre>
+
+<h2>Why it works</h2>
+<p>Because all numbers are positive, expanding the window increases sum, shrinking decreases sum. So the window can slide monotonicly without needing to reset.</p>
+
+<h2>If numbers can be negative</h2>
+<p>Then this method fails  you need prefix sums with hashmap (O(n)) or other techniques. The twopointer only works for nonnegative or nonpositive (with adjustments).</p>
+
+<h2>Example</h2>
+<p>arr = [1,2,3,4,5], target = 9. r=0 sum=1; r=1 sum=3; r=2 sum=6; r=3 sum=10 >9  shrink: l=1 sum=9 -> found indices (1,3) -> subarray [2,3,4] sum 9.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Requires nonnegative numbers (or all nonpositive with sign reversal).</li>
+  <li>Time O(n), space O(1).</li>
+  <li>This is a specific case of sliding window for monotonic sums.</li>
+</ul>
+
+<blockquote>Two pointers for subarray sum is like moving a magnifying glass  you enlarge it when you need more, shrink when you have too much.</blockquote>
+`
 },
 
 
