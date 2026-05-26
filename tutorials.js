@@ -10197,6 +10197,48 @@ public:
 
 <blockquote>Range queries are like having a cheat sheet  you precompute once, then answer instantly.</blockquote>
 `
+},{
+  slug: "prefix-sum-array-for-static-sum-queries",
+  title: "Prefix Sum Array for Static Sum Queries",
+  topic: "Range Queries",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-26",
+  excerpt: "Precompute prefix sums to answer sum of any subarray in O(1). Simple and powerful for static arrays.",
+  tags: ["prefix sum", "static queries", "O(1)", "sum"],
+  html: `
+<p>The prefix sum (or cumulative sum) array is one of the simplest yet most useful preprocessing techniques. Given an array A of size n, define P[i] = sum of first i elements (with P[0]=0). Then the sum of subarray A[l..r] = P[r+1] - P[l]. This works for any associative and invertible operation (e.g., sum, XOR).</p>
+
+<h2>Construction</h2>
+<pre><code>vector&ltlong long&gt buildPrefix(const vector&ltint&gt& arr) {
+    int n = arr.size();
+    vector&ltlong long&gt pref(n+1, 0);
+    for (int i = 0; i < n; i++) {
+        pref[i+1] = pref[i] + arr[i];
+    }
+    return pref;
+}</code></pre>
+
+<h2>Query</h2>
+<pre><code>long long rangeSum(const vector&ltlong long&gt& pref, int l, int r) {
+    return pref[r+1] - pref[l];
+}</code></pre>
+
+<h2>Example</h2>
+<p>arr = [1,2,3,4], pref = [0,1,3,6,10]. Sum [1..3] = pref[4]-pref[1]=10-1=9 = 2+3+4.</p>
+
+<h2>2D prefix sum (for sum of rectangle)</h2>
+<p>Let P[i][j] = sum of rectangle from (0,0) to (i-1,j-1). Then sum of (r1,c1) to (r2,c2) = P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1].</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Prefix sum uses O(n) space, O(n) build, O(1) query.</li>
+  <li>Works for XOR as well: prefXOR[i+1] = prefXOR[i] ^ arr[i]; range XOR = prefXOR[r+1] ^ prefXOR[l].</li>
+  <li>Not for min/max because operation not invertible.</li>
+</ul>
+
+<blockquote>Prefix sum is the duct tape of CP  simple, versatile, and always in your toolkit.</blockquote>
+`
 },
      
 
