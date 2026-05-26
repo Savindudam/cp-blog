@@ -9976,6 +9976,62 @@ int fib(int n) {
 
 <blockquote>Twopointer 2SUM is like meeting in the middle  the two pointers walk towards each other until they find the right sum.</blockquote>
 `
+},{
+  slug: "3sum-problem-in-on2-time",
+  title: "3SUM Problem in O(n^2) Time",
+  topic: "Two Pointers",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Find three distinct elements that sum to zero (or target). Sort array, then fix one element and use two pointers on the rest. O(n^2) time.",
+  tags: ["3sum", "two pointers", "sorting", "target sum"],
+  html: `
+<p>The 3SUM problem asks for all triplets (i,j,k) with i<j<k such that arr[i]+arr[j]+arr[k] = target (often target=0). A naive O(n^3) solution is too slow for n=3000. By sorting and using two pointers, we achieve O(n^2).</p>
+
+<h2>Algorithm</h2>
+<pre><code>vector&ltvector&ltint&gt&gt threeSum(vector&ltint&gt& nums, int target) {
+    sort(nums.begin(), nums.end());
+    vector&ltvector&ltint&gt&gt res;
+    int n = nums.size();
+    for (int i = 0; i < n-2; i++) {
+        if (i > 0 && nums[i] == nums[i-1]) continue; // skip duplicates
+        int l = i+1, r = n-1;
+        while (l < r) {
+            int sum = nums[i] + nums[l] + nums[r];
+            if (sum == target) {
+                res.push_back({nums[i], nums[l], nums[r]});
+                while (l < r && nums[l] == nums[l+1]) l++;
+                while (l < r && nums[r] == nums[r-1]) r--;
+                l++; r--;
+            }
+            else if (sum < target) l++;
+            else r--;
+        }
+    }
+    return res;
+}</code></pre>
+
+<h2>Complexity</h2>
+<p>O(n^2) because for each i (n times) we run a twopointer scan O(n). Sorting adds O(n log n).</p>
+
+<h2>Handling duplicates</h2>
+<p>Skipping duplicate i values and moving pointers past duplicates ensures no repeated triplets.</p>
+
+<h2>Variations</h2>
+<ul>
+  <li>Find closest sum to target (similar, keep best).</li>
+  <li>Count number of triplets (modify loop).</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Works for n up to about 5000 (25 million operations).</li>
+  <li>Always skip duplicates to avoid double counting.</li>
+  <li>If target is not zero, adjust comparison accordingly.</li>
+</ul>
+
+<blockquote>3SUM with two pointers is like fixing one element and solving 2SUM on the rest  elegant and fast enough for mediumsized arrays.</blockquote>
+`
 },
      
 
