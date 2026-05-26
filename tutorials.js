@@ -10540,6 +10540,61 @@ public:
 
 <blockquote>Segment tree is like a hierarchical summary  each node knows the answer for its segment, and queries combine nodes without redundancy.</blockquote>
 `
+},{
+  slug: "building-segment-tree-for-array-bottom-up",
+  title: "Building a Segment Tree for an Array (Bottom-Up)",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Iterative (bottomup) segment tree construction. Faster than recursion and uses less memory. Often used in CP for simplicity.",
+  tags: ["segment tree", "iterative", "bottom-up", "build"],
+  html: `
+<p>An iterative segment tree (also called bottomup segment tree) is easier to code and faster than the recursive version. It stores leaves at indices n to 2n-1 (assuming size is a power of two, or we pad). The tree is built from leaves upward.</p>
+
+<h2>Size adjustment</h2>
+<pre><code>int N = 1;
+while (N < n) N <<= 1;
+vector&ltint&gt tree(2 * N, 0);</code></pre>
+
+<h2>Building</h2>
+<p>Store leaves at indices N to N+n-1, then for i from N-1 down to 1: tree[i] = tree[2*i] + tree[2*i+1].</p>
+<pre><code>for (int i = 0; i < n; i++) tree[N + i] = arr[i];
+for (int i = N-1; i > 0; i--) tree[i] = tree[2*i] + tree[2*i+1];</code></pre>
+
+<h2>Point update</h2>
+<pre><code>void update(int idx, int val) {
+    idx += N;
+    tree[idx] = val;
+    for (idx /= 2; idx >= 1; idx /= 2) {
+        tree[idx] = tree[2*idx] + tree[2*idx+1];
+    }
+}</code></pre>
+
+<h2>Range query (sum)</h2>
+<pre><code>int query(int l, int r) { // [l, r] inclusive, 0based
+    l += N; r += N;
+    int res = 0;
+    while (l <= r) {
+        if (l % 2 == 1) res += tree[l++];
+        if (r % 2 == 0) res += tree[r--];
+        l /= 2; r /= 2;
+    }
+    return res;
+}</code></pre>
+
+<h2>Advantages</h2>
+<p>No recursion, faster, less code. Works for any associative operation (just change the combine function).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Requires N to be a power of two (or we just allocate extra).</li>
+  <li>Memory about 2 * next_power_of_two(n).</li>
+  <li>Query loop moves from leaves up, using parity to decide whether to include a node.</li>
+</ul>
+
+<blockquote>Bottomup segment tree is like building a pyramid from the base  you start with individual stones and work your way up.</blockquote>
+`
 },
      
 
