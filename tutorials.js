@@ -10239,6 +10239,51 @@ public:
 
 <blockquote>Prefix sum is the duct tape of CP  simple, versatile, and always in your toolkit.</blockquote>
 `
+},{
+  slug: "2d-prefix-sum-for-rectangular-subarray-sum",
+  title: "2D Prefix Sum for Rectangular Subarray Sum",
+  topic: "Range Queries",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Extend prefix sum to 2D. Precompute sums of rectangles from (0,0) to (i,j). Then answer any subrectangle sum in O(1).",
+  tags: ["2D prefix sum", "rectangle sum", "inclusion-exclusion", "matrix"],
+  html: `
+<p>In many grid problems, you need to compute the sum of values in a subrectangle quickly. 2D prefix sum allows O(1) queries after O(n*m) preprocessing. The idea is to compute P[i][j] = sum of all elements in rows [0,i-1] and columns [0,j-1].</p>
+
+<h2>Construction</h2>
+<pre><code>vector&ltvector&ltlong long&gt&gt build2DPrefix(vector&ltvector&ltint&gt&gt& grid) {
+    int n = grid.size(), m = grid[0].size();
+    vector&ltvector&ltlong long&gt&gt pref(n+1, vector&ltlong long&gt(m+1, 0));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            pref[i][j] = grid[i-1][j-1] + pref[i-1][j] + pref[i][j-1] - pref[i-1][j-1];
+        }
+    }
+    return pref;
+}</code></pre>
+
+<h2>Query (inclusive indices)</h2>
+<pre><code>long long rectangleSum(vector&ltvector&ltlong long&gt&gt& pref, int r1, int c1, int r2, int c2) {
+    // r1,c1 top-left, r2,c2 bottom-right (0-indexed)
+    return pref[r2+1][c2+1] - pref[r1][c2+1] - pref[r2+1][c1] + pref[r1][c1];
+}</code></pre>
+
+<h2>Inclusionexclusion principle</h2>
+<p>P[i][j] = P[i-1][j] + P[i][j-1] - P[i-1][j-1] + grid[i-1][j-1]. For query: sum = P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1].</p>
+
+<h2>Example</h2>
+<p>grid = [[1,2],[3,4]]. pref = [[0,0,0],[0,1,3],[0,4,10]]. Sum submatrix (0,0) to (1,1) = pref[2][2]=10. Sum (1,0) to (1,1) = pref[2][2] - pref[1][2] - pref[2][0] + pref[1][0] = 10-3-0+0=7 = 3+4.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use long long to avoid overflow.</li>
+  <li>Works for any associative invertible operation (sum, XOR, but not min/max).</li>
+  <li>For min/max in 2D, use 2D sparse table or segment tree of segment trees.</li>
+</ul>
+
+<blockquote>2D prefix sum is like having a map of accumulaterainfall  you can compute any rectangle's total by adding and subtracting four corners.</blockquote>
+`
 },
      
 
