@@ -9836,7 +9836,65 @@ int fib(int n) {
 
 <blockquote>Tiling formulas are like hidden patterns – for 2xn it's Fibonacci, for bigger grids it's more complex but still beautiful.</blockquote>
 `
+},  
+{
+  slug: "amortized-analysis-two-pointers-method",
+  title: "Amortized Analysis: Two Pointers Method",
+  topic: "Algorithm Analysis",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "Amortized analysis averages the cost of operations over a sequence. Two pointers technique often achieves O(n) total time because each pointer moves at most n times.",
+  tags: ["amortized", "two pointers", "complexity", "analysis"],
+  html: `
+<p>Amortized analysis gives the average time per operation over a sequence, even if some operations are expensive. The two pointers (or sliding window) technique is a classic example: each pointer moves at most n steps total, so the overall complexity is O(n) even though each step may seem to do constant work.</p>
+
+<h2>Amortized intuition</h2>
+<p>In many twopointer algorithms (e.g., subarray sum, removing duplicates), we have a loop that advances one pointer and sometimes the other. Even though an inner while loop might run many times, each element is moved over at most once across the entire algorithm. So total operations = O(n).</p>
+
+<h2>Example: removing duplicates from sorted array (inplace)</h2>
+<pre><code>int removeDuplicates(vector&ltint&gt& nums) {
+    if (nums.empty()) return 0;
+    int j = 0;
+    for (int i = 1; i < nums.size(); i++) {
+        if (nums[i] != nums[j]) {
+            j++;
+            nums[j] = nums[i];
+        }
+    }
+    return j + 1;
+}</code></pre>
+<p>Here, i moves n steps, j moves at most n steps. Total O(n).</p>
+
+<h2>Amortized vs average case</h2>
+<p>Average case depends on input distribution; amortized is worstcase over the whole sequence. Two pointers give amortized linear time regardless of data.</p>
+
+<h2>Common twopointer patterns that are amortized O(n)</h2>
+<ul>
+  <li>Subarray sum / sliding window where window expands and contracts.</li>
+  <li>Merging two sorted arrays.</li>
+  <li>Partitioning (e.g., Dutch national flag).</li>
+</ul>
+
+<h2>Why not just say O(n)?</h2>
+<p>Because the inner loop might be a while that seems to add extra complexity. Amortized analysis justifies that the sum of all inner loop iterations is O(n).</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Amortized analysis is about total cost, not per operation.</li>
+  <li>Two pointers often achieve amortized O(n) because each element is processed a constant number of times.</li>
+  <li>Use this reasoning to prove linear time when you have nested loops but the inner loop is bounded by total moves.</li>
+</ul>
+
+<blockquote>Amortized analysis is like a budget  you save up cheap operations to pay for expensive ones. In two pointers, each element's cost is spread out evenly.</blockquote>
+`
 },
+
+
+
+
+
+
 
 
 ]
