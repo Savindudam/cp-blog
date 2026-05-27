@@ -10939,6 +10939,49 @@ cout << (~a) << "\\n";    // -6 (depends on bit width)</code></pre>
 
 <blockquote>Bitwise operations are the Lego bricks of lowlevel programming  with them you can build any mask, flag, or compression scheme.</blockquote>
 `
+  },{
+  slug: "bit-shifts-left-and-right-operators",
+  title: "Bit Shifts: Left Shift << and Right Shift >>",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-27",
+  excerpt: "Left shift multiplies by powers of two; right shift divides (floor for unsigned, arithmetic for signed). Learn the nuances.",
+  tags: ["left shift", "right shift", "bit shift", "arithmetic shift"],
+  html: `
+<p>Shift operators move bits left or right. They are extremely fast for multiplication and division by powers of two. But beware of undefined behavior for negative shifts or shifts by more than bit width.</p>
+
+<h2>Left shift (<<)</h2>
+<p>Shifts bits to the left, filling vacated bits with 0. Equivalent to multiplying by 2^k (for nonnegative numbers and no overflow). Example: <code>5 << 2 = 20</code> (101 << 2 = 10100 = 20).</p>
+
+<h2>Right shift (>>)</h2>
+<p>For <strong>unsigned</strong> types, right shift fills with 0 (logical shift). For <strong>signed</strong> types, it usually fills with the sign bit (arithmetic shift) to preserve the sign. Example: <code>-8 >> 2 = -2</code> (11111000 >> 2 = 11111110 = -2).</p>
+
+<h2>Common pitfalls</h2>
+<ul>
+  <li>Shifting by more than or equal to the bit width (e.g., 1 << 32 on 32bit int) is undefined behavior.</li>
+  <li>Left shift of negative signed numbers is undefined before C++20 (now defined as two's complement).</li>
+  <li>Right shift of negative signed numbers is implementationdefined (but now arithmetic shift is standard).</li>
+</ul>
+
+<h2>Using shifts for bit manipulation</h2>
+<pre><code>int setBit(int x, int i) { return x | (1 << i); }
+int clearBit(int x, int i) { return x & ~(1 << i); }
+int toggleBit(int x, int i) { return x ^ (1 << i); }
+int getBit(int x, int i) { return (x >> i) & 1; }</code></pre>
+
+<h2>Shifting large numbers</h2>
+<p>Use <code>1LL << i</code> for 64bit (long long). Otherwise, <code>1 << 40</code> overflows 32bit int.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Prefer unsigned types when doing bit shifts to avoid sign surprises.</li>
+  <li>Shifting left by 1 is often faster than multiplying by 2.</li>
+  <li>Shift operators have lower precedence than addition  use parentheses: <code>(x << 2) + y</code>.</li>
+</ul>
+
+<blockquote>Shifts are the turbo boost of arithmetic  they zoom through powers of two, but watch out for the sign lane.</blockquote>
+`
   },
 
 
