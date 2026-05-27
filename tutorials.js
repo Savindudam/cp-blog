@@ -10982,6 +10982,57 @@ int getBit(int x, int i) { return (x >> i) & 1; }</code></pre>
 
 <blockquote>Shifts are the turbo boost of arithmetic  they zoom through powers of two, but watch out for the sign lane.</blockquote>
 `
+  },{
+  slug: "printing-integers-binary-representation",
+  title: "Printing an Integer's Binary Representation",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-27",
+  excerpt: "How to print the binary representation of an integer in C++. Useful for debugging bitwise operations.",
+  tags: ["binary", "printing", "bits", "debugging"],
+  html: `
+<p>Sometimes you need to see the actual bits of an integer to debug bitwise operations. C++ doesn't have a builtin binary output format, but you can write a simple function to print the binary representation.</p>
+
+<h2>Simple loop (for unsigned int)</h2>
+<pre><code>void printBinary(unsigned int x) {
+    for (int i = 31; i >= 0; i--) {
+        cout << ((x >> i) & 1);
+        if (i % 8 == 0) cout << " "; // optional grouping
+    }
+    cout << "\\n";
+  }</code></pre>
+
+<h2>Using bitset (easiest)</h2>
+<pre><code>#include &ltbitset&gt
+unsigned int x = 42;
+cout << bitset&lt32&gt(x) << "\\n"; // prints 32 bits</code></pre>
+
+<h2>Printing for arbitrary bit width</h2>
+<pre><code>template&lttypename T&gt
+void printBinary(T x) {
+    for (int i = sizeof(T)*8 - 1; i >= 0; i--) {
+        cout << ((x >> i) & 1);
+    }
+    cout << "\\n";
+  }</code></pre>
+
+<h2>Handling negative numbers</h2>
+<p>Casting to unsigned before shifting ensures logical (zerofill) shift: <code>printBinary((unsigned int)(-42))</code>.</p>
+
+<h2>Using std::format (C++20)</h2>
+<pre><code>#include &ltformat&gt
+cout << format("{:b}", 42) << "\\n"; // not widely supported yet</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use <code>bitset</code> for quick debugging  it's part of the standard.</li>
+  <li>When printing signed negative numbers, cast to unsigned first.</li>
+  <li>Grouping bits (e.g., every 4 bits) can make output more readable.</li>
+</ul>
+
+<blockquote>Printing binary is like turning on the Xray  you see what's really inside your integers.</blockquote>
+`
   },
 
 
