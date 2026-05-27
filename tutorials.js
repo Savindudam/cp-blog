@@ -11261,6 +11261,60 @@ for (int i = 0; i < 32; i++) {
 
 <blockquote>Bitmask sets are like having a magic wallet  each slot holds a yes/no, and you can manipulate all slots at once.</blockquote>
 `
+  },{
+  slug: "set-operations-with-bitmasks-union-intersection-complement",
+  title: "Set Operations with Bitmasks: Union, Intersection, Complement",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-27",
+  excerpt: "Implement set operations using bitwise operators. Also, subset checks and equality. All in O(1) for fixed universe.",
+  tags: ["bitmask", "union", "intersection", "complement", "subset"],
+  html: `
+<p>Once you represent sets as bitmasks, all standard set operations become simple bitwise expressions. This is incredibly efficient for small universe sizes ( 64). Let's explore the common operations.</p>
+
+<h2>Basic operations</h2>
+<pre><code>int A, B; // bitmasks
+int U = (1 << n) - 1; // full set (universe of size n)
+int union_AB = A | B;
+int intersection_AB = A & B;
+int diff_AB = A & ~B;   // elements in A but not B
+int symdiff_AB = A ^ B; // elements in A or B but not both
+int complement_A = U ^ A; // or ~A & U</code></pre>
+
+<h2>Subset and equality checks</h2>
+<pre><code>bool isSubset = (A & B) == A; // A  B
+bool isProperSubset = isSubset && (A != B);
+bool isEqual = (A == B);
+bool isDisjoint = (A & B) == 0;</code></pre>
+
+<h2>Cardinality (size)</h2>
+<pre><code>int sizeA = __builtin_popcount(A);
+int sizeA_ll = __builtin_popcountll(A); // for 64-bit</code></pre>
+
+<h2>Adding/removing elements</h2>
+<pre><code>A |= (1 << i);   // add i
+A &= ~(1 << i);  // remove i
+A ^= (1 << i);   // toggle i</code></pre>
+
+<h2>Iterating over elements</h2>
+<pre><code>int temp = A;
+while (temp) {
+    int lsb = temp & -temp;
+    int idx = __builtin_ctz(lsb);
+    // process idx
+    temp ^= lsb;
+  }</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always mask complements to the universe size: <code>~A & ((1<<n)-1)</code>.</li>
+  <li>For n=64, use <code>unsigned long long</code> and <code>ULL</code> suffix.</li>
+  <li>Bitmask operations are constant time  ideal for DP states.</li>
+</ul>
+
+<blockquote>Union is OR, intersection is AND, complement is NOT  bitmasks turn set theory into algebra.</blockquote>
+`
   },
 
 
