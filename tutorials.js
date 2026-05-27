@@ -10802,6 +10802,49 @@ public:
 
 <blockquote>Range updates with two BITs are like having two accountants  one tracks the increments, the other tracks the adjustments.</blockquote>
 `
+},{
+  slug: "bit-manipulation-signed-and-unsigned-representations",
+  title: "Bit Manipulation: Signed and Unsigned Representations",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-26",
+  excerpt: "How integers are stored in memory: two's complement for signed, direct binary for unsigned. Why right shift behaves differently.",
+  tags: ["bit manipulation", "two's complement", "signed", "unsigned"],
+  html: `
+<p>Understanding how signed and unsigned integers are represented is crucial for bit manipulation, especially with shifts and comparisons. Most modern systems use <strong>two's complement</strong> for signed integers. Unsigned integers are simple binary representation.</p>
+
+<h2>Unsigned representation</h2>
+<p>For unsigned int (32 bits), the value is sum(bit_i * 2^i). Range: 0 to 2^32-1. Right shift (>>) fills with zeros (logical shift).</p>
+
+<h2>Signed two's complement</h2>
+<p>The most significant bit (MSB) indicates sign: 0 for positive, 1 for negative. Negative numbers are represented as 2^n - abs(x). For example, -1 in 8 bits is 11111111 (since 256-1=255).</p>
+
+<h2>Properties of two's complement</h2>
+<ul>
+  <li>Addition and subtraction work the same as unsigned.</li>
+  <li>Negation: flip all bits and add 1.</li>
+  <li>Range for 32bit signed: -2^31 to 2^31-1.</li>
+</ul>
+
+<h2>Right shift for signed vs unsigned</h2>
+<p>For signed integers, right shift is <strong>arithmetic shift</strong> (copies the sign bit) to preserve the sign. For positive numbers, it's same as unsigned; for negative, it fills with 1s. For unsigned, it's logical shift (fills with 0).</p>
+
+<h2>Example</h2>
+<pre><code>int x = -8; // 11111000 (8 bits)
+int y = x >> 2; // 11111110 = -2 (arithmetic shift)
+unsigned int u = 0xFFFFFFF8; // same bits but unsigned
+unsigned int v = u >> 2; // 0x3FFFFFFE (logical shift)</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Use unsigned when you need logical shifts or bitwise operations without sign extension.</li>
+  <li>Be careful with right shift on signed negative numbers  it's implementationdefined before C++20, but now standard is arithmetic shift.</li>
+  <li>When doing bit tricks, prefer unsigned types to avoid surprises.</li>
+</ul>
+
+<blockquote>Signed vs unsigned is like two languages  they share the same alphabet (bits) but interpret words differently.</blockquote>
+`
 },
      
 
