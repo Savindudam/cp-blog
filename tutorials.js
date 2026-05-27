@@ -11033,6 +11033,51 @@ cout << format("{:b}", 42) << "\\n"; // not widely supported yet</code></pre>
 
 <blockquote>Printing binary is like turning on the Xray  you see what's really inside your integers.</blockquote>
 `
+  },{
+  slug: "setting-clearing-toggling-single-bits",
+  title: "Setting, Clearing, and Toggling Single Bits",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-27",
+  excerpt: "Manipulate individual bits using OR, AND with NOT, and XOR. Essential for bitmask programming.",
+  tags: ["set bit", "clear bit", "toggle bit", "bitmask"],
+  html: `
+<p>When using integers as bitmasks, you often need to modify a single bit without affecting others. The operations are standard: set (turn to 1), clear (turn to 0), and toggle (flip).</p>
+
+<h2>Set bit i to 1</h2>
+<pre><code>mask |= (1 << i);</code></pre>
+
+<h2>Clear bit i (set to 0)</h2>
+<pre><code>mask &= ~(1 << i);</code></pre>
+
+<h2>Toggle bit i</h2>
+<pre><code>mask ^= (1 << i);</code></pre>
+
+<h2>Check if bit i is set</h2>
+<pre><code>bool isSet = (mask >> i) & 1;
+// or
+bool isSet = mask & (1 << i);</code></pre>
+
+<h2>Working with multiple bits</h2>
+<p>To set a range of bits, create a mask with those bits set (e.g., <code>((1 << (r+1)) - (1 << l))</code>). Then use OR to set, AND with complement to clear.</p>
+
+<h2>Example</h2>
+<pre><code>int mask = 0b0000;
+mask |= (1 << 2); // set bit2 -> 0100
+mask |= (1 << 0); // set bit0 -> 0101
+mask &= ~(1 << 2); // clear bit2 -> 0001
+mask ^= (1 << 0); // toggle bit0 -> 0000</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Always use parentheses: <code>~(1 << i)</code> not <code>~1 << i</code> (different precedence).</li>
+  <li>For i >= bit width, shift is undefined  be careful with loops.</li>
+  <li>Using <code>unsigned int</code> avoids sign issues when shifting.</li>
+</ul>
+
+<blockquote>Setting, clearing, toggling  the three musketeers of bitmask manipulation. Learn them, and you'll control bits like a puppeteer.</blockquote>
+`
   },
 
 
