@@ -11212,6 +11212,55 @@ __builtin_ctzll</code></pre>
 
 <blockquote>Builtin bit functions are the nitro boost  why write loops when the CPU can do it in one cycle?</blockquote>
 `
+  },{
+  slug: "representing-sets-with-bitmasks-0-to-31",
+  title: "Representing Sets with Bitmasks (0..31)",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-27",
+  excerpt: "Use an integer's bits to represent a subset of {0,1,...,31}. Each bit corresponds to an element. Operations are bitwise.",
+  tags: ["bitmask", "subset", "set representation", "small universe"],
+  html: `
+<p>When the universe size is small ( 32 or  64), you can represent a set as an integer bitmask. Bit i = 1 means element i is in the set. This representation allows extremely fast set operations using bitwise operators.</p>
+
+<h2>Mapping elements to bits</h2>
+<p>Element i (0based) corresponds to bit i. So mask = (1 << i) for a singleton set {i}.</p>
+
+<h2>Set operations as bitwise</h2>
+<ul>
+  <li>Union: <code>a | b</code></li>
+  <li>Intersection: <code>a & b</code></li>
+  <li>Difference (a \ b): <code>a & ~b</code></li>
+  <li>Symmetric difference: <code>a ^ b</code></li>
+  <li>Complement (within universe of size n): <code>~a & ((1 << n) - 1)</code></li>
+</ul>
+
+<h2>Example</h2>
+<p>Universe {0,1,2,3}. Set A = {0,2} -> maskA = 1010 binary = 10 decimal. Set B = {1,2} -> maskB = 0110 = 6. Union = 10|6 = 14 (1110) = {0,1,2}. Intersection = 10&6 = 2 (0010) = {2}.</p>
+
+<h2>Iterating over elements of a mask</h2>
+<pre><code>int mask = 13; // 1101
+for (int i = 0; i < 32; i++) {
+    if (mask & (1 << i)) {
+        // element i is present
+    }
+  }</code></pre>
+
+<h2>Iterating over all submasks of a mask</h2>
+<pre><code>for (int sub = mask; sub; sub = (sub-1) & mask) {
+    // process submask
+  }</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Works for n  64 if using unsigned long long.</li>
+  <li>Bitmask operations are O(1) (single CPU instruction).</li>
+  <li>This technique is used in DP over subsets (e.g., TSP).</li>
+</ul>
+
+<blockquote>Bitmask sets are like having a magic wallet  each slot holds a yes/no, and you can manipulate all slots at once.</blockquote>
+`
   },
 
 
