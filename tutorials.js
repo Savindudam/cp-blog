@@ -11078,6 +11078,54 @@ mask ^= (1 << 0); // toggle bit0 -> 0000</code></pre>
 
 <blockquote>Setting, clearing, toggling  the three musketeers of bitmask manipulation. Learn them, and you'll control bits like a puppeteer.</blockquote>
 `
+  },{
+  slug: "trick-x-and-x-minus-1-to-turn-off-last-1-bit",
+  title: "Trick: x & (x-1) to Turn Off Last 1-Bit",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 7,
+  date: "2026-05-27",
+  excerpt: "The expression x & (x-1) clears the lowest set bit in x. This is used to count set bits, check power of two, and iterate over subsets.",
+  tags: ["bit trick", "x & (x-1)", "lowest set bit", "Brian Kernighan"],
+  html: `
+<p>One of the most famous bit tricks: <code>x & (x-1)</code> clears the lowest set bit of x (turns it from 1 to 0). For example, x=12 (1100), x-1=11 (1011), 1100 & 1011 = 1000 (8). The lowest set bit (bit 2) is gone. This is used in counting set bits (Brian Kernighan's algorithm) and checking powers of two.</p>
+
+<h2>Why it works</h2>
+<p>Subtracting 1 flips all trailing zeros to 1 and the first 1 to 0. ANDing with original clears that 1 and leaves higher bits unchanged.</p>
+
+<h2>Counting set bits (popcount)</h2>
+<pre><code>int countBits(int x) {
+    int cnt = 0;
+    while (x) {
+        cnt++;
+        x &= (x - 1);
+    }
+    return cnt;
+  }</code></pre>
+
+<h2>Checking if x is a power of two</h2>
+<pre><code>bool isPowerOfTwo(int x) {
+    return x > 0 && (x & (x - 1)) == 0;
+  }</code></pre>
+
+<h2>Iterating over set bits</h2>
+<pre><code>int x = some_mask;
+while (x) {
+    int lowest = x & -x; // isolate lowest set bit
+    int bit_index = __builtin_ctz(lowest);
+    // process bit_index
+    x &= (x - 1); // clear lowest set bit
+  }</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Works for positive integers only (for zero, x-1 is -1, result is 0, but zero has no bits).</li>
+  <li>It's used in many CP problems where you need to handle subsets or masks efficiently.</li>
+  <li>Brian Kernighan's algorithm is O(number of set bits), not O(bit width).</li>
+</ul>
+
+<blockquote>x & (x-1) is the magic eraser  it removes the rightmost 1, leaving the rest untouched.</blockquote>
+`
   },
 
 
