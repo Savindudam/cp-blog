@@ -10686,6 +10686,63 @@ for (int i = N-1; i > 0; i--) tree[i] = tree[2*i] + tree[2*i+1];</code></pre>
 
 <blockquote>Switching from sum to min is like changing the lens  the tree structure stays the same, only the merge rule changes.</blockquote>
 `
+},{
+  slug: "binary-search-on-segment-tree-for-smallest-value",
+  title: "Binary Search on Segment Tree for Smallest Value",
+  topic: "Data Structures",
+  difficulty: "Hard",
+  readMinutes: 9,
+  date: "2026-05-26",
+  excerpt: "Find the smallest index such that prefix sum >= target using binary search on segment tree in O(log n). Useful for order statistics.",
+  tags: ["segment tree", "binary search", "prefix sum", "lower bound"],
+  html: `
+<p>A common operation on a Fenwick tree is finding the smallest index where prefix sum >= target. This can be done in O(log n) by walking down the tree. In a segment tree, you can also perform this "binary search on the tree" by traversing from the root, choosing the left child if its sum is enough, else going right with reduced target.</p>
+
+<h2>Problem</h2>
+<p>Given an array with point updates, find the smallest index i such that sum[1..i] >= k. This is sometimes needed in order statistic trees or cumulative frequency queries.</p>
+
+<h2>Segment tree approach (recursive)</h2>
+<pre><code>int findKth(int node, int l, int r, int k) {
+    if (l == r) return l;
+    int mid = (l+r)/2;
+    if (tree[2*node] >= k) return findKth(2*node, l, mid, k);
+    else return findKth(2*node+1, mid+1, r, k - tree[2*node]);
+}</code></pre>
+
+<h2>Iterative segment tree approach (bottomup)</h2>
+<p>For iterative segment tree, we start from the leaf level and walk up. A simpler method: use the iterative query loop to simulate binary search, but it's trickier. Usually, the recursive version is fine.</p>
+
+<h2>Fenwick tree version (more common)</h2>
+<pre><code>int findByOrder(int k) {
+    int idx = 0;
+    int bitMask = highestOneBit(n);
+    while (bitMask != 0) {
+        int next = idx + bitMask;
+        if (next <= n && tree[next] < k) {
+            k -= tree[next];
+            idx = next;
+        }
+        bitMask >>= 1;
+    }
+    return idx + 1;
+}</code></pre>
+
+<h2>Applications</h2>
+<ul>
+  <li>Order statistics (kth smallest element) in a multiset with point updates.</li>
+  <li>Finding median of streaming data.</li>
+  <li>Dynamic rank queries.</li>
+</ul>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The array must store frequencies (counts).</li>
+  <li>The tree must support point updates (increase/decrease count).</li>
+  <li>This method finds the smallest index where prefix sum >= k.</li>
+</ul>
+
+<blockquote>Binary search on segment tree is like asking the tree "which leaf contains the kth item?"  the tree guides you down the correct path.</blockquote>
+`
 },
      
 
