@@ -11165,6 +11165,53 @@ while (x) {
 
 <blockquote>Power of two check is the litmus test for a number's simplicity  only one bit stands alone.</blockquote>
 `
+  },{
+  slug: "gpp-built-in-bit-functions-builtin-clz-etc",
+  title: "g++ Built-in Bit Functions: __builtin_clz, etc.",
+  topic: "Bit Manipulation",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-27",
+  excerpt: "GCC provides fast built-in functions for counting leading zeros, trailing zeros, and set bits. They are much faster than manual loops.",
+  tags: ["__builtin_clz", "__builtin_ctz", "__builtin_popcount", "GCC"],
+  html: `
+<p>The GNU compiler (g++) offers a set of builtin functions for bit manipulation that map directly to CPU instructions when available. They are extremely fast and usefull in CP. The most common are: <code>__builtin_popcount</code>, <code>__builtin_clz</code>, <code>__builtin_ctz</code>, and their <code>ll</code> variants for <code>long long</code>.</p>
+
+<h2>__builtin_popcount(x)</h2>
+<p>Returns the number of 1bits in x. For unsigned int. Equivalent to <code>popcnt</code> instruction on modern CPUs.</p>
+<pre><code>int ones = __builtin_popcount(0b1011); // 3</code></pre>
+
+<h2>__builtin_popcountll(x)</h2>
+<p>Same for unsigned long long.</p>
+
+<h2>__builtin_clz(x)</h2>
+<p>Counts leading zeros in x. For x=0, result is undefined. Example: <code>__builtin_clz(8)</code> on 32bit returns 28 (since 8 is 000...01000).</p>
+<pre><code>int leading = __builtin_clz(16); // 27 (if 32-bit)</code></pre>
+
+<h2>__builtin_ctz(x)</h2>
+<p>Counts trailing zeros (the number of zero bits after the least significant 1). For x=0, undefined. Example: <code>__builtin_ctz(12)</code> (1100) returns 2.</p>
+
+<h2>Useful derived operations</h2>
+<pre><code>// log2 floor for power of two
+int floorLog2 = 31 - __builtin_clz(x);
+// isolate lowest set bit
+int lowbit = x & -x;
+int lowbitIndex = __builtin_ctz(x);</code></pre>
+
+<h2>64bit variants</h2>
+<pre><code>__builtin_popcountll
+__builtin_clzll
+__builtin_ctzll</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>These functions are not standard C++  they are GCC extensions. But all major CP judges (Codeforces, AtCoder) use GCC.</li>
+  <li>Passing zero to clz/ctz is undefined  check for zero first.</li>
+  <li>For MSVC, use <code>__popcnt</code>, <code>__lzcnt</code>, etc., but they are slower to access.</li>
+</ul>
+
+<blockquote>Builtin bit functions are the nitro boost  why write loops when the CPU can do it in one cycle?</blockquote>
+`
   },
 
 
