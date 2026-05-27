@@ -10890,6 +10890,55 @@ unsigned int v = u >> 2; // 0x3FFFFFFE (logical shift)</code></pre>
 
 <blockquote>Two's complement is the silent hero of computing  you rarely think about it, but without it, negative numbers would be a mess.</blockquote>
 `
+  },{
+  slug: "bitwise-and-or-xor-not-operations",
+  title: "Bitwise AND, OR, XOR, NOT Operations",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 8,
+  date: "2026-05-27",
+  excerpt: "Bitwise operators work on each bit independently. Learn the truth tables and common use cases in CP.",
+  tags: ["AND", "OR", "XOR", "NOT", "bitwise"],
+  html: `
+<p>Bitwise operators treat integers as sequences of bits and perform logical operations per bit. They are extremly fast and are used for bitmasks, flags, and various optimizations.</p>
+
+<h2>Truth table summary</h2>
+<table border="1" cellpadding="4">
+  <tr><th>A</th><th>B</th><th>A & B</th><th>A | B</th><th>A ^ B</th><th>~A</th></tr>
+  <tr><td>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+</table>
+
+<h2>AND (&)</h2>
+<p>Result bit is 1 only if both bits are 1. Used to check if a bit is set: <code>(mask & (1 << i)) != 0</code>. Also used to clear bits: <code>x & ~mask</code>.</p>
+
+<h2>OR (|)</h2>
+<p>Result bit is 1 if at least one bit is 1. Used to set bits: <code>x | (1 << i)</code>. Also to combine bitmasks.</p>
+
+<h2>XOR (^)</h2>
+<p>Result bit is 1 if bits are different (exclusive OR). Properties: a^a=0, a^0=a, a^b^b=a. Used for toggling bits: <code>x ^ (1 << i)</code>. Also in many tricks (like finding the odd element).</p>
+
+<h2>NOT (~)</h2>
+<p>Flips all bits. In two's complement, <code>~x = -x-1</code>. Used to clear specific bits when combined with AND: <code>x & ~(1 << i)</code>.</p>
+
+<h2>Examples</h2>
+<pre><code>int a = 5 (0101), b = 3 (0011);
+cout << (a & b) << "\\n"; // 1 (0001)
+cout << (a | b) << "\\n"; // 7 (0111)
+cout << (a ^ b) << "\\n"; // 6 (0110)
+cout << (~a) << "\\n";    // -6 (depends on bit width)</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Bitwise operators have lower precedence than arithmetic operators  use parentheses.</li>
+  <li>XOR is its own inverse  usefull for simple encryption and swapping.</li>
+  <li>Do not confuse & with && or | with ||.</li>
+</ul>
+
+<blockquote>Bitwise operations are the Lego bricks of lowlevel programming  with them you can build any mask, flag, or compression scheme.</blockquote>
+`
   },
 
 
