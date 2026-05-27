@@ -10846,7 +10846,51 @@ unsigned int v = u >> 2; // 0x3FFFFFFE (logical shift)</code></pre>
 <blockquote>Signed vs unsigned is like two languages  they share the same alphabet (bits) but interpret words differently.</blockquote>
 `
 },
-     
+  {
+  slug: "twos-complement-and-negative-numbers",
+  title: "Two's Complement and Negative Numbers",
+  topic: "Bit Manipulation",
+  difficulty: "Medium",
+  readMinutes: 9,
+  date: "2026-05-27",
+  excerpt: "Two's complement is the standard way to represent negative integers in computers. It makes addition and subtraction uniform and handles overflow elegantly.",
+  tags: ["two's complement", "negative numbers", "binary representation", "signed"],
+  html: `
+<p>In most modern systems, signed integers are stored using <strong>two's complement</strong>. This representation makes arithmetic consistent: the same hardware can add both signed and unsigned numbers without special logic. For an nbit number, negative values are represented as 2^n minus the absolute value.</p>
+
+<h2>How two's complement works</h2>
+<p>For a positive integer x, its representation is the ordinary binary form. For a negative integer -x (where x > 0), the representation is the bitwise complement of (x-1) or, equivalently, the bitwise complement of x plus 1 (flip all bits, then add 1).</p>
+
+<h2>Example: 8bit signed numbers</h2>
+<p>1 = 00000001, -1 = 11111111 (since 256-1=255). 2 = 00000010, -2 = 11111110 (256-2=254). The most significant bit (MSB) indicates sign: 0 for nonnegative, 1 for negative.</p>
+
+<h2>Range of nbit two's complement</h2>
+<p>Range: -2^(n-1) to 2^(n-1)-1. For 32 bits: -2,147,483,648 to 2,147,483,647. For 64 bits: -9.2e18 to 9.2e18.</p>
+
+<h2>Why two's complement is used</h2>
+<ul>
+  <li>Only one representation for zero (all bits zero).</li>
+  <li>Addition and subtraction work the same as unsigned (with overflow ignored).</li>
+  <li>No separate sign bit logic  hardware is simpler.</li>
+</ul>
+
+<h2>Negation in two's complement</h2>
+<p>To get -x from x: flip all bits (bitwise NOT) then add 1. Example: x=5 (00000101), flip: 11111010, add 1: 11111011 = -5.</p>
+
+<h2>Bitwise NOT and two's complement</h2>
+<p>In C++, <code>~x</code> gives the bitwise NOT, which for signed numbers is equivalent to -x-1. So <code>~x = -x - 1</code>. This is a usefull identity.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Two's complement is not optional  it's how your CPU works.</li>
+  <li>When you do bitwise operations on signed integers, the representation matters.</li>
+  <li>Right shift on negative signed numbers is implementationdefined (but usually arithmetic).</li>
+  <li>Always consider overflow when doing arithmetic on signed numbers near the limits.</li>
+</ul>
+
+<blockquote>Two's complement is the silent hero of computing  you rarely think about it, but without it, negative numbers would be a mess.</blockquote>
+`
+  },
 
 
 
