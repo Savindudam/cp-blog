@@ -10743,6 +10743,65 @@ for (int i = N-1; i > 0; i--) tree[i] = tree[2*i] + tree[2*i+1];</code></pre>
 
 <blockquote>Binary search on segment tree is like asking the tree "which leaf contains the kth item?"  the tree guides you down the correct path.</blockquote>
 `
+},{
+  slug: "range-updates-with-difference-array-and-bit",
+  title: "Range Updates with Difference Array and BIT",
+  topic: "Data Structures",
+  difficulty: "Medium",
+  readMinutes: 8,
+  date: "2026-05-26",
+  excerpt: "To add a constant to all elements in a range [l, r] and then query single elements, use a difference array. For range queries after range updates, use two BITs.",
+  tags: ["difference array", "range update", "BIT", "prefix sum"],
+  html: `
+<p>Sometimes we need to add a value to every element in a range (range update) and later query individual elements or prefix sums. A simple difference array can handle point queries after range updates in O(1) per update and O(n) to build prefix. For online queries and updates, we can use a BIT to maintain the difference array.</p>
+
+<h2>Difference array (static range updates, point queries)</h2>
+<p>Let diff[i] = arr[i] - arr[i-1] (with arr[0]=0). To add v to range [l, r] (1indexed), we do diff[l] += v, diff[r+1] -= v. Then prefix sum of diff gives the original array.</p>
+
+<h2>Fenwick tree for range update and point query</h2>
+<pre><code>// update: add v to range [l, r]
+void range_add(int l, int r, int v) {
+    bit.add(l, v);
+    bit.add(r+1, -v);
+}
+// point query: value at index i
+int point_query(int i) {
+    return bit.sum(i);
+}</code></pre>
+
+<h2>Fenwick tree for range update and range sum (two BITs)</h2>
+<p>We maintain two BITs, B1 and B2. To add v to [l, r]:</p>
+<pre><code>add(B1, l, v); add(B1, r+1, -v);
+add(B2, l, v*(l-1)); add(B2, r+1, -v*r);</code></pre>
+<p>Then prefix sum up to i = sum(B1, i)*i - sum(B2, i). Then range sum = prefix(r) - prefix(l-1).</p>
+
+<h2>Complete 2BIT implementation</h2>
+<pre><code>class RangeBIT {
+    Fenwick B1, B2;
+    int n;
+public:
+    RangeBIT(int n) : n(n), B1(n+2), B2(n+2) {}
+    void range_add(int l, int r, int v) {
+        B1.add(l, v); B1.add(r+1, -v);
+        B2.add(l, v*(l-1)); B2.add(r+1, -v*r);
+    }
+    int prefix_sum(int i) {
+        return B1.sum(i) * i - B2.sum(i);
+    }
+    int range_sum(int l, int r) {
+        return prefix_sum(r) - prefix_sum(l-1);
+    }
+};</code></pre>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>Difference array alone is O(n) to rebuild after updates  not online.</li>
+  <li>Two BITs give O(log n) for both range update and range sum.</li>
+  <li>This works for addition; for assignment, you need a segment tree with lazy propagation.</li>
+</ul>
+
+<blockquote>Range updates with two BITs are like having two accountants  one tracks the increments, the other tracks the adjustments.</blockquote>
+`
 },
      
 
