@@ -11126,6 +11126,45 @@ while (x) {
 
 <blockquote>x & (x-1) is the magic eraser  it removes the rightmost 1, leaving the rest untouched.</blockquote>
 `
+  },{
+  slug: "checking-if-number-is-power-of-two",
+  title: "Checking if a Number Is Power of Two",
+  topic: "Bit Manipulation",
+  difficulty: "Easy",
+  readMinutes: 6,
+  date: "2026-05-27",
+  excerpt: "A power of two has exactly one bit set. Use x > 0 && (x & (x-1)) == 0 to check efficiently.",
+  tags: ["power of two", "bit trick", "popcount", "fast check"],
+  html: `
+<p>Powers of two (1,2,4,8,16,...) have exactly one 1bit in their binary representation. This property leads to simple bitwise tests. The classic test: <code>x > 0 && (x & (x-1)) == 0</code>.</p>
+
+<h2>Why it works</h2>
+<p>If x is a power of two, its binary is 100...0. x-1 is 011...1. AND gives 0. If x has more than one 1bit, x-1 will have a 1 in the lowest set bit position after subtraction, so AND is nonzero.</p>
+
+<h2>Edge cases</h2>
+<ul>
+  <li>Zero: (0 & -1) == 0, but 0 is not a power of two. So check x > 0.</li>
+  <li>Negative numbers: They can never be powers of two (except if you consider two's complement, but usually we don't).</li>
+</ul>
+
+<h2>Alternative using popcount</h2>
+<pre><code>bool isPowerOfTwo = __builtin_popcount(x) == 1 && x > 0;</code></pre>
+
+<h2>Using bit length</h2>
+<pre><code>bool isPowerOfTwo = x > 0 && (1 << (31 - __builtin_clz(x))) == x;</code></pre>
+
+<h2>Applications</h2>
+<p>Checking if a number is a power of two appears in problems about binary representation, memory allocation, and greedy algorithms.</p>
+
+<h2>Things to rememeber</h2>
+<ul>
+  <li>The test is O(1) and very fast.</li>
+  <li>For unsigned integers, you can skip the x>0 check if you know it's positive.</li>
+  <li>Works for any bit width (int, long long).</li>
+</ul>
+
+<blockquote>Power of two check is the litmus test for a number's simplicity  only one bit stands alone.</blockquote>
+`
   },
 
 
